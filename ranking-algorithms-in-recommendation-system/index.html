@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?21bc8380fea604d205394c585e188918";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74191141-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Ranking Algorithms in Recommendation System | Learning Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ranking Algorithms in Recommendation System">
+<meta property="og:url" content="http://sensirly.github.io/ranking-algorithms-in-recommendation-system/index.html">
+<meta property="og:site_name" content="Learning Machine">
+<meta property="og:description" content="Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/recommend_ranking.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/matrix_factorization.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/factorization_machine.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/EigenRank.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/BPR_OPT.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/cofirank.PNG">
+<meta property="og:image" content="http://sensirly.github.io/img/machine_learning/climf_proof.PNG">
+<meta property="og:updated_time" content="2016-02-22T09:09:45.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ranking Algorithms in Recommendation System">
+<meta name="twitter:description" content="Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。">
+  
+    <link rel="alternative" href="/atom.xml" title="Learning Machine" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/wangzai.jpeg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Eric Li</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">给时光以生命，而不是给生命以时光</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/machine-learning">机器学习</a></li>
+				        
+							<li><a href="/tags/reading">读书笔记</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="facebook" target="_blank" href="https://www.facebook.com/kklisen" title="facebook">facebook</a>
+					        
+								<a class="mail" target="_blank" href="mailto:sdulisen@163.com" title="mail">mail</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/sleric" title="weibo">weibo</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/lisenlisen" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/algorithm/" style="font-size: 13.33px;">algorithm</a> <a href="/tags/coursera/" style="font-size: 20px;">coursera</a> <a href="/tags/data-science/" style="font-size: 10px;">data science</a> <a href="/tags/economics/" style="font-size: 16.67px;">economics</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/reading/" style="font-size: 13.33px;">reading</a> <a href="/tags/recommendation-system/" style="font-size: 13.33px;">recommendation system</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/kksleric">我的ACM之路</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://sanmu-photography.lofter.com">我的LOFTER</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hxytravel.com">海逍遥旅行</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://bqzhao.blogspot.com">乐田乐大人</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/03474f176e0d">八汰sighby</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">戏谑生活的苦难，梦想改变世界，关注机器学习、推荐系统</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Eric Li</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/wangzai.jpeg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Eric Li</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">给时光以生命，而不是给生命以时光</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/machine-learning">机器学习</a></li>
+		        
+					<li><a href="/tags/reading">读书笔记</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="facebook" target="_blank" href="https://www.facebook.com/kklisen" title="facebook">facebook</a>
+			        
+						<a class="mail" target="_blank" href="mailto:sdulisen@163.com" title="mail">mail</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/sleric" title="weibo">weibo</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/in/lisenlisen" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-ranking-algorithms-in-recommendation-system" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/ranking-algorithms-in-recommendation-system/" class="article-date">
+  	<time datetime="2016-02-03T10:50:18.000Z" itemprop="datePublished">2016-02-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ranking Algorithms in Recommendation System
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation-system/">recommendation system</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。<br><img src="/img/machine_learning/recommend_ranking.PNG" alt=""><br><a id="more"></a></p>
+<h1 id="1-Pointwise"><a href="#1-Pointwise" class="headerlink" title="1.Pointwise"></a>1.Pointwise</h1><h2 id="1-1_Matrix_Factorization"><a href="#1-1_Matrix_Factorization" class="headerlink" title="1.1 Matrix Factorization"></a>1.1 Matrix Factorization</h2><p>由Koren在Nexflix比赛期间提出并大获成功，将user对Item的偏好看做评分矩阵（稀疏矩阵），通过SGD等方法将矩阵分解为两个低维度矩阵P(|U|*K)和Q(|I|*K)，用latent factor分别代表User和Item的属性，对应向量的叉乘获取预测评分。在损失函数中增加正则项和bias项可显著提高效果。扩展算法在建模过程中考虑了更多因素，如SVD++、TimeSVD、TrustSVD等。<br><img src="/img/machine_learning/matrix_factorization.PNG" alt=""> </p>
+<h2 id="1-2_Factorization_Machines"><a href="#1-2_Factorization_Machines" class="headerlink" title="1.2 Factorization Machines"></a>1.2 Factorization Machines</h2><p>FM可以看做是MF的generalized版本，不仅能够利用普通的用户反馈信息，还能融合情景信息、社交信息等诸多影响个性化推荐的因素。与传统的非线性模型相比，降低了参数维度，作为特征预处理和预测算法被广泛应用于广告、推荐、搜索等业务。<br><img src="/img/machine_learning/factorization_machine.PNG" alt=""><br>假如忽略任何额外信息，那么一条评分数据对应的特征就只涉及到一个用户id，一个物品id，将前三项分别看成全局、用户、物品的bias，最后一项刚好是两个隐因子向量的内积，等同于带bias的SVD模型。</p>
+<h3 id="u4E3B_u8981_u53C2_u6570"><a href="#u4E3B_u8981_u53C2_u6570" class="headerlink" title="主要参数"></a>主要参数</h3><ul>
+<li>k: 控制交叉项的复杂度，k值增大可以逼近任意复杂的二次交叉特征, 但是也会造成过度拟合.</li>
+<li>lamda：在特征集较大时，k值的引入很容易导致过拟合现象，但是模型本身规定了特征交叉的形式，因此在FM模型中，不能像线性模型中一样通过减少特定的特征组合来减弱过拟合。而是通过引入L2正则项来约束过拟合。</li>
+<li>n：迭代轮数。迭代次数可以使得数据训练的相对充分，但是在数据集较大的情况下其性能上的优化并不大，因为在一轮迭代过程中特征训练的已经相对充分了</li>
+<li>Learning_rate: 学习速率太大会导致模型权重震荡，太小则需要较长的迭代时间。实际中一般使learning rate随着迭代次数不断衰减。</li>
+</ul>
+<h3 id="u4E0E_u5176_u4ED6_u6A21_u578B_u7684_u6BD4_u8F83"><a href="#u4E0E_u5176_u4ED6_u6A21_u578B_u7684_u6BD4_u8F83" class="headerlink" title="与其他模型的比较"></a>与其他模型的比较</h3><p>通过将特征的交叉映射到低纬度的空间，在特征交叉的同时达到了特征降维的效果，兼具了SVM等模型的非线性特征和latent factor model适用于稀疏数据的特征。形式上与一般的线性回归相似，特殊的地方是对组合特征的处理，在稀疏特征环境下，这种对组合特征的处理使得该模型更适合做推荐。</p>
+<h2 id="1-3_OrdRec"><a href="#1-3_OrdRec" class="headerlink" title="1.3 OrdRec"></a>1.3 OrdRec</h2><p>Korend大神提出，2011 RecSys best paper。将用户对物品的评分用1…S共S个等级而不是具体的数值来表示，相邻两个等级之间的差用β表示，因此模型的参数就是t1及S-2个β。根据训练集中的评分等级训练评分的概率分布，通过每一个评分等级与其相邻的阈值之差构造误差函数 P(r=t|β)=P(r&lt;=t|β)-P(r&lt;=t-1|β)，用随机梯度下降算法对阈值参数求解threshold，得到评分等级整体的概率分布情况。</p>
+<h2 id="1-4_Restricted_Boltzmann_Machines"><a href="#1-4_Restricted_Boltzmann_Machines" class="headerlink" title="1.4 Restricted Boltzmann Machines"></a>1.4 Restricted Boltzmann Machines</h2><p>RBM对二分类的偏好数据进行latent factor分析，本质上是一个随机神经网络（节点的状态取决于相连节点的状态），每个visible unit连接所有的hidden unit和bias unit，同时bias unit还有所有hidden unit相连。算法参数是连接visible unit和hidden unit的无向边的权重Wij，不同用户使用不同的hidden unit和hidden unit状态，但是共享一组weight。详见论文<a href="http://www.machinelearning.org/proceedings/icml2007/papers/407.pdf" target="_blank" rel="external">Restricted Boltzmann Machines for Collaborative Filtering</a>，或者这个<a href="http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines" target="_blank" rel="external">introduction</a>.</p>
+<h1 id="2-Pairwise"><a href="#2-Pairwise" class="headerlink" title="2.Pairwise"></a>2.Pairwise</h1><h2 id="2-1_EigenRank"><a href="#2-1_EigenRank" class="headerlink" title="2.1 EigenRank"></a>2.1 EigenRank</h2><p>发表于08年SIGIR，提出了ranking-oriented CF的架构，并给出了贪心法和随机游走两种简单的算法实现。详见论文<a href="http://www.cs.ust.hk/~qyang/Docs/2008/SIGIR297-liu.pdf" target="_blank" rel="external">EigenRank: A Ranking-Oriented Approach to Collaborative Filtering</a><br><img src="/img/machine_learning/EigenRank.PNG" alt=""> </p>
+<h3 id="Kendall_Rank_Correlation_Coefficient"><a href="#Kendall_Rank_Correlation_Coefficient" class="headerlink" title="Kendall Rank Correlation Coefficient"></a>Kendall Rank Correlation Coefficient</h3><p>在rating-based相似度计算中，根据user对item的打分计算u2u相似度及i2i相似度；在ranking-oriented方案中，根据user对item的偏好关系（关注打分的顺序而非数值）计算相似度，KRCC取决于两者序列中不对称pair的数量，即在一个序列中i排序高于j而在另外一个序列中i低于j。</p>
+<h3 id="Greedy_Order_Algorithm"><a href="#Greedy_Order_Algorithm" class="headerlink" title="Greedy Order Algorithm"></a>Greedy Order Algorithm</h3><ol>
+<li>根据neighborhood-based CF构造user对item的偏好关系（投票表决i和j的相对位置），这个偏好关系是没有传递性的。</li>
+<li>计算每个item初始的potential分：the more items that are less preferred than i, the higher the potential of i.</li>
+<li>每次选取potential分数最高的item并更新其他item的potential分(移除当前item对其它item的影响)：π(i)+=p(t,i)-p(i,t) </li>
+</ol>
+<h3 id="Random_Walk_Model"><a href="#Random_Walk_Model" class="headerlink" title="Random Walk Model"></a>Random Walk Model</h3><p>用Markov chain model做item排序，状态表示item，偏好函数（依然用neighborhood-based CF构造）表示转移概率。 </p>
+<h3 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h3><ul>
+<li>较早提出了ranking-oriented CF的路子，idea值得称赞，内容比较糙</li>
+<li>对照组选取有问题，为什么不选用效果更好的item-based CF而选用user-based CF作为baseline？与model-based CF相比效果如何？</li>
+<li>如何证明Preference Functions没有传递性，如果有传递性，Greedy算法的更新策略就有点问题了。</li>
+</ul>
+<h2 id="2-2_Bayesian_Personalized_Ranking"><a href="#2-2_Bayesian_Personalized_Ranking" class="headerlink" title="2.2 Bayesian Personalized Ranking"></a>2.2 Bayesian Personalized Ranking</h2><p>Rendle在2009年提出，在一个base算法基础之上通过反馈数据构造偏序对，直接对偏序对预测值大小关系构造损失函数优化base算法参数。详见论文<a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Rendle_et_al2009-Bayesian_Personalized_Ranking.pdf" target="_blank" rel="external">BPR: Bayesian Personalized Ranking from Implicit Feedback</a><br><img src="/img/machine_learning/BPR_OPT.PNG" alt="">  </p>
+<h3 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h3><p>如果使用full gradient descent，数据倾斜导致收敛速度慢；每次迭代梯度变化过大不易正则化。如果使用stochastic gradient decent，同一个user-item会有连续的多次更新。因此采用可替换的bootstrap sampling。<br>但是当商品流行度分布不均匀时（tailed distribution），随机选取(c,i)是i很可能是一个流行度很高的item，因此y(c,i)-y(c,j)趋于0，模型更新获得了很小的梯度导致更新效率低。<br><a href="http://webia.lip6.fr/~gallinar/gallinari/uploads/Teaching/WSDM2014-rendle.pdf" target="_blank" rel="external">Improving Pairwise Learning for Item Recommendation from Implicit Feedback</a>提出了一种全新的采样方式：每次选取负样本时倾向于rank较高的item，且采样函数会随模型参数的变化而变化。这种非均匀的采样方式可以大幅提高收敛速度并小幅提高效果，由于采样函数复杂度增加，算法整体的复杂度变化不大。 </p>
+<h3 id="u9002_u7528_u573A_u666F"><a href="#u9002_u7528_u573A_u666F" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li>理论上pairwise的效果好于pointwise，但由于实现代价较高，使用并不多</li>
+<li>可用于多目标学习，例如要同时优化CTR、CVR、加购率等指标，在构造样本时可假设：购买&gt;加购&gt;点击&gt;未点击</li>
+<li>当特征较多而样本不足时，pairwise的方式可提供更多的样本</li>
+</ul>
+<h1 id="3-Listwise"><a href="#3-Listwise" class="headerlink" title="3.Listwise"></a>3.Listwise</h1><h2 id="3-1_CoFiRank"><a href="#3-1_CoFiRank" class="headerlink" title="3.1 CoFiRank"></a>3.1 CoFiRank</h2><p>将排序问题转化为结构化的预估问题，学习函数最大化排序指标NDCG，详见论文<a href="http://papers.nips.cc/paper/3359-cofi-rank-maximum-margin-matrix-factorization-for-collaborative-ranking.pdf" target="_blank" rel="external">COFIRANK: Maximum Margin Matrix Factorization for Collaborative Ranking</a><br><img src="/img/machine_learning/cofirank.PNG" alt=""></p>
+<h2 id="3-2_CLiMF"><a href="#3-2_CLiMF" class="headerlink" title="3.2 CLiMF"></a>3.2 CLiMF</h2><p>通过优化Reciprocal Rank损失函数的lower bound优化整个列表的排序。 详见论文<a href="http://www.ci.tuwien.ac.at/~alexis/Publications_files/climf-recsys12.pdf" target="_blank" rel="external">CLiMF: Learning to Maximize Reciprocal Rank with Collaborative Less-is-More Filtering</a></p>
+<h3 id="Smooth_Reciprocal_Rank"><a href="#Smooth_Reciprocal_Rank" class="headerlink" title="Smooth Reciprocal Rank"></a>Smooth Reciprocal Rank</h3><p><img src="/img/machine_learning/climf_proof.PNG" alt=""></p>
+<ol>
+<li>通过对(1)中RR的定义看见，RR is a non-smooth function over the model parameters，因此无法使用传统的优化算法直接优化。</li>
+<li>使用模型预测得分的logistic function代替Rij，得到了(5)的近似表示。</li>
+<li>根据Jensen’s inequality和Concavity of log function推导出ln(1/n*RR)的lower bound，如(7).可以看出：The maximization of the first term contributes to learning latent factors that promote relevant items, e.g., item j; maximizing the second term turns to learning latent factors of all the other items (e.g., item k) in order to degrade their relevance scores. <strong>In sum, the two effects come together to promote and scatter the relevant items at the same time</strong></li>
+<li>将f(ij)=Ui*Vj带入，就可以使用梯度下降这种标准的优化方法求解UV了</li>
+</ol>
+<h3 id="u4E0E_u5176_u4ED6_u6A21_u578B_u5BF9_u6BD4"><a href="#u4E0E_u5176_u4ED6_u6A21_u578B_u5BF9_u6BD4" class="headerlink" title="与其他模型对比"></a>与其他模型对比</h3><ul>
+<li><strong>CoFiRank</strong>通过优化NDCG损失函数的convex upper bound优化整个列表的排序，适用于评分类的训练数据，；CLiMF适合于二分类的训练数据</li>
+<li><strong>CCF</strong>(Collaborative competitive Filtering)考虑了候选集中所有pair的关系（需要构造负样本），CLiMF只考虑相关的pair</li>
+<li><strong>BPR</strong>与CLiMF都是直接优化评估指标的smoothed version，但需要负样本；BPR目标是提升所有相关item的排名，而CLiMF目标是提高top-k中相关item的排名</li>
+</ul>
+<h1 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.slideshare.net/kerveros99/learning-to-rank-for-recommender-system-tutorial-acm-recsys-2013" target="_blank" rel="external">RecSys2013: LTR Tutorial</a><br><a href="http://www.librec.net" target="_blank" rel="external">LibRec: A Java Library for Recommender Systems</a><br><a href="http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/" target="_blank" rel="external">Winning the Netflix Prize: A Summary</a><br><a href="http://eletva.com/tower/?p=159" target="_blank" rel="external">概述搜索排序算法的评价指标MAP,NDCG,MRR</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/prediction-model-calibration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          预测模型结果校准
+        
+      </div>
+    </a>
+  
+  
+    <a href="/game-theory-coursera-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Game Theory II (Advanced Applications) on Coursera</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="ranking-algorithms-in-recommendation-system" data-title="Ranking Algorithms in Recommendation System" data-url="http://sensirly.github.io/ranking-algorithms-in-recommendation-system/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"onslaughtor"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Eric Li
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74191141-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?21bc8380fea604d205394c585e188918";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
