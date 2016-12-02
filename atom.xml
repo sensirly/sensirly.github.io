@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Learning Machine]]></title>
+  <subtitle><![CDATA[给时光以生命，而不是给生命以时光]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://sensirly.github.io/"/>
+  <updated>2016-12-02T13:05:45.903Z</updated>
+  <id>http://sensirly.github.io/</id>
+  
+  <author>
+    <name><![CDATA[Eric Li]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Leetcode Solution]]></title>
+    <link href="http://sensirly.github.io/leetcode-solution/"/>
+    <id>http://sensirly.github.io/leetcode-solution/</id>
+    <published>2016-12-02T13:05:45.903Z</published>
+    <updated>2016-12-02T13:05:45.903Z</updated>
+    <content type="html"><![CDATA[<p>My solutions to most of Hard problems and some Medium problems on <a href="https://leetcode.com" target="_blank" rel="external">LeetCode Online Judge</a>, respective code(mostly in python) is stored on <a href="https://github.com/onslaughtor/leetcode" target="_blank" rel="external">my github</a>. The problems on Leetcode are easier to those in ACM-ICPC, but to raise a bug-free solution in a short time still require a lot of skills and practice. My solutions are not guaranteed to be the best(Actually, it is not necessary to raise the best solution in the interview), there are more creative idea and elegant solutions in the <em>Discuss</em>. <strong>To get accepted is not the terminal</strong>, keep revising and making your solutions better.<br><a id="more"></a></p>
+<h2 id="Recursion"><a href="#Recursion" class="headerlink" title="Recursion"></a>Recursion</h2><h3 id="4-_Median_of_Two_Sorted_Arrays"><a href="#4-_Median_of_Two_Sorted_Arrays" class="headerlink" title="4. Median of Two Sorted Arrays"></a>4. Median of Two Sorted Arrays</h3><p>求两个有序数组合并后的中位数。<br>it’s equivalent to find the kth number of the merged array. To find it, we compare the k/2th numbers of the two array and desert the smaller part, and then find the k/2th number of the sub-array recursively. Be careful when one’s length is smaller than k/2.</p>
+<h3 id="22-_Generate_Parentheses"><a href="#22-_Generate_Parentheses" class="headerlink" title="22. Generate Parentheses"></a>22. Generate Parentheses</h3><p>生成n对括号的所有合法排列。<br>at each position, when there is less ‘)’ than ‘(‘ in the previous result, then we can add a ‘)’; when the number of ‘(‘ is less than n, then ‘(‘ can be added. solve the next position recursively.</p>
+<h3 id="37-_Sudoku_Solver"><a href="#37-_Sudoku_Solver" class="headerlink" title="37. Sudoku Solver"></a>37. Sudoku Solver</h3><p>数独：每行、每列、每个3*3小正方形内都不能有重复的数字。<br>use three groups of set to record the number appeared in each row, column, and square and all empty grid. traverse each number from 1 to 9 and checking the sets to judge whether its legal. If legal, put the number in three respective sets and try another empty grid recursively. Remember to restore the status when the recursion tracked back.</p>
+<h3 id="87-_Scramble_String"><a href="#87-_Scramble_String" class="headerlink" title="87. Scramble String"></a>87. Scramble String</h3><p>用一颗二叉树表示一个字符串（分裂点随意），任意一个非叶子结点左右子节点互换称作scramble，问s1是否可以由s2通过scramble获取。<br>Enumerate the split point and the check isomorphism of the respective left part and right part recursively. Remember to check scramble operation of the node itself, which means the left part of s1 can be isomorphic to either left or right part of s2. use memorization or check the the equality of sorted string to prune.<br>Another solution is DP, <code>dp[n][i][j]</code> means whether the n-length substring starting from ith position in s1 and jth position in s2 is scrambled. <code>dp[n][i][j]</code>=1 when <code>dp[t][i][j]</code>=1 and <code>dp[n-t][i+t][j+1]</code>=1 for each t smaller than n, also consider the reverse isomorphism just as the recursion solution.</p>
+<h3 id="212-_Word_Search_28Trie_Tree_29"><a href="#212-_Word_Search_28Trie_Tree_29" class="headerlink" title="212. Word Search(Trie Tree)"></a>212. Word Search(Trie Tree)</h3><p>给出一个字母的矩阵和一个字典，求出矩阵中包含的字典中的所有单词（四个方向）<br>traverse the start point and brute force DFS is feasible for small dataset, while build a trie tree to mantain the query words is more efficient for big datasets: try the next letter if the current TrieNode has a child node of the current letter. when choosing the next node to traverse, no need to check each letter in the TrieNode(TLE because of 26x slower).</p>
+<h3 id="282-_Expression_Add_Operators"><a href="#282-_Expression_Add_Operators" class="headerlink" title="282. Expression Add Operators"></a>282. Expression Add Operators</h3><p>给出一串数字和一个target，在数字之间添加运算符使结果等于target。<br>Enumerate the position of the opertor and regard the left part as a number and the right part as a expression, find the candidates of the right part whose target equal to <code>target [+,-,*] - left</code> recursively. When the operator is <code>*</code>, the factor should be transmitted to the left number of the right part and keep its target unchanged. Accelerate the algorithm by memorization. </p>
+<h3 id="329-_Longest_Increasing_Path_in_a_Matrix"><a href="#329-_Longest_Increasing_Path_in_a_Matrix" class="headerlink" title="329. Longest Increasing Path in a Matrix"></a>329. Longest Increasing Path in a Matrix</h3><p>求矩阵中最长递增序列，可以向上下左右四个方向走。</p>
+<h2 id="Divide_and_Conquer"><a href="#Divide_and_Conquer" class="headerlink" title="Divide and Conquer"></a>Divide and Conquer</h2><h3 id="23-_Merge_k_Sorted_Lists"><a href="#23-_Merge_k_Sorted_Lists" class="headerlink" title="23. Merge k Sorted Lists"></a>23. Merge k Sorted Lists</h3><p>将k个已排序的列表合并为一个有序列表。<br>similar to merge sort with a embedded merge operation for two lists</p>
+<h3 id="95/96-_Unique_Binary_Search_Trees"><a href="#95/96-_Unique_Binary_Search_Trees" class="headerlink" title="95/96. Unique Binary Search Trees"></a>95/96. Unique Binary Search Trees</h3><p>求1-n构成的所有的BST的个数/所有答案？<br><code>dp[n]=dp[n-i-1]*dp[i]</code> for all i in [0,n)<br>Enumerate all possible number and merge it into three part: less ones, itself, and greater ones. Get the subtree of less ones and greater ones recursively and merge two subtrees into the current node.</p>
+<h3 id="241-_Different_Ways_to_Add_Parentheses"><a href="#241-_Different_Ways_to_Add_Parentheses" class="headerlink" title="241. Different Ways to Add Parentheses"></a>241. Different Ways to Add Parentheses</h3><p>给出一个包含’+’,’-‘,’*’的表达式，问加括号后会有多少不同的结果。<br>traverse the split point and get the result of the two sides recursively. use memorization to avoid repeated computation.</p>
+<h3 id="395-_Longest_Substring_with_At_Least_K_Repeating_Characters"><a href="#395-_Longest_Substring_with_At_Least_K_Repeating_Characters" class="headerlink" title="395. Longest Substring with At Least K Repeating Characters"></a>395. Longest Substring with At Least K Repeating Characters</h3><p>找出字符串的最长子串，使得子串中每个字母都至少出现了k次。</p>
+<h2 id="DP"><a href="#DP" class="headerlink" title="DP"></a>DP</h2><h3 id="32-_Longest_Valid_Parentheses"><a href="#32-_Longest_Valid_Parentheses" class="headerlink" title="32. Longest Valid Parentheses"></a>32. Longest Valid Parentheses</h3><p>给出一个左右括号组成的序列，查找最长的合法括号序列。<br>use a stack to record the position of unmatched ‘(‘. <code>dp[i]</code> represent the left end of the longest valid sequence that ends at i if i is ‘)’. let x be the position of the matched ‘(‘, <code>dp[i]=dp[x-1]</code> when x-1 is a ‘)’ otherwise x. the answer is the maximum of i-dp[i]+1.</p>
+<h3 id="42-_Trapping_Rain_Water"><a href="#42-_Trapping_Rain_Water" class="headerlink" title="42. Trapping Rain Water"></a>42. Trapping Rain Water</h3><p>给出n根竖立的柱子，问可以围城多大的蓄水池。<br>Let <code>left[i]</code> be the highest line left to ith line and <code>right[i]</code> be the height to the right, both are exclusive. The area above i is <code>min(left[i],right[i])-height[i]</code> if ith line is not the highest one, add each area up</p>
+<h3 id="72-_Edit_Distance"><a href="#72-_Edit_Distance" class="headerlink" title="72. Edit Distance"></a>72. Edit Distance</h3><p>求两个字符串之间的编辑距离<br>Let <code>dp[i][j]</code> be the edit distance between <code>s1[:i]</code> and <code>s2[:j]</code>. Then <code>dp[i][j]</code> is equal to <code>dp[i-1][j-1]</code> if <code>s1[i]</code>=<code>s2[j]</code>; otherwise the minimum of <code>dp[i-1][j-1]</code>, <code>dp[i][j-1]</code>and <code>dp[i-1][j]</code> (Replace, Insert and Delete respectively).</p>
+<h3 id="97-_Interleaving_String"><a href="#97-_Interleaving_String" class="headerlink" title="97. Interleaving String"></a>97. Interleaving String</h3><p>给出字符串s1、s2，问s3是否可以由s1和s2交叉而成？<br><code>dp[i][j]</code> means whether the first i+j letters in s3 can be interleft by the fisrt i letters in s1 and first j letters in j. <code>dp[i][j]</code>=1 when <code>dp[i-1][j]</code>=1 and <code>s1[i]</code>=<code>s3[i+j]</code> or <code>s2[j]</code>=<code>s3[i+j]</code> and <code>dp[i][j-1]</code>=1.</p>
+<h3 id="115-_Distinct_Subsequences"><a href="#115-_Distinct_Subsequences" class="headerlink" title="115. Distinct Subsequences"></a>115. Distinct Subsequences</h3><p>字符串S中有多少个子序列是字符串T？<br><code>dp[i][j]</code> means the number of subsequence <code>t[:i]</code> in <code>s[:j]</code> when <code>t[i]</code> matches <code>s[j]</code>. <code>dp[i][j]</code>=sum(<code>dp[i-1][k]</code>) for all <code>k</code> less than <code>j</code> if <code>s[i]</code>=<code>t[j]</code> otherwise 0 and sum(<code>dp[-1]</code>) is the answer. Since <code>dp[i][]</code> only determined by <code>dp[i-1][]</code>, we can reduce it to a one-dimension array, and since the sum is accumulated, we don’t need to traverse all the k. So the time complexity is O(M*N).<br><strong>Comment: when we swap the first dimension with the second, it doesn’t work. To define the status is the first and very important process in DP.</strong></p>
+<h3 id="132-_Palindrome_Partitioning_28Smart_29"><a href="#132-_Palindrome_Partitioning_28Smart_29" class="headerlink" title="132. Palindrome Partitioning(Smart)"></a>132. Palindrome Partitioning(Smart)</h3><p>给一个字符串S，最少切割多少次可以使所有字串都是回文串？<br><code>dp[k]</code> means the mininum cuts for the first k characters. <code>dp[k]=min(dp[j]+1 for any j that s[j:k] is a palindrome)</code>, but the nested palindrome check is also O(n), so totally O(n*n) for each k. However, regard kth character as the pivot of the palindrome it belongs to, we can check it while looping all j afeer it and update all <code>dp[j]</code> instead, stop the loop immediately using the monotonicity of palindrome, complexity reduced to O(n) for each k.<br><strong>Comment: when it comes to the kth elements in DP, it not a MUST to update <code>dp[k]</code> but anyone following it(as long as there is no afteraffect)
+</strong></p>
+<h3 id="140-_Word_Breaker"><a href="#140-_Word_Breaker" class="headerlink" title="140. Word Breaker"></a>140. Word Breaker</h3><p>给一个字符串s和一个单词的字典，求将s分割为字典中单词的方案。<br><code>dp[i]</code> record all the ending position of the word that starts at position i. <code>dp[k]={i}</code> that <code>s[i:k]</code> in the dictionary. backtrace from right to left to get the pathes(less redundant recursion than scan from left to right).  </p>
+<h3 id="188-_Best_Time_to_Buy_and_Sell_Stock_IV"><a href="#188-_Best_Time_to_Buy_and_Sell_Stock_IV" class="headerlink" title="188. Best Time to Buy and Sell Stock IV"></a>188. Best Time to Buy and Sell Stock IV</h3><p>给出N天股价，问最多交易K次的最大收益。<br><code>dp[i][j]</code> means the max profit when there is up to j transitions in the first i days, then <code>dp[i][j]</code>=max(<code>dp[i-1][j]</code>,<code>price[i]</code>+max(<code>dp[k-1][j-1]</code>-<code>price[k]</code>)) for all <code>k</code> less than <code>i</code>. Since the inner max loop can be updated after the ith traverse, we can loop in in the outside, update the max while the inside i loop.<br>when K*2&gt;N, it’s equal to limitless transaction and can be solved by a Greedy strategy that make a trasaction every time the prices stop going up or going down.<br><strong>Comment: the order of updating to different dimensions affect the complexity, try to find the monotonicity and reduce repeated computation</strong></p>
+<h3 id="213-_House_Robber_II"><a href="#213-_House_Robber_II" class="headerlink" title="213. House Robber II"></a>213. House Robber II</h3><p>N个房间形成一个环，每个房间内有一定的财富，相邻两个房间不能同时抢劫，问最多能抢劫多少财富？<br>If there is not such circle, the max profile before ith room is <code>dp[i]</code>= max(<code>dp[i-1]</code>,<code>dp[i-2]</code>+<code>value[i]</code>). Since one of the first and second has to be robbed, we can enumerate the two scenario by two similar dp where one’s initial status is <code>dp[1]</code>=0, <code>dp[2]</code>=<code>price[2]</code> and another’s is <code>dp[1]</code>=<code>dp[2]</code>=<code>price[1]</code>.  </p>
+<h3 id="309-_Best_Time_to_Buy_and_Sell_Stock_with_Cooldown"><a href="#309-_Best_Time_to_Buy_and_Sell_Stock_with_Cooldown" class="headerlink" title="309. Best Time to Buy and Sell Stock with Cooldown"></a>309. Best Time to Buy and Sell Stock with Cooldown</h3><p>无限次交易，两次交易之间有一天的冷冻期。<br><img src="http://i.imgur.com/wvR4TN8.png" alt=""><br>There are three states, according to the action that you can take. we can calulate the profit of each state at time i as:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s0[i] = max(s0[i-<span class="number">1</span>], s2[i-<span class="number">1</span>])</span><br><span class="line">s1[i] = max(s1[i-<span class="number">1</span>], s0[i-<span class="number">1</span>] - prices[i])</span><br><span class="line">s2[i] = s1[i-<span class="number">1</span>] + prices[i]</span><br></pre></td></tr></table></figure></p>
+<p><strong>Comment: good idea to define the status in DP with Status Machine</strong></p>
+<h3 id="312-_Burst_Balloons"><a href="#312-_Burst_Balloons" class="headerlink" title="312. Burst Balloons"></a>312. Burst Balloons</h3><p>n个有数值的气球，打爆某个气球将得到<code>nums[left]*nums[i]*nums[right]</code>分，求最多可以得多少分。<br>Let’s think about the sub problem, given a sub interval of balloons, we are only sure about the score to  burst the last balloon, so we can solve it by traversing the last burst balloon in the interval and solve the sub problem of the two sides respectively, that’s  <code>dp[left][right]=max(dp[left][k-1]+dp[k+1][right]+num[left-1]*num[k]*num[right+1])</code> . To remove the after effect, we need to loop the length of the interval in the first layer, and then the start of the interval and the position of the last balloon in the inner loop.</p>
+<h3 id="368-Largest_Divisible_Subset"><a href="#368-Largest_Divisible_Subset" class="headerlink" title="368.Largest Divisible Subset"></a>368.Largest Divisible Subset</h3><p>寻找元素之间可以互相整除的最大子集</p>
+<h3 id="403-_Frog_Jump"><a href="#403-_Frog_Jump" class="headerlink" title="403. Frog Jump"></a>403. Frog Jump</h3><p>青蛙是否能从第一块石头跳到最后一块，如果上一步跳了k个单位则下一步可以跳[k-1,k,k+1]个单位。第一步只能跳一个单位。</p>
+<h3 id="464-_Can_I_win"><a href="#464-_Can_I_win" class="headerlink" title="464. Can I win"></a>464. Can I win</h3><p>两个人轮流从[1,N]中选一个数，累加和达到M时获胜，问给定M和N先手是否可以必胜<br>it’s a common minmax problem in game theory, and the key point is to utilize memorization to reduce the repeated computation.<br>The status is the numbers which are not selected and the <code>desiredTotal</code> util now. since the <code>desiredTotal</code> could be computed by the available numbers for each game, the numbers is enough to represent the status. And to traverse the available numbers and record the status efficiently, we can use bit-wise mask to record the the available numbers, instead of array or set. </p>
+<h2 id="Greedy"><a href="#Greedy" class="headerlink" title="Greedy"></a>Greedy</h2><h3 id="45/55-_Jump_Game"><a href="#45/55-_Jump_Game" class="headerlink" title="45/55. Jump Game"></a>45/55. Jump Game</h3><p>给一个数组表示每个位置上最多可以向前跳多少步，至少跳多少步可以跳出尾端？<br>let <code>dest[i]</code> be the farthest destination from i. Each time, we choose to jump a point x such at <code>dest[x]</code> is the farthest, in order to have more choice in the next step. Since <code>dest[i]</code> must be greater than i, the each position is just traversed once during searching the maximum.<br>如果只问是否可以到达呢?<br>record the farthest destination and traverse one by one until reach the end or the destination is beyond the current position(can not reach).</p>
+<h3 id="134-_Gas_Station"><a href="#134-_Gas_Station" class="headerlink" title="134. Gas Station"></a>134. Gas Station</h3><p>N个加油站形成环，每个加油站有<code>gas[i]</code>升油，从第i个到第i+1个加油站需要耗费<code>cost[i]</code>升油。从哪个加油站开始出发可以经过所有加油站？<br>Calculate the incremental gas of each station(<code>gas[i]-cost[i]</code>), it can be proved that there must be some solution if the sum is equal or greater than 0. Start from the first station and keep moving forward until ths sum of increment is less than 0, then mark the next station as the start(the sum must be smaller starting from some station between the two ends because the sum is greater than 0 before arriving it, so any station between would be a worse choice). Repeat it until each station is visited once and there is always a answer.<br>An smart solution is Two Pointer in the <a href="https://discuss.leetcode.com/topic/5088/my-ac-is-o-1-space-o-n-running-time-solution-does-anybody-have-posted-this-solution" target="_blank" rel="external">Discuss</a>.</p>
+<h3 id="135-_Candy"><a href="#135-_Candy" class="headerlink" title="135. Candy"></a>135. Candy</h3><p>每人都有一个rating值，使用最少的糖使得每人至少分到一块并且比相邻的rating低的人分到的多。<br>Initially give everyone one candy and traverse from left to right, it some rating is greater than its left, give it one more than the left. Then traverse from right to left and the similar operations.</p>
+<h3 id="376-_Wiggle_Subsequence"><a href="#376-_Wiggle_Subsequence" class="headerlink" title="376. Wiggle Subsequence"></a>376. Wiggle Subsequence</h3><p>一个数列两个连续元素的差正负交替则这个数列为wiggle sequence，给出一个数列，求满足wiggle sequence的最长子序列。</p>
+<h3 id="435-_Non-overlapping_Intervals"><a href="#435-_Non-overlapping_Intervals" class="headerlink" title="435. Non-overlapping Intervals"></a>435. Non-overlapping Intervals</h3><p>给出n个区间，问至少移除多少个可以使剩余的区间相互不重叠。</p>
+<h2 id="Binary_Search"><a href="#Binary_Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><h3 id="33-_Search_in_Rotated_Sorted_Array"><a href="#33-_Search_in_Rotated_Sorted_Array" class="headerlink" title="33. Search in Rotated Sorted Array"></a>33. Search in Rotated Sorted Array</h3><p>在一个旋转过的有序数组里查找目标数字。<br>use binary search to locate the pivot and find the target. if <code>nums[mid]</code>&gt;=<code>nums[left]</code>, the pivot must be in the right, then compare target with the left part(because it’s ascending) to determine its position; otherwise the pivot must be in the left and compare target with the right part.<br><strong>Comment: to use the binary search ,we have to find the monotonicity even if it’s not perfect</strong></p>
+<h3 id="153-_Find_Minimum_in_Rotated_Sorted_Array"><a href="#153-_Find_Minimum_in_Rotated_Sorted_Array" class="headerlink" title="153. Find Minimum in Rotated Sorted Array"></a>153. Find Minimum in Rotated Sorted Array</h3><p>在一个旋转过的有序数组（可能有重复值）中查找最小值。<br>If <code>arr[left]</code>&lt;=<code>arr[mid]</code> and <code>arr[right]</code>&gt;<code>arr[mid]</code> then the pivot must be the right otherwise to the left. Be careful about the case when <code>arr[left]</code>=<code>arr[right]</code>.</p>
+<h3 id="240-_Search_a_2D_Matrix_II"><a href="#240-_Search_a_2D_Matrix_II" class="headerlink" title="240. Search a 2D Matrix II"></a>240. Search a 2D Matrix II</h3><p>在一个行和列都递增的矩阵中查找一个数。<br>start from the top right corner, if it is greater than the target then move down otherwise move left. O(M+N).</p>
+<h3 id="287-_Find_the_Duplicate_Number"><a href="#287-_Find_the_Duplicate_Number" class="headerlink" title="287. Find the Duplicate Number"></a>287. Find the Duplicate Number</h3><p>找出n+1个1到n的数字中唯一重复的一个，不能更改原数组。<br>enumerate <code>k</code> by binary search and traverse the array to see whether there are at lease <code>k</code> numbers that less than or equal to <code>k</code>. If so, move to the right, otherwise move to the left. O(NlogN)</p>
+<h3 id="300-_Longest_Increasing_Subsequence"><a href="#300-_Longest_Increasing_Subsequence" class="headerlink" title="300. Longest Increasing Subsequence"></a>300. Longest Increasing Subsequence</h3><p>数组中最长上升子序列。<br><code>last[i]</code> means the smallest last element in a <code>i</code>-length sequence, it is ascending with the index. So to get the longest increasing sequence ending with the current element is to find the biggest <code>i</code> that <code>last[i]</code> is less than it, which can be found by binary search. O(NlogN)</p>
+<h3 id="327-_Count_of_Range_Sum"><a href="#327-_Count_of_Range_Sum" class="headerlink" title="327. Count of Range Sum"></a>327. Count of Range Sum</h3><p>求数列中所有和在[lower,upper]之间的子区间个数<br>record the sum from the first to each element of the previous array while traversing each element, check how many sums are less than <code>current sum -  lower</code>  and <code>current sum -  upper</code>  by binary search, the difference is the number of legal interval which ends with the current element.</p>
+<h3 id="354-_Russian_Doll_Envelopes"><a href="#354-_Russian_Doll_Envelopes" class="headerlink" title="354. Russian Doll Envelopes"></a>354. Russian Doll Envelopes</h3><p>如果一个信封的高度和宽度都严格小于另一个则可以装进去，给出N个信封问最多可以套多少个。<br>sort the envelopes by width increasingly and height decreasingly and then it comes to find the longest increasing subsequence of the height array. </p>
+<h2 id="Two_Pointer"><a href="#Two_Pointer" class="headerlink" title="Two Pointer"></a>Two Pointer</h2><h3 id="11-_Container_With_Most_Water"><a href="#11-_Container_With_Most_Water" class="headerlink" title="11. Container With Most Water"></a>11. Container With Most Water</h3><p>给出n个点，求任选两个与x轴组成的最大面积。<br>Begin from the two ends, we assume the current area is W*H, to make it bigger, we must reduce W and improve H, each time desert the shorter line and shrink the segment until two ends meet.  </p>
+<h3 id="76-_Minimum_Window_Substring"><a href="#76-_Minimum_Window_Substring" class="headerlink" title="76. Minimum Window Substring"></a>76. Minimum Window Substring</h3><p>给两个字符串S和T，问S包含T中所有字符的最短字串。<br>move the left pointer to scan S from left to right until all characters in T has appeared, some may appeared more than once. Then move the left pointer forward until all the characters appeared exactly once, that’s one window. Move the right pointer to find other windows until the end of T.</p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><h3 id="15-_3Sum"><a href="#15-_3Sum" class="headerlink" title="15. 3Sum"></a>15. 3Sum</h3><p>给一个数组，求所有三个数相加等于0的组合。<br>traverse and compute all pair of two-sum and check whether current number*-1 is in the previous two-sum set. sort the array firstly to avoid repeated answer.</p>
+<h3 id="16-_3Sum_Closest"><a href="#16-_3Sum_Closest" class="headerlink" title="16. 3Sum Closest"></a>16. 3Sum Closest</h3><p>给一个数组，求任意三个数相加最接近target的和值。<br>traverse the array, compute the two-sum set of the previous nums, then use binary search to find two-sum that is closet to target-current num.</p>
+<h3 id="18-_4Sum"><a href="#18-_4Sum" class="headerlink" title="18. 4Sum"></a>18. 4Sum</h3><p>给一个数组，求所有三个数相加等于target的组合。<br>traverse the array, compute the two-sum set of the previous nums, then traverse the following nums to check whether target-current-following in the two-sum set. sort the array firstly to avoid repeated answer.</p>
+<h3 id="41-_First_Missing_Positive"><a href="#41-_First_Missing_Positive" class="headerlink" title="41. First Missing Positive"></a>41. First Missing Positive</h3><p>给一个无序的数组，找出数组中缺失的第一个正整数。<br>the missing Positive must between 1 to n(the length of the array). traverse the array and put the ith element to position x where <code>arr[i]</code>=<code>x</code> and x in [1,n] by swapping <code>a[i]</code> and <code>a[x]</code>. After traverse, find the first i where <code>a[i]</code>!=<code>i</code>.</p>
+<h3 id="128-_Longest_Consecutive_Sequence"><a href="#128-_Longest_Consecutive_Sequence" class="headerlink" title="128. Longest Consecutive Sequence"></a>128. Longest Consecutive Sequence</h3><p>最长连续（元素）子序列。<br>Traverse each element, loop and remove all the numbers consecutive to it until some is not in the Set, and that is one sequence. Since each element is removed after being visited and will not be visited after, O(n).</p>
+<h3 id="137-_Single_Number_II"><a href="#137-_Single_Number_II" class="headerlink" title="137. Single Number II"></a>137. Single Number II</h3><p>一个数组中除了某一个元素外其他元素都出现了3次。<br>Sort the array and traverse each element with 3 steps, check whether <code>arr[i]==arr[i+1]==arr[i+2]</code>.</p>
+<h3 id="260-_Single_Number_III"><a href="#260-_Single_Number_III" class="headerlink" title="260. Single Number III"></a>260. Single Number III</h3><p>一个数组中两个元素出现了1次，其他元素出现了2次。<br>There must be difference in some bit of the two numbers. Do exclusive operation and find the bit that equal to 1, seperate the array based on the value of this bit so that the two numbers must be seperated. Carry out exclusive operation to the sub array seperately to get two numbers.</p>
+<h3 id="229-_Majority_Element_II"><a href="#229-_Majority_Element_II" class="headerlink" title="229. Majority Element II"></a>229. Majority Element II</h3><p>一个长度为n的数组，找出所有出现次数大于n/3次的元素。<br>It’s obvious there is at most two elements and it has to be in [<code>n/3</code>th smallest,<code>n/3</code>th biggest] so it’s to find the <code>n/3</code>th elements and <code>(n-n/3+1)</code>th element in an array, quick sort is O(n^2) when the data is special and heapsort is stable O(nlogK).<br>Another solution is to counteract, record two numbers and their frequence; when other numbers appear, counteract the frequency of the two numbers until it comes to zero and replace it with the current number.</p>
+<h2 id="Stack_and_Queue"><a href="#Stack_and_Queue" class="headerlink" title="Stack and Queue"></a>Stack and Queue</h2><h3 id="84-_Largest_Rectangle_in_Histogram_28_u7ECF_u5178_29"><a href="#84-_Largest_Rectangle_in_Histogram_28_u7ECF_u5178_29" class="headerlink" title="84. Largest Rectangle in Histogram(经典)"></a>84. Largest Rectangle in Histogram(经典)</h3><p>给出一个柱状图，求柱状图中最大的矩形面积。<br>Scan the lines and we want to know the area of rectangle whose height is determined by this line, it is determined by the position of the first shorter line to the left and right.<br>Use a stack to record the lines in increasing order, each time when we want to put a new line to the stack, while the top line is equal to higher than it, we keep popping the top element, the current line is the first shorter line left to the popped line and the previous line in the stack is the first shorter line to its left.</p>
+<h3 id="85-_Maximal_Rectangle"><a href="#85-_Maximal_Rectangle" class="headerlink" title="85. Maximal Rectangle"></a>85. Maximal Rectangle</h3><p>给出一个包含0和1的矩阵，求由1组成的最大子矩阵。<br>similar to <em>Largest Rectangle in Histogram</em>, traverse each row and regard the continuous 1 in each column as the lines, we can get the largest rectangle blow this row.  </p>
+<h3 id="239-_Sliding_Window_Maximum"><a href="#239-_Sliding_Window_Maximum" class="headerlink" title="239. Sliding Window Maximum"></a>239. Sliding Window Maximum</h3><p>求长度为k的滑动窗口中的最大值。<br>Maintain a queue ascending in index and descending in value. Pop the head if the distance to head is greater than k. Pop the tail until the tail is less than the current value and then add the current element to the tail. Then the head is the answer in this window.</p>
+<h3 id="330-_Patching_Array"><a href="#330-_Patching_Array" class="headerlink" title="330. Patching Array"></a>330. Patching Array</h3><p>给出一个排序数列，添加或修改数列中的数字，使得[1,n]的所有数都可以表示为数列中某些数字的和，求最小的修改次数。</p>
+<h3 id="388-_Longest_Absolute_File_Path"><a href="#388-_Longest_Absolute_File_Path" class="headerlink" title="388. Longest Absolute File Path"></a>388. Longest Absolute File Path</h3><p>文件系统中最长的文件路径 </p>
+<h3 id="402-_Remove_K_Digits"><a href="#402-_Remove_K_Digits" class="headerlink" title="402. Remove K Digits"></a>402. Remove K Digits</h3><p>一个数字移除K位数后得到的数字最小。</p>
+<h3 id="456-_132_Pattern"><a href="#456-_132_Pattern" class="headerlink" title="456. 132 Pattern"></a>456. 132 Pattern</h3><p>求一个数列中是否存在 <code>i&lt;j&lt;k</code>且 <code>a[i]</code>&lt;<code>a[k]</code>&lt;<code>a[j]</code>。</p>
+<h2 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h2><h3 id="313-_Super_Ugly_Number"><a href="#313-_Super_Ugly_Number" class="headerlink" title="313. Super Ugly Number"></a>313. Super Ugly Number</h3><h2 id="Linked_List"><a href="#Linked_List" class="headerlink" title="Linked List"></a>Linked List</h2><h3 id="25-_Reverse_Nodes_in_k-Group"><a href="#25-_Reverse_Nodes_in_k-Group" class="headerlink" title="25. Reverse Nodes in k-Group"></a>25. Reverse Nodes in k-Group</h3><p>给出一个列表，要求以k个元素为一组进行组内反转。<br>record the tail of last group and the head of the next group, then traverse each group from right to left, hang it to the tail of the last tail one by one, lastly hang next start to the current tail. use a superhead and supertail to reduce boundary check.</p>
+<h3 id="86-_Partition_List"><a href="#86-_Partition_List" class="headerlink" title="86. Partition List"></a>86. Partition List</h3><p>将列表中小于x的节点出现在大于x的前面，相对顺序不变。<br>define small_head, small_tail, big_head, big_tail, scan the list and assert the current node to the small_tail-&gt;current-&gt;big_head or big_tail-&gt;current, update one or two of the four marks.</p>
+<h3 id="142-_Linked_List_Cycle"><a href="#142-_Linked_List_Cycle" class="headerlink" title="142. Linked List Cycle"></a>142. Linked List Cycle</h3><p>检查列表中是否存在环并返回环的起点。<br>Use two pointer <code>fast</code> and <code>low</code>, each time <code>fast</code> move fowards two steps and  <code>slow</code> move forwards one step. If the two pointers meet before the end, there is a cycle.<br>Then let <code>slow</code> points to the head and the two pointers both move one step each time and the node where they meet again is the start of the circle.<br>Prove: <code>X</code>=length before the circle,<code>Y</code>=length of the circle,<code>K</code>=distance from the start of the circle to the met point. when two pointers met: <code>X</code>+m<code>Y</code>+<code>K</code>=2(<code>X</code>+n<code>Y</code>+<code>K</code>)-&gt;(m-2n)<code>Y</code>=<code>X</code>+<code>K</code>. Therefore, additional <code>X</code> steps from the met point is the start of the circle.</p>
+<h3 id="143-_Reorder_List"><a href="#143-_Reorder_List" class="headerlink" title="143. Reorder List"></a>143. Reorder List</h3><p>将一个列表变为L0→Ln→L1→Ln-1→L2→Ln-2→…的顺序。<br>First, find the middle point with two pointer <code>fast</code> and <code>low</code>. Then reverse the list after middle node. Lastly merge the right part to the left part one by one.</p>
+<h3 id="146-_LRU_Cache"><a href="#146-_LRU_Cache" class="headerlink" title="146. LRU Cache"></a>146. LRU Cache</h3><p>支持get和set操作的Least Recently Used (LRU) cache。<br>use Map and Double Linked List to maitain the cache queue, add the new key to the head, remove the tail node in LinkedList and respective key in Set if it reaches the capacity. when set and get some key, the respective node should be moved to the head if it’s not the head.</p>
+<h2 id="Tree"><a href="#Tree" class="headerlink" title="Tree"></a>Tree</h2><h3 id="99-_Recover_Binary_Search_Tree_28Hard_29"><a href="#99-_Recover_Binary_Search_Tree_28Hard_29" class="headerlink" title="99. Recover Binary Search Tree(Hard)"></a>99. Recover Binary Search Tree(Hard)</h3><h3 id="109-_Convert_Sorted_List_to_Binary_Search_Tree"><a href="#109-_Convert_Sorted_List_to_Binary_Search_Tree" class="headerlink" title="109. Convert Sorted List to Binary Search Tree"></a>109. Convert Sorted List to Binary Search Tree</h3><p>将一个排序的数列变成一个高度平衡的BST。<br>The key point is to find the middle node of the list, initialize two node variance, each time the first moves forward one step, the second moves two steps. when the second comes to the end, the first is the middle node, solve the subtree recursively.</p>
+<h3 id="114-_Flatten_Binary_Tree_to_Linked_List"><a href="#114-_Flatten_Binary_Tree_to_Linked_List" class="headerlink" title="114. Flatten Binary Tree to Linked List"></a>114. Flatten Binary Tree to Linked List</h3><p>将一棵二分树就地变成一个列表。<br>solve the subtree recursively, return the leftest and rightest node of the subtree, linked rightest node of the left subtree to node and node to the leftest node of the right subtree.</p>
+<h3 id="116/117-_Populating_Next_Right_Pointers_in_Each_Node"><a href="#116/117-_Populating_Next_Right_Pointers_in_Each_Node" class="headerlink" title="116/117. Populating Next Right Pointers in Each Node"></a>116/117. Populating Next Right Pointers in Each Node</h3><p>让每个节点指向同层的右边节点。<br>The next pointer of left child is the its right child, the next pointer the right child is it’s next node’s left child. Record the first node of the next level, use the next pointer and the first node of net level to traverse all nodes so that the next pointer was there when we traverse it. when it’s not a perfect tree, we need another variable to record the previous node in this level.</p>
+<h3 id="124-_Binary_Tree_Maximum_Path_Sum"><a href="#124-_Binary_Tree_Maximum_Path_Sum" class="headerlink" title="124. Binary Tree Maximum Path Sum"></a>124. Binary Tree Maximum Path Sum</h3><p>求二分树上的最长路径。<br>The maximum path of a tree is either the maximum path of its left or right subtree, or the maximum chain(starts from the root to some sub child) of left or/and right child plus itself. So find the maximun path and maximum chain, return the two variable to its father and update recursively.</p>
+<h3 id="310-_Minimum_Height_Tree"><a href="#310-_Minimum_Height_Tree" class="headerlink" title="310. Minimum Height Tree"></a>310. Minimum Height Tree</h3><p>给出一个连通无环图，则任意一个节点做根都可以构造出一棵树，找出所有可以使得树高度最小的根节点。<br>remove the leaf nodes layer by layer until there is less than three leaf nodes left and each of them is optional(one or two).</p>
+<h3 id="331-_Verify_Preorder_Serialization_of_a_Binary_Tree"><a href="#331-_Verify_Preorder_Serialization_of_a_Binary_Tree" class="headerlink" title="331. Verify Preorder Serialization of a Binary Tree"></a>331. Verify Preorder Serialization of a Binary Tree</h3><p>给出一个序列，判断是否为二叉树的合法前序遍历</p>
+<h3 id="337-_House_Robber_III"><a href="#337-_House_Robber_III" class="headerlink" title="337. House Robber III"></a>337. House Robber III</h3><p>二叉树上每个节点都有一定数额的宝贝，相邻的节点不能同时抢，最多可以抢多少宝贝？<br>record the maximum with and without the value itself for each node, update them from bottom recursively. </p>
+<h2 id="Regular_Expression"><a href="#Regular_Expression" class="headerlink" title="Regular Expression"></a>Regular Expression</h2><h3 id="10-_Regular_Expression_Matching"><a href="#10-_Regular_Expression_Matching" class="headerlink" title="10. Regular Expression Matching"></a>10. Regular Expression Matching</h3><p>判断含有’.’和’*‘的正则表达式是否完全匹配输入串。<br>traverse the pattern string and use a set to record which position of the input string has been matched.  </p>
+<ul>
+<li>if the letter is ‘*‘, pass</li>
+<li>if the next letter is ‘*‘, traverse the matched position and extend each position until mismatch</li>
+<li>otherwise, traverse the matched position and compare whether the next position is matched to the current letter   </li>
+</ul>
+<p>After traverse, if the last position of the input string in the matched set, return True.</p>
+<h3 id="44-_Wildcard_Matching_28Hard_29"><a href="#44-_Wildcard_Matching_28Hard_29" class="headerlink" title="44. Wildcard Matching(Hard)"></a>44. Wildcard Matching(Hard)</h3><p>‘?’和’*‘的完美匹配，其中’?’代表任意字符，’*‘代表任意序列。<br>a star in pattern matches all the following sequence, so we can record the matched position of last star and try to match the pattern with all the subsequence after this position until meet another star or entirely matched.<br>A faster way is to use KMP to find the first matched pattern until next star.<br>DP is a more straightforward solution but got TLE. let <code>dp[i][j]</code> represent whether first i letters in pattern matched first j letters in string, <code>dp[i][j] = dp[i-1][j-1]</code> when <code>pattern[i]</code> matches <code>string[j]</code> and <code>dp[i][j]=dp[i][j-1] | p[i-1][j]</code> if pattern[i] is ‘*‘ otherwise 0. A rolling array to can reduce the memory complexity to O(n).</p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><h3 id="3-_Longest_Substring_Without_Repeating_Characters_uFF1A"><a href="#3-_Longest_Substring_Without_Repeating_Characters_uFF1A" class="headerlink" title="3. Longest Substring Without Repeating Characters："></a>3. Longest Substring Without Repeating Characters：</h3><p>求没有重复字符出现的最长子串。<br>traverse the string, record the last position of each letter and the position last repeated letter.<br>if the current letter has appeared before, the beginning of the qualified substring ending with current letter is minnum of lastAppear and lastReapt otherwise the lastReapeat. Update the two kinds of variable and maximum length.</p>
+<h3 id="30-_Substring_with_Concatenation_of_All_Words"><a href="#30-_Substring_with_Concatenation_of_All_Words" class="headerlink" title="30. Substring with Concatenation of All Words"></a>30. Substring with Concatenation of All Words</h3><p>给出一个字符串和一组长度相同的单词，求包含所有单词的字串。<br>the length of the matched substring must be constant. enumerate the starting point(0,len(word)-1) and traverse from left to right, move len(words) each time and update the number of matched words by add one and remove one.</p>
+<h3 id="31-_Next_Permutation"><a href="#31-_Next_Permutation" class="headerlink" title="31.  Next Permutation"></a>31.  Next Permutation</h3><p>traverse from right to left to find the first ascending pair. reverse the right part(descending sequence), swap the last one on the left with the smallest bigger one on the right.</p>
+<h3 id="126/127-_Word_Ladder"><a href="#126/127-_Word_Ladder" class="headerlink" title="126/127.  Word Ladder"></a>126/127.  Word Ladder</h3><p>给出一个begin_word和一个end_word以及一个单词列表，问从begin_word转化到end_word的最短序列。      If two words are different in just one letter then we assume they are connected, the question is to find the shortest path in the undirected graph. Since the length of each edge is 1, we can ultilize BFS to find the shortest path. At each word, there is no need to traverse all the word to find its neighbors, while to traverse index and 26 letters is more efficient, reduce the complixity from O(N*N*L) to O(N*L*26).<br>To record all pathes, we need to another array to record the level of each node and record the next node on the path based on their level. Then use backtrack of this array to output the pathes. </p>
+<h3 id="149-_Max_Points_on_a_Line"><a href="#149-_Max_Points_on_a_Line" class="headerlink" title="149.  Max Points on a Line"></a>149.  Max Points on a Line</h3><p>二维坐标系里最多有多少个点共线？<br>Traverse every point and count the number of gradient to all other lines. Careful about the verticle lines(infinity gradient) and repeated points(no gradient). O(n^2).</p>
+<h3 id="166-_Fraction_to_Recurring_Decimal"><a href="#166-_Fraction_to_Recurring_Decimal" class="headerlink" title="166.  Fraction to Recurring Decimal"></a>166.  Fraction to Recurring Decimal</h3><p>将两个整数相除表示为（循环）小数的形式。<br>deminish the numerator bit by bit until some numerator has been appeared, record the position of each numerator and append the ‘()’ between the two positions.</p>
+<h3 id="214-_Shortest_Palindrome_28_u7ECF_u5178_29"><a href="#214-_Shortest_Palindrome_28_u7ECF_u5178_29" class="headerlink" title="214. Shortest Palindrome(经典)"></a>214. Shortest Palindrome(经典)</h3><p>给一个字符串添加最少的字符使之变为回文串。<br>the value of <code>next</code> array of the string <code>S</code>+’#’+reverse(<code>S</code>) in KMP</p>
+<h3 id="335-_Self_Crossing"><a href="#335-_Self_Crossing" class="headerlink" title="335. Self Crossing"></a>335. Self Crossing</h3><p>从原点出发后一次向东、西、南、北走若干步，问路径是否会否交叉。</p>
+<h3 id="336-_Palindrome_Pairs"><a href="#336-_Palindrome_Pairs" class="headerlink" title="336. Palindrome Pairs"></a>336. Palindrome Pairs</h3><p>给出一个长度为N的单词列表，问有哪些单词对拼接起来可以组成一个回文串。<br>record the reversed string of each word and then traverse each word’s substring, if the substring(both left part and right part) is in the reversed strings and the other part itself is palindrome, then the word can form a palindrome with the respective word of the reversed string, the time complexity is O(N*K*K) where K is the length of the word.</p>
+<h3 id="352-_Data_Stream_as_Disjoint_Intervals"><a href="#352-_Data_Stream_as_Disjoint_Intervals" class="headerlink" title="352. Data Stream as Disjoint Intervals"></a>352. Data Stream as Disjoint Intervals</h3><p>给出一个整数的数据量，请求时以不重叠区间的形式返回之前的数据<br>utilize TreeMap in Java to record the intervals where the key is the left end of the interval and value is the right end, when a new number comes, check the <code>ceilingKey()</code> and <code>floorKey</code> to get its neighbor intervals and  decide whether combine two adjacent intervals, add the number  to the one interval or generate a new interval.</p>
+<h3 id="397-_Integer_Replacement"><a href="#397-_Integer_Replacement" class="headerlink" title="397. Integer Replacement"></a>397. Integer Replacement</h3><p>给一个整数n，如果是偶数可以变为n/2,否则可以变为n-1或n+1，问n至少经过多少次变换可以变为1。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>My solutions to most of Hard problems and some Medium problems on <a href="https://leetcode.com">LeetCode Online Judge</a>, respective code(mostly in python) is stored on <a href="https://github.com/onslaughtor/leetcode">my github</a>. The problems on Leetcode are easier to those in ACM-ICPC, but to raise a bug-free solution in a short time still require a lot of skills and practice. My solutions are not guaranteed to be the best(Actually, it is not necessary to raise the best solution in the interview), there are more creative idea and elegant solutions in the <em>Discuss</em>. <strong>To get accepted is not the terminal</strong>, keep revising and making your solutions better.<br>]]>
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://sensirly.github.io/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Tree Ensemble Models]]></title>
+    <link href="http://sensirly.github.io/tree_ensemble_models/"/>
+    <id>http://sensirly.github.io/tree_ensemble_models/</id>
+    <published>2016-09-16T08:29:05.000Z</published>
+    <updated>2016-09-16T15:39:36.219Z</updated>
+    <content type="html"><![CDATA[<p>集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。<br><img src="/img/machine_learning/model_ensemble.png" alt=""><br>下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：<br>比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行ensemble，那么得到的正确率为：<code>0.7*0.7*0.7+0.3*0.7*0.7+0.7*0.3*0.7+0.7*0.7*0.3=0.788</code></p>
+<a id="more"></a>
+<h1 id="Ensemble_Method"><a href="#Ensemble_Method" class="headerlink" title="Ensemble Method"></a>Ensemble Method</h1><p>主要的方法有Bagging和Boosting。另外一种是stacking（也有叫Hybrid的），即将多个模型的输出作为特征，使用单模型将预测值组合起来，常用LR做模型组合。</p>
+<h2 id="Bagging_u548CBoosting"><a href="#Bagging_u548CBoosting" class="headerlink" title="Bagging和Boosting"></a>Bagging和Boosting</h2><p>Random Forest使用了Bagging的方法，GBDT、AdaBoost使用的是Boosting的方法。两者在实现上的区别在于：</p>
+<ul>
+<li>训练集：Bagging每一轮从样本中做有放回的随机采样；Boosting每一轮采用的样本分布都和上一轮的学习结果有关</li>
+<li>样例权重：Bagging随机采样权重相同；Boosting根据错误率不断调整样例的权值，错误率越大则权重越大（不完全是这样）</li>
+<li>预测权重：Bagging所有预测函数的权重相等；Boosting每个模型都有相应的权重，对于分类误差小的模型会有更大的权重</li>
+<li>并行化：Bagging各个预测函数可以并行生成；Boosting必须顺序生成。</li>
+</ul>
+<h2 id="variance__26amp_3B_bias"><a href="#variance__26amp_3B_bias" class="headerlink" title="variance &amp; bias"></a>variance &amp; bias</h2><p>模型的准确度<code>Error = Bias + Variance</code>, Bias反映的是模型在样本上的输出与真实值之间的误差，即模型本身的精准度（拟合程度，由underfitting造成）；Variance反映的是模型每一次输出结果与模型输出期望之间的误差，即模型的稳定性（泛化能力，由overfitting造成）。<br><img src="/img/machine_learning/bias_variance.png" alt=""><br>两者往往互相影响不可兼得，需要做tradeoff。比如降低决策树的高度、增加正则项、降低k近邻算法中的k值，牺牲bias降低variance。<br><img src="/img/machine_learning/bias_variance_tradeoff.png" alt=""><br>Boosting通过将若干个弱分类器合成一个强分类器，主要降低Bias。因此GBDT中每棵树的深度都很浅，通过boosting消除单棵树的bias；<br>Bagging通过将多个弱分类器取平均，主要降低Variance。因此RF每棵树都是充分学习的（过拟合的）树，通过bagging消除单棵树的variance。</p>
+<h2 id="Adaboosting_u548CGradient_Boosting_u7684_u533A_u522B"><a href="#Adaboosting_u548CGradient_Boosting_u7684_u533A_u522B" class="headerlink" title="Adaboosting和Gradient Boosting的区别"></a>Adaboosting和Gradient Boosting的区别</h2><p>Adaboosting在每次迭代时增加上次分类错误的样本的权重，减少分类正确的样本的权重。最后将得到的许多分类器综合起来。<br>Gradient Boosting每次并未改变样本的权重来拟合下一棵树，而是将之前所有模型的预测值与目标值的残差作为新的目标进行学习。</p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>GBDT(Gradient Boosting Decision Tree) 又叫 MART（Multiple Additive Regression Tree)，是Ensemble Model的一种实现方式，由多棵决策树组成，所有树的结果累加起来做最终答案。<br><img src="/img/machine_learning/gradient_boosting.png" alt="">  </p>
+<h2 id="Decision_Tree"><a href="#Decision_Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h2><p>选取Decision Tree作为Gradient Boosting Modeling的弱分类器，得益于Decision Tree本身的一些良好特性，比如可以处理missing feature、可以不理不同scale的特征值不需要归一化、可以自动过滤无关特征等等。虽然GBDT可以用来解决分类问题，但是GBDT中的树都是回归树，不是分类树。两者区别主要在于节点分裂的依据：</p>
+<ul>
+<li>分类树（如C4.5）在每次分裂时穷举每一个特征的的每一个阈值，找到信息熵最大的分裂点分裂，直到到达临界条件。</li>
+<li>回归树（如CART）每个节点都会得一个预测值，每次分裂时穷举每一个特征的的每一个阈值，最小化均方差（最小二乘）。</li>
+</ul>
+<h2 id="u62DF_u5408_u53C2_u6570"><a href="#u62DF_u5408_u53C2_u6570" class="headerlink" title="拟合参数"></a>拟合参数</h2><ul>
+<li>the number of gradient boosting iterations树的数量</li>
+<li>学习速率，通常小于0.1，最优参数与树的数量有关</li>
+<li>Stochastic gradient boosting，每棵树只从样本中随机选取一部分进行训练，一般选[0.5,0.8]</li>
+<li>树的深度，一般不超过6</li>
+<li>叶子节点的最少样本数，根据样本量而定，通常与树的深度功能相同</li>
+</ul>
+<h2 id="u5E76_u884C_u5316"><a href="#u5E76_u884C_u5316" class="headerlink" title="并行化"></a>并行化</h2><p>预测时每棵树之间互不影响可以并行预测最后累加。训练时由于树与树之间是迭代的关系，无法独立训练每棵树，但是可以在每棵树的训练过程中进行并行化，其中并行计算量最大的特征分裂点选取收益最大。<br><img src="/img/machine_learning/gbdt_parallel.jpg" alt="">  </p>
+<ul>
+<li>Parallelize Node Building at Each Level: 建树过程中每一层级中的node都是相互独立的，可以直接并行（第一个for循环），但是会引起数据加载不均衡的问题workload imbalanced.</li>
+<li>特征分裂并行化：每个node上查找split分割点时候并行(第二个for循环)，但对一些小的节点，并行带来的收益可能远小于数据切换以及进程通信等带来的开销</li>
+<li>在每一层对特征进行并行化：也就是把两层循环的顺序换一下，在外层进行排序省去了重复排序的开销。由于每个feature下的样本数相同，避免了以上两种方法workload不平衡和Overhead过小的缺点</li>
+<li>特征&amp;样本并行化：将样本按行分成N份，分别在N个节点上做计算梯度计算、预估值及采样等工作；每个节点维护一个特征的所有特征值，计算最佳分裂点并同步到所有节点，每个节点上仅对这个节点的样本进行分裂</li>
+</ul>
+<h1 id="LambdaMART"><a href="#LambdaMART" class="headerlink" title="LambdaMART"></a>LambdaMART</h1><p>LambdaMART模型从名字上可以拆分成Lambda和MART两部分，MART（GBDT）表示底层训练模型，Lambda是MART求解过程使用的梯度。LambdaMART可以看做提升树版本的LambdaRank，而后者又是基于RankNet发展而来的。所以，搞清楚三者各自的原理以及三者间的关系可以帮助我们加深对LambdaMART的理解。</p>
+<h2 id="RankNet"><a href="#RankNet" class="headerlink" title="RankNet"></a>RankNet</h2><p>RankNet是一个pairwise的LTR算法，提出了一种概率损失函数来学习Ranking Function。将两个候选集之间的相对排序位置作为目标概率，使用类似于逻辑回归中的交叉熵（cross entropy loss function）作为概率损失函数，通过梯度下降的方法求解。<br><img src="/img/machine_learning/rank_net.png" alt=""></p>
+<h2 id="NDCG"><a href="#NDCG" class="headerlink" title="NDCG"></a>NDCG</h2><p>NDCG(Normalized discounted cumulative gain)是用来衡量排序质量的常用指标。其中一种实现公式为：<br><img src="/img/machine_learning/ndcg.png" alt=""><br>其中gain代表的是每个结果的质量，position discount使得排名越靠前的结果权重越大。以NDCG为优化目标，保证了结果总体质量好的情况下，把更高质量结果排在更前面。其Gain以及Discounted的计算可以随着需求而变化。</p>
+<h2 id="LambdaRank"><a href="#LambdaRank" class="headerlink" title="LambdaRank"></a>LambdaRank</h2><p>pairwise中常用的NDCG等指标与RankNet中的交叉熵概率损失函数存在一定的差异，而且是不连续的无法求梯度，将其直接作为优化目标是比较困难的。LambdaRank选择了直接定义cost function的梯度来解决上述问题。Lambda梯度由两部分相乘得到：(1)RankNet中交叉熵概率损失函数的梯度；(2)交换Ui，Uj位置后评价指标的差值。<br><img src="/img/machine_learning/lambda_rank.png" alt=""><br>Lambda梯度更关注位置靠前的优质文档的排序位置的提升。有效的避免了下调位置靠前优质文档的位置这种情况的发生。相比RankNet的优势在于考虑了评价指标，直接对问题求解，所以效果更好。</p>
+<h2 id="LambdaMART-1"><a href="#LambdaMART-1" class="headerlink" title="LambdaMART"></a>LambdaMART</h2><p>LambdaMART使用一个特殊的Lambda值来代替GBDT中的梯度，也就是将LambdaRank算法与MART算法结和起来。</p>
+<h1 id="xgboost"><a href="#xgboost" class="headerlink" title="xgboost"></a>xgboost</h1><p>gboost是Gradient Boosting的一种高效实现，训练速度和效果与GBDT相比都有大幅提升，成为各种数据挖掘比赛中的必备武器。其中主要的优化点：</p>
+<ul>
+<li>xgboost的目标函数分为了两个部分，其中正则项控制着模型的复杂度，包括了叶子节点数目T和leaf score的L2范数。<br><img src="/img/machine_learning/xgboost_obj.png" alt=""></li>
+<li>传统GBDT在优化时只用到一阶导数信息，xgboost则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数，加速了求解过程。</li>
+<li>xgboost借鉴了随机森林的做法，支持列抽样(column subsampling)，不仅能降低过拟合，还能减少计算</li>
+<li>Shrinkage: 相当于学习速率。将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。</li>
+<li>传统的分裂算法采用exact greedy algorithm寻找最优点（即先排序然后逐一遍历）。而xgboost实现了一种近似算法（Weighted Quantile Sketch）大致的思想是根据百分位法列举几个可能成为分割点的候选者，然后从候选者中根据上面求分割点的公式计算找出最佳的分割点。<br><img src="/img/machine_learning/xgboost_split.png" alt=""></li>
+<li>针对稀疏数据的特征值缺失问题，根据特征不缺失的数据指定默认方向。</li>
+<li>特征列排序后以block的形式存储在内存中，在迭代中可以重复使用。并且收集每一列统计值是可以并行化的。<br><img src="/img/machine_learning/xgboost_block.png" alt=""></li>
+<li>cache-aware：以行计算梯度时会导致内存的不连续访问降低效率。先将数据收集到线程内部的buffer，然后mini-batch的形式计算提高效率。</li>
+<li>大数据无法全部导入内存，使用block compression和block sharding来提高out-of-core computation。</li>
+</ul>
+<h1 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/springerEBR09.pdf" target="_blank" rel="external">周志华老师的Ensemble Learning</a> 这里只是简介，还有相同名字的一本深度讲解的书</li>
+<li><a href="https://www.zhihu.com/question/27068705" target="_blank" rel="external">知乎：机器学习中的Bias(偏差)，Error(误差)，和Variance(方差)有什么区别和联系？</a></li>
+<li><a href="http://scott.fortmann-roe.com/docs/BiasVariance.html" target="_blank" rel="external">Understanding the Bias-Variance Tradeoff</a></li>
+<li><a href="http://zhanpengfang.github.io/418home.html" target="_blank" rel="external">Parallel Gradient Boosting Decision Trees</a></li>
+<li><a href="http://www.jianshu.com/p/3c5c1ea7d836" target="_blank" rel="external">LambdaMART笔记</a>讲了RankNet、LambdaRank和LambdaMART之间的联系</li>
+<li><a href="http://arxiv.org/abs/1603.02754" target="_blank" rel="external">XGBoost: A Scalable Tree Boosting System</a> 发表在KDD2016的官方paper</li>
+<li><a href="http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">陈天奇的slides</a></li>
+<li><a href="http://www.zhihu.com/question/41354392" target="_blank" rel="external">知乎：机器学习算法中GBDT和XGBOOST的区别有哪些？</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。<br><img src="/img/machine_learning/model_ensemble.png" alt=""><br>下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：<br>比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行ensemble，那么得到的正确率为：<code>0.7*0.7*0.7+0.3*0.7*0.7+0.7*0.3*0.7+0.7*0.7*0.3=0.788</code></p>]]>
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[从Logistic Regression到FTRL]]></title>
+    <link href="http://sensirly.github.io/from-logistic-regression-to-ftrl/"/>
+    <id>http://sensirly.github.io/from-logistic-regression-to-ftrl/</id>
+    <published>2016-09-07T02:29:05.000Z</published>
+    <updated>2016-09-10T08:15:28.843Z</updated>
+    <content type="html"><![CDATA[<p>Logistic Regression在Linear Regression的基础上，使用sigmoid函数将<code>y=θx+b</code>的输出值映射到0到1之间，且<code>log(P(y=1)/P(y=0)) = θx+b</code>。并且在靠近0.5处坡度较大，使两侧快速趋于边界。<br><img src="/img/machine_learning/lr/sigmoid.png" alt=""><br>Hypothesis可以认为是y=1时的概率，表示为:<br><img src="/img/machine_learning/lr/predict_function.png" alt=""><br><a id="more"></a><br>如果使用与线性回归相同的平方损失函数函数，那么是“non-convex”的，不利于求得最优解。因此选择对数似然损失函数(log-likelihood loss function)作为逻辑回归的Cost Function:<br><img src="/img/machine_learning/lr/cost_function.jpg" alt=""><br>将两式合并可以得到Cost Function（最大似然的负数就是损失函数，最大化似然函数和最小化损失函数是等价的）：<br><img src="/img/machine_learning/lr/cost_function.png" alt=""> </p>
+<h1 id="u6B63_u5219_u5316"><a href="#u6B63_u5219_u5316" class="headerlink" title="正则化"></a>正则化</h1><p>为控制模型的复杂度，通常在损失函数中加L1或L2范数做正则化（regularization），通过惩罚过大的参数来防止过拟合。L1范数是指向量中各个元素绝对值之和，也称为Lasso regularization；L2范数是指向量中各个元素平方之和, 也称为Ridge Regression。  </p>
+<p>L1正则化产生稀疏的权值，因此可用来做特征选择，在高维数据中使用更为广泛一些；L2正则化产生平滑的权值，并且加速收敛速度？</p>
+<h3 id="u6570_u5B66_u516C_u5F0F_u89E3_u91CA"><a href="#u6570_u5B66_u516C_u5F0F_u89E3_u91CA" class="headerlink" title="数学公式解释"></a>数学公式解释</h3><ul>
+<li>L1的权值更新公式为<code>wi = wi – η * 1</code>, 权值每次更新都固定减少一个特定的值(学习速率)，那么经过若干次迭代之后，权值就有可能减少到0。</li>
+<li>L2的权值更新公式为<code>wi = wi – η * wi</code>，虽然权值不断变小，但每次减小的幅度不断降低，所以很快会收敛到较小的值但不为0。</li>
+</ul>
+<h3 id="u51E0_u4F55_u7A7A_u95F4_u89E3_u91CA"><a href="#u51E0_u4F55_u7A7A_u95F4_u89E3_u91CA" class="headerlink" title="几何空间解释"></a>几何空间解释</h3><p><img src="/img/machine_learning/lr/regularization.png" alt=""><br>在二维空间中，左边的方形线上是L1中w1/w2取值区间，右边得圆形线上是L2中w1/w2的取值区间，圆圈表示w1/w2取不同值时整个正则化项的值的等高线。从等高线和w1/w2取值区间的交点可以看到，L1中两个权值倾向于一个较大另一个为0，L2中两个权值倾向于均为非零的较小数。</p>
+<h1 id="u6C42_u89E3_u65B9_u6CD5"><a href="#u6C42_u89E3_u65B9_u6CD5" class="headerlink" title="求解方法"></a>求解方法</h1><h2 id="Gradient_Descent"><a href="#Gradient_Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h2><p>梯度下降法通过沿着目标函数梯度相反的方向更新参数达到最小化目标函数的目的。梯度下降的最终点并非一定是全局最小点，受初始点的选择影响可能会陷入局部最小点。<br><img src="/img/machine_learning/lr/gradient_descent.jpg" alt=""><br>对LR的损失函数求偏导，可以得到梯度:<br><img src="/img/machine_learning/lr/lr_gradient.png" alt=""><br>更新时θi会向着全局梯度最小的方向进行减少：<br><img src="/img/machine_learning/lr/lr_descent.png" alt=""><br>按照每次更新使用的样本量，梯度下降分为批量梯度下降法（Batch Gradient Descent）、随机梯度下降法（Stochastic Gradient Descent）、小批量梯度下降法（Mini-batch Gradient Descent）</p>
+<h3 id="Batch_Gradient_Descent_uFF1A"><a href="#Batch_Gradient_Descent_uFF1A" class="headerlink" title="Batch Gradient Descent："></a>Batch Gradient Descent：</h3><p>更新每一参数时都使用所有的样本来进行更新。</p>
+<ul>
+<li>优点：凸函数保证得到全局最优解；易于并行实现。</li>
+<li>缺点：大数据更新速度慢，内存无法装下所有数据；无法实时更新</li>
+</ul>
+<h3 id="Stochastic_Gradient_Descent"><a href="#Stochastic_Gradient_Descent" class="headerlink" title="Stochastic Gradient Descent"></a>Stochastic Gradient Descent　</h3><p>利用每个样本的损失函数对θ求偏导得到对应的梯度</p>
+<ul>
+<li>优点: 迭代速度快；可用于实时更新</li>
+<li>缺点: 目标函数zigzag波动大；不保证得到全局最优解，但是随着更新逐渐缩小步长几乎可以达到与BGD相同的效果；不利于并行实现</li>
+</ul>
+<h3 id="Mini-batch_Gradient_Descent"><a href="#Mini-batch_Gradient_Descent" class="headerlink" title="Mini-batch Gradient Descent"></a>Mini-batch Gradient Descent</h3><p>MBGD在BGD和SGD之间做了取舍，既保证了高效的训练速度，又保证了稳定的收敛，是大数据集下常用的方法。batch的大小一般取50-256之间。</p>
+<h2 id="L-BFGS__26amp_3B_OWLQN"><a href="#L-BFGS__26amp_3B_OWLQN" class="headerlink" title="L-BFGS &amp; OWLQN"></a>L-BFGS &amp; OWLQN</h2><ol>
+<li>梯度下降法是基于目标函数梯度进行搜索，收敛速度是线性的。  </li>
+<li>牛顿法同时使用一阶段数和二阶导数（Hessian矩阵）进行搜索，收敛速度快。尤其在最优值附近时，收敛速度是二次的。牛顿法需要计算Hessian矩阵的逆矩阵，当维度过高矩阵稠密时运算和存储量巨大。 </li>
+<li>拟牛顿法（Quasi-Newton）用一个近似矩阵来替代逆Hessian矩阵。BFGS是拟牛顿法的一种，使用””Backtracking line search”搜索步长，使用”two loop recursion”更新参数。  </li>
+<li>BFGS虽然不需要计算Hessian矩阵了，但是保存历史记录仍需要消耗大量的内存。L-BFGS，即限定内存的BFGS算法，由最近的m次输入变量和梯度变量的差值近似更新矩阵。  </li>
+<li>OWLQN(Orthant-Wise Limited-memory Quasi-Newton)是在L-BFGS基础上解决L1-norm不可微提出的，每次迭代都不改变参数的正负性，使得正则项变成可微的。对于需要变换符号的参数，将其置为0，通过在下次迭代中选择合适的象限来改变参数的正负。</li>
+</ol>
+<h1 id="Online_Learning"><a href="#Online_Learning" class="headerlink" title="Online Learning"></a>Online Learning</h1><p>使用流式样本进行模型的实时训练时，OGD(online gradient descent)不能非常高效的产生稀疏解，常见的做稀疏解的途径:   </p>
+<ul>
+<li>简单截断：设定一个阈值，每online训练K个数据截断一次。无法确定特征确实稀疏还是只是刚刚开始更新。  </li>
+<li>梯度截断(Truncated Gradient): 当<code>t/k</code>不是整数时，采用标准的SGD,当<code>t/k</code>是整数时，采取截断技术。<br><img src="/img/machine_learning/lr/truncate.png" alt=""></li>
+<li>FOBOS(Forward-Backward Splitting)：由标准的梯度下降和对梯度下降的结果进行微调两部分组成，确保微调发生在梯度下降结果的附近并产生稀疏性。FOBOS可以看做TG在特定条件下的特殊形式随着的增加，截断阈值会随着t的增加逐渐降低。    </li>
+<li>RDA(Regularized Dual Averaging): 是一种非梯度下降类方法，判定对象是梯度的累加均值，避免了由于某些维度由于训练不足导致截断的问题；RDA的“截断阈值”是常数，截断判定上更加aggressive，更容易产生稀疏性，但会损失一些精度。<br><img src="/img/machine_learning/lr/online_l1.png" alt="">   </li>
+</ul>
+<h1 id="FTRL_28Followed_the_Regularized_Leader_29"><a href="#FTRL_28Followed_the_Regularized_Leader_29" class="headerlink" title="FTRL(Followed the Regularized Leader)"></a>FTRL(Followed the Regularized Leader)</h1><p>FTRL综合考虑了FOBOS和RDA的优点，兼具FOBOS的精确性和RDA优良的稀疏性，Google 2013年发布在KDD的<a href="http://research.google.com/pubs/pub41159.html" target="_blank" rel="external">《Ad Click Prediction: a View from the Trenches》</a>给出了详细的工程实践。</p>
+<h2 id="u601D_u60F3_u53CA_u5B9E_u73B0"><a href="#u601D_u60F3_u53CA_u5B9E_u73B0" class="headerlink" title="思想及实现"></a>思想及实现</h2><p>特征权重更新公式为:<br><img src="/img/machine_learning/lr/ftrl_update.png" alt=""><br>第一部分为累计梯度和，代表损失函数下降的方向；第二部分表示新的结果不要偏离已有结果太远；第三部分是正则项，用于产生稀疏解。将第二项展开可以表示为：<br><img src="/img/machine_learning/lr/ftrl_update_rewrite.png" alt=""><br>因此只需要保存第一部分的累加和，并在每轮更新前都进行累计就可以完成权重的更新。更新算法如下：<br><img src="/img/machine_learning/lr/ftrl_algorithm.png" alt=""><br>Per-Coordinate根据每个特征在样本中出现的次数来推算它的学习率。如果出现的次数多，那么模型在该特征上学到的参数就已经比较可信了，所以学习率可以不用那么高；而对于出现次数少的特征，认为在这个特征上的参数还没有学完全，所以要保持较高的学习率来使之尽快适应新的数据。</p>
+<h2 id="Memory_Saving_u7B56_u7565"><a href="#Memory_Saving_u7B56_u7565" class="headerlink" title="Memory Saving策略"></a>Memory Saving策略</h2><ul>
+<li>Probabilistic Feature Inclusion：丢弃训练数据中很少出现的特征。离线训练可以通过预处理过滤，这里给出了两个在线训练的方法：<ul>
+<li>Poisson Inclusion：当一个新特征出现时，以固定概率P接受并更新</li>
+<li>Bloom Filter Inclusion：用布隆过滤器记录某个特征是否出现了n次，同样也是基于概率的，因为布隆过滤器有一定的概率误判</li>
+</ul>
+</li>
+<li>Encoding Values with Fewer Bits：由于需要保存的数据一般处于[-2,2]之间所以使用64位浮点数存储浪费了空间。使用<code>q2.13</code>编码保存，即小数点前寸2位小数点后寸13位正负号寸一位。这样可以节省75%的内存，并且准确度基本没有损失。</li>
+<li>Training Many Similar Models：当需要训练多个模型的变种时，每个模型都单独训练会浪费很多资源；如果把一个固定的模型作为先验学习残差，无法处理移除或替换特征的情况。经过观察发现：每一维的特征都跟特定的数据有关，每个模型的变种都有自己独特的数据。因而，可以用一张hash表来存储所有变种的模型参数，以及该特征是哪个变种模型。</li>
+<li>A single Value Structure：当模型需要增加或者减少一批特征时，此时共享的特征只保留一份，用一个位数组来记录某个特征被哪些模型变种共享。对于一个样本，计算所有模型的更新值并取平均值更新共享参数。</li>
+<li>Computing Learning Rates with Counts：使用正负样本的比例来近似计算梯度的和。</li>
+<li>Subsampling Training Data：负样本按r的概率采样在训练时乘一个1/r的权重来弥补负样本的缺失。</li>
+</ul>
+<h1 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression" target="_blank" rel="external">coursera斯坦福机器学习笔记</a>  </li>
+<li><a href="http://freemind.pluskid.org/machine-learning/sparsity-and-some-basics-of-l1-regularization/" target="_blank" rel="external">Sparsity and Some Basics of L1 Regularization</a> 给出了详细的几何解释及L1的求解   </li>
+<li><a href="http://www.fuqingchuan.com/2015/08/969.html" target="_blank" rel="external">为什么L1稀疏，L2平滑？</a> 给出了数学角度的解释</li>
+<li><a href="http://sebastianruder.com/optimizing-gradient-descent/index.html" target="_blank" rel="external">An overview of gradient descent optimization algorithms</a></li>
+<li><a href="http://www.cnblogs.com/maybe2030/p/5089753.html" target="_blank" rel="external">梯度下降法的三种形式BGD、SGD以及MBGD</a></li>
+<li><a href="http://blog.xlvector.net/2014-02/different-logistic-regression/" target="_blank" rel="external">Logistic Regression的几个变种</a></li>
+<li><a href="http://mlworks.cn/posts/introduction-to-l-bfgs/" target="_blank" rel="external">理解L-BFGS算法</a></li>
+<li><a href="http://www.cnblogs.com/richqian/p/4535550.html" target="_blank" rel="external">牛顿法和拟牛顿法 – BFGS, L-BFGS, OWL-QN</a></li>
+<li><a href="https://github.com/strint/LogisticRegression_OWLQN_Notes" target="_blank" rel="external">逻辑回归及OWLQN的算法和实现</a></li>
+<li><a href="http://www.cnblogs.com/EE-NovRain/p/3810737.html" target="_blank" rel="external">各大公司广泛使用的在线学习算法FTRL详解</a></li>
+<li><a href="http://www.wbrecom.com/?p=412" target="_blank" rel="external">在线最优化求解(Online Optimization)系列</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Logistic Regression在Linear Regression的基础上，使用sigmoid函数将<code>y=θx+b</code>的输出值映射到0到1之间，且<code>log(P(y=1)/P(y=0)) = θx+b</code>。并且在靠近0.5处坡度较大，使两侧快速趋于边界。<br><img src="/img/machine_learning/lr/sigmoid.png" alt=""><br>Hypothesis可以认为是y=1时的概率，表示为:<br><img src="/img/machine_learning/lr/predict_function.png" alt=""><br>]]>
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[python数据结构]]></title>
+    <link href="http://sensirly.github.io/python-data-structure/"/>
+    <id>http://sensirly.github.io/python-data-structure/</id>
+    <published>2016-08-15T11:00:00.000Z</published>
+    <updated>2016-11-28T09:40:15.609Z</updated>
+    <content type="html"><![CDATA[<p>记录一下使用python数据结构过程中踩过的坑及一些常见应用。同时参照了<a href="http://multimedia.ucc.ie/Public/training/cycle1/algorithms-in-python.pdf" target="_blank" rel="external">《Data Structures and Algorithms in Python》</a>这本书，其中讲了python数据结构底层的实现原理及很多高效使用的建议。</p>
+<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><p>列表是一个可变的序列，可以直接按索引访问，也可以动态的删减,表示为<code>[x,y,z]</code></p>
+<h2 id="u591A_u7EF4_u6570_u7EC4"><a href="#u591A_u7EF4_u6570_u7EC4" class="headerlink" title="多维数组"></a>多维数组</h2><p>如果使用<code>array = [[0] * 3] * 3</code>对一个3<em>3的二维数组进行初始化，当操作<code>array[0][1] = 1</code>时，发现整个第二列都被赋值，变成:<code>[[0,1,0],[0,1,0],[0,1,0]]</code><br><a href="http://docs.python.org/library/index.html" target="_blank" rel="external">The Python Standard Library</a>里的解释是：list </em> n—&gt;n shallow copies of list concatenated, n个list的浅拷贝的连接。<br>因此正确的初始化方式应该是：<br><code>array=[([0] * 3) for i in range(3)]</code><br><a id="more"></a></p>
+<h2 id="u6392_u5E8F"><a href="#u6392_u5E8F" class="headerlink" title="排序"></a>排序</h2><ul>
+<li>使用容器自带的排序函数<code>list.sort()</code>，此时原列表结构被改变;  </li>
+<li>使用python的内建函数<code>sorted(list)</code>，原列表结构不发生改变，返回一个新的列表。</li>
+</ul>
+<p>两个函数的参数类似，可以通过指定key或者比较函数的方式进行排序：<br><code>sorted(iterable,[cmp=func()],[Key=?],[reverse=True/False])</code><br>其中reverse在不指定时默认为False。当列表中元素较为复杂时，常使用lambda函数指定key和cmp函数，参照<a href="https://www.zhihu.com/question/20125256" target="_blank" rel="external">知乎:Lambda 表达式有何用处？如何使用？</a>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter</span><br><span class="line"></span><br><span class="line">l1 = [&#123;<span class="string">'name'</span>:<span class="string">'abc'</span>,<span class="string">'age'</span>:<span class="number">20</span>&#125;,&#123;<span class="string">'name'</span>:<span class="string">'def'</span>,<span class="string">'age'</span>:<span class="number">30</span>&#125;,&#123;<span class="string">'name'</span>:<span class="string">'ghi'</span>,<span class="string">'age'</span>:<span class="number">25</span>&#125;]</span><br><span class="line"><span class="keyword">print</span> sorted(l1,key = <span class="keyword">lambda</span> x:x[<span class="string">'age'</span>],reverse=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">students = [(<span class="string">'john'</span>, <span class="string">'A'</span>, <span class="number">15</span>), (<span class="string">'jane'</span>, <span class="string">'B'</span>, <span class="number">12</span>), (<span class="string">'dave'</span>, <span class="string">'B'</span>, <span class="number">10</span>),]</span><br><span class="line"><span class="keyword">print</span> sorted(students, cmp=<span class="keyword">lambda</span> x,y : cmp(x[<span class="number">2</span>], y[<span class="number">2</span>]))</span><br><span class="line"><span class="keyword">print</span> sorted(students, key=itemgetter(<span class="number">2</span>))  <span class="comment">#使用operator指定key，与上面指定cmp效果等价</span></span><br><span class="line"><span class="keyword">print</span> sorted(students, key=itemgetter(<span class="number">1</span>,<span class="number">2</span>)) <span class="comment">#使用operator进行多级排序</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">[&#123;'age': 30, 'name': 'def'&#125;, &#123;'age': 25, 'name': 'ghi'&#125;, &#123;'age': 20, 'name': 'abc'&#125;]</span><br><span class="line">[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]</span><br><span class="line">[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]</span><br><span class="line">[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]</span><br><span class="line">'''</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u6709_u5E8F_u6570_u7EC4_u64CD_u4F5C_bisect"><a href="#u6709_u5E8F_u6570_u7EC4_u64CD_u4F5C_bisect" class="headerlink" title="有序数组操作 bisect"></a>有序数组操作 bisect</h2><p><code>bisect</code>中的插入和查询操作都是基于二分查找实现的，单次操作复杂度为O(logn)，因此操作之前必须保证数组是有序的。如果插入的是复杂对象而不是数字，可以插入元组(val,obj)实现，这样就会自动根据元组的第一个元素进行排序。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line">a=[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>]</span><br><span class="line"><span class="comment">#如果元素存在返回索引，如果不存在返回后继的索引（如果将x插入数列后的位置）</span></span><br><span class="line"><span class="keyword">print</span> bisect.bisect(a,<span class="number">2</span>) <span class="comment">#2</span></span><br><span class="line"><span class="keyword">print</span> bisect.bisect(a,<span class="number">3</span>) <span class="comment">#2</span></span><br><span class="line"><span class="keyword">print</span> bisect.bisect_left(a,<span class="number">3</span>) <span class="comment">#1  总是返回大于等于这个数的索引</span></span><br><span class="line"><span class="comment"># 向有序数组插入新元素</span></span><br><span class="line">bisect.insort(a,<span class="number">4</span>) <span class="comment"># [1,3,3,4,5,7,9]</span></span><br><span class="line">bisect.insort(a,<span class="number">3</span>) <span class="comment"># [1,3,3,5,7,9]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u5E38_u7528_u64CD_u4F5C"><a href="#u5E38_u7528_u64CD_u4F5C" class="headerlink" title="常用操作"></a>常用操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按索引插入删除</span></span><br><span class="line">l=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>]</span><br><span class="line">l.insert(<span class="number">1</span>,<span class="number">5</span>) <span class="comment">#[1,5,2,3,5,7]</span></span><br><span class="line">l.pop(<span class="number">2</span>)<span class="comment">#[1,5,3,5,7]</span></span><br><span class="line"><span class="comment"># 查询索引</span></span><br><span class="line"><span class="keyword">print</span> l.index(<span class="number">5</span>) <span class="comment">#1</span></span><br><span class="line"><span class="comment"># 查询元素个数</span></span><br><span class="line"><span class="keyword">print</span> l.count(<span class="number">5</span>) <span class="comment">#2</span></span><br><span class="line"><span class="comment"># 移除某个值</span></span><br><span class="line">l.remove(<span class="number">5</span>) <span class="comment">#[1,3,5,7]</span></span><br><span class="line">l.reverse() <span class="comment">#[7,5,3,1]</span></span><br></pre></td></tr></table></figure>
+<h2 id="u5B9E_u73B0_u6808_u548C_u961F_u5217"><a href="#u5B9E_u73B0_u6808_u548C_u961F_u5217" class="headerlink" title="实现栈和队列"></a>实现栈和队列</h2><p>列表对象支持类似的操作，但只是优化了固定长度操作的速度。像pop(0)和insert(0,v)这些改变列表长度和元素展示位置的操作都会带来 O (n)的内存移动消耗。<code>deque</code>是一种由队列结构扩展而来的双端队列。无论从队列的哪端入队和出队，性能都能够接近于O(1)。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># using List as Stack  </span></span><br><span class="line">l.append(<span class="number">9</span>)<span class="comment">#[1,3,5,7,9]</span></span><br><span class="line">l.append(<span class="number">11</span>)<span class="comment">#[1,3,5,7,9,11]</span></span><br><span class="line">l.pop()<span class="comment">#[1,3,5,7,9]</span></span><br><span class="line"><span class="comment"># using deque as Queue</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">q=deque([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">q.append(<span class="number">5</span>) <span class="comment">#deque([2,3,4,5])</span></span><br><span class="line">q.appendleft(<span class="number">1</span>) <span class="comment">#deque([1,2,3,4,5])</span></span><br><span class="line"><span class="keyword">print</span> q[<span class="number">0</span>] <span class="comment">#1</span></span><br><span class="line"><span class="keyword">print</span> q.popleft() <span class="comment">#deque([2,3,4,5])</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u4F18_u5148_u961F_u5217_uFF08_u5806_uFF09"><a href="#u4F18_u5148_u961F_u5217_uFF08_u5806_uFF09" class="headerlink" title="优先队列（堆）"></a>优先队列（堆）</h2><p>堆（小顶堆min-heap）用树形结构维护数列，使得heap[k] &lt;= heap[2<em>k+1] and heap[k] &lt;= heap[2</em>k+2]，max-heap性质相反。pyhton中实现的是小顶堆。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line">queue=[<span class="number">3</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">5</span>]</span><br><span class="line">heapq.heapify(queue)</span><br><span class="line"><span class="keyword">print</span> queue<span class="comment">#[1,3,4,5,7]</span></span><br><span class="line"><span class="keyword">print</span> heapq.heappop(queue) <span class="comment">#1</span></span><br><span class="line"><span class="keyword">print</span> queue<span class="comment">#[3,5,4,7]</span></span><br><span class="line">heapq.heappush(queue,<span class="number">6</span>)</span><br><span class="line"><span class="keyword">print</span> queue<span class="comment">#[3,5,4,7,6]</span></span><br><span class="line">heapq.heapreplace(queue,<span class="number">1</span>)<span class="comment"># more efficient than a heappop() followed by heappush()</span></span><br><span class="line"><span class="keyword">print</span> queue<span class="comment">#[1,5,4,7,6]</span></span><br><span class="line">heapq.heappushpop(queue,<span class="number">2</span>)<span class="comment"># more efficiently than heappush() followed by heappop()</span></span><br><span class="line"><span class="keyword">print</span> queue<span class="comment">#[2,5,4,7,6]</span></span><br></pre></td></tr></table></figure></p>
+<p>如果插入的是复杂对象而不是数字，可以插入元组(val,obj)实现，这样就会自动根据元组的第一个元素进行排序</p>
+<h1 id="u5143_u7EC4_28tuple_29"><a href="#u5143_u7EC4_28tuple_29" class="headerlink" title="元组(tuple)"></a>元组(tuple)</h1><p>元组与列表类似，但是一个不可修改的序列，表示为<code>(x,y,z)</code></p>
+<h1 id="u5B57_u7B26_u4E32"><a href="#u5B57_u7B26_u4E32" class="headerlink" title="字符串"></a>字符串</h1><h2 id="u5217_u8868_u8F6C_u6362"><a href="#u5217_u8868_u8F6C_u6362" class="headerlink" title="列表转换"></a>列表转换</h2><p>通过list()构造函数或者split()方法将字符串转换为列表。通过join()函数将列表转换为字符串。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">s=<span class="string">'abcd'</span></span><br><span class="line">l=list(s)</span><br><span class="line">ss=<span class="string">''</span>.join(l)</span><br><span class="line">words=sentence.split(<span class="string">' '</span>)</span><br><span class="line">``` </span><br><span class="line">直接使用`+`做字符串拼接的复杂度是O(n*n),先将字符append到数组中在转化为字符串可将复杂度降低到O(n)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 字母遍历</span></span><br><span class="line">```python</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> string.uppercase:</span><br><span class="line">    <span class="keyword">print</span> word</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> string.lowercase:</span><br><span class="line">    <span class="keyword">print</span> word</span><br><span class="line">``` </span><br><span class="line">Python提供了`ord()`和`chr()`两个内置的函数，用于字符与ASCII码之间的转换</span><br><span class="line">```python</span><br><span class="line"><span class="keyword">print</span> ord(<span class="string">'a'</span>) </span><br><span class="line"><span class="keyword">print</span> chr(<span class="number">97</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="u5E8F_u5217_u901A_u7528_u64CD_u4F5C"><a href="#u5E8F_u5217_u901A_u7528_u64CD_u4F5C" class="headerlink" title="序列通用操作"></a>序列通用操作</h1><p>列表、元组、字符串都属于序列，支持通用的序列操作：</p>
+<ul>
+<li>索引：索引从0（从左向右）开始，也可以从最后一个位置（从右向左）开始，编号是-1。复杂度O(1)</li>
+<li>分片：通过s[x:y:z]访问序列的左x开右y闭区间,z表示步长。当某个值缺失表示端点，如s[::-1]表示序列反转；当x大于y时返回空序列。复杂度O(y-x)</li>
+<li>序列相加：完成序列拼接，但只支持统一类型的序列之间相加。复杂度O(n2)</li>
+<li>序列乘法：实现序列的复制。<code>s=&#39;abc&#39;,s*3=&#39;abcabcabc&#39;</code>。杂度O(n*k)</li>
+<li>检查成员：<code>&#39;x&#39; in s</code>，返回True或False。复杂度O(n)</li>
+<li>长度、最大、最小值: len(s), 复杂度O(1)；max(s), min(s)，复杂度O(n)</li>
+</ul>
+<h1 id="u5B57_u5178_28dict_29"><a href="#u5B57_u5178_28dict_29" class="headerlink" title="字典(dict)"></a>字典(dict)</h1><ul>
+<li>创建方式：<code>d={&#39;a&#39;:1, &#39;b&#39;:2}</code> 或 <code>d={}</code> 或 <code>d=dict()</code></li>
+<li>字典的键可以是任何不可变类型（数字、字符串、元组）;</li>
+<li>当键不存在时可以自动创建，不需要先检查是否存在再赋值；</li>
+<li>删除key为x的记录<code>del dict[&#39;x&#39;]</code>；清空词典所有条目<code>dict.clear()</code>    </li>
+<li>同时遍历关键字和对应的值 <code>for k,v in d.items()</code></li>
+</ul>
+<h2 id="OrderedDict"><a href="#OrderedDict" class="headerlink" title="OrderedDict"></a>OrderedDict</h2><p>OrderedDict只是按照插入顺序进行了排序，并没有按照key进行排序，无法实现类似于java中treemap的功能</p>
+<h1 id="u96C6_u5408_28set_29"><a href="#u96C6_u5408_28set_29" class="headerlink" title="集合(set)"></a>集合(set)</h1><p>集合就是由序列构建的，表示为<code>set([x,y,z])</code></p>
+<ul>
+<li>并集 <code>a.union(b)``a|b</code></li>
+<li>交集 <code>a&amp;b</code></li>
+<li>差集 <code>a-b</code></li>
+<li>update方法：把要传入的元素拆分，做为个体传入到集合中</li>
+</ul>
+<h1 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h1><p><a href="https://taizilongxu.gitbooks.io/stackoverflow-about-python/content/index.html" target="_blank" rel="external">Stack Overflow上热门python问题翻译</a><br><a href="http://multimedia.ucc.ie/Public/training/cycle1/algorithms-in-python.pdf" target="_blank" rel="external">《Data Structures and Algorithms in Python》</a><br><a href="http://www.runoob.com/python3/python3-data-structure.html" target="_blank" rel="external">Python3 数据结构|菜鸟教程</a><br><a href="http://www.cnblogs.com/jeffwongishandsome/archive/2012/08/05/2623660.html" target="_blank" rel="external">Python常见数据结构整理</a><br><a href="http://blog.jobbole.com/65218/" target="_blank" rel="external">Python中的高级数据结构</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>记录一下使用python数据结构过程中踩过的坑及一些常见应用。同时参照了<a href="http://multimedia.ucc.ie/Public/training/cycle1/algorithms-in-python.pdf">《Data Structures and Algorithms in Python》</a>这本书，其中讲了python数据结构底层的实现原理及很多高效使用的建议。</p>
+<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><p>列表是一个可变的序列，可以直接按索引访问，也可以动态的删减,表示为<code>[x,y,z]</code></p>
+<h2 id="u591A_u7EF4_u6570_u7EC4"><a href="#u591A_u7EF4_u6570_u7EC4" class="headerlink" title="多维数组"></a>多维数组</h2><p>如果使用<code>array = [[0] * 3] * 3</code>对一个3<em>3的二维数组进行初始化，当操作<code>array[0][1] = 1</code>时，发现整个第二列都被赋值，变成:<code>[[0,1,0],[0,1,0],[0,1,0]]</code><br><a href="http://docs.python.org/library/index.html">The Python Standard Library</a>里的解释是：list </em> n—&gt;n shallow copies of list concatenated, n个list的浅拷贝的连接。<br>因此正确的初始化方式应该是：<br><code>array=[([0] * 3) for i in range(3)]</code><br>]]>
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://sensirly.github.io/tags/algorithm/"/>
+    
+      <category term="python" scheme="http://sensirly.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Data Visualization (UIUC)]]></title>
+    <link href="http://sensirly.github.io/data-visualization/"/>
+    <id>http://sensirly.github.io/data-visualization/</id>
+    <published>2016-06-22T13:23:03.000Z</published>
+    <updated>2016-06-23T07:56:39.359Z</updated>
+    <content type="html"><![CDATA[<h1 id="week_1_3A_The_Computer_and_the_Human"><a href="#week_1_3A_The_Computer_and_the_Human" class="headerlink" title="week 1: The Computer and the Human"></a>week 1: The Computer and the Human</h1><p>visualization is an interface between the computer and the human.    因此我们要首先了解human和computer的特点才能做好visualization。</p>
+<h2 id="Photorealism"><a href="#Photorealism" class="headerlink" title="Photorealism"></a>Photorealism</h2><p>用2D画面表示3D效果常用的技巧</p>
+<ul>
+<li>occlusion：不透明物体的覆盖关系暗示远近关系（strongest cue）</li>
+<li>illumination：通过亮度差异暗示平面方向，强调细节</li>
+<li>shadowing：制造光线的occlusion</li>
+<li>perspective：大小暗示深度（近大远小）<br><img src="/img/coursera/photorealism.JPG" alt=""><a id="more"></a>
+<h2 id="Fitts_u2019_Law_uFF08_u8D39_u8328_u6CD5_u5219_uFF09"><a href="#Fitts_u2019_Law_uFF08_u8D39_u8328_u6CD5_u5219_uFF09" class="headerlink" title="Fitts’ Law（费茨法则）"></a>Fitts’ Law（费茨法则）</h2>当一个人用鼠标来移动鼠标指针时，屏幕上的目标的某些特征会使得点击变得轻松或者困难。目标离的越远，到达就越是费劲。目标越小，就越难点中。<br><img src="/img/coursera/fitt-law.JPG" alt=""><br><strong>Fitts’ Law鼓励减少距离，增加目标大小以提升用户效率</strong>。比如Mac OS将Dock放在最底端、windows开始菜单在左下角。这些区域都是可以被“无限可选中的”，只需要大幅度晃动鼠标就能到达目标区域，相当于增大了目标大小；而右键菜单随时可以触发而不需要将鼠标移向程序主菜单，相当于减少距离。Mac系统中的交互设计更好的应用了费茨法则，因此操作效率更高。<br><img src="/img/coursera/os_margin.png" alt=""><br>更多应用案例参照：<a href="http://www.jianshu.com/p/36b610bac7a2" target="_blank" rel="external">设计法则： Fitts’ Law / 菲茨定律（费茨法则）</a></li>
+</ul>
+<h2 id="Human_Retina"><a href="#Human_Retina" class="headerlink" title="Human Retina"></a>Human Retina</h2><ul>
+<li>对亮度比对颜色更敏感。因为亮度和颜色是分别传输的，感应亮度的神经元数量更大</li>
+<li>chromatic aberration（色差）：因为不同波长的色光有不同的折射率，透镜（人的眼睛）无法将各种波长的色光都聚焦在同一点上。蓝色的波长比红和绿更容易偏离视网膜，使图像看起来模糊，因此应该避免纯蓝色的文本。<strong>暖色调更容易聚焦</strong>。</li>
+<li>Color Perception:Luminance=31%R+59%G+10%B。Yellow=Green+Red，因此黄色非常亮</li>
+</ul>
+<h2 id="Lateral_Inhibition_28Perceiving_2D_29"><a href="#Lateral_Inhibition_28Perceiving_2D_29" class="headerlink" title="Lateral Inhibition(Perceiving 2D)"></a>Lateral Inhibition(Perceiving 2D)</h2><p>we see things in context because of these local comparisons that our perceptual system does. 神经系统在处理图像时会放大差异，已便于识别<br><img src="/img/coursera/color_context.JPG" alt="color context"><br>相同的紫色因为环境色的不同亮度发生了改变<br><img src="/img/coursera/orientation_context.JPG" alt="orientation context"><br>左边橙色梯形的斜率是2/5，右边的斜率是5/13。<br><img src="/img/coursera/size_context.JPG" alt="size context"><br>我们看到的颜色、形状、大小会因为跟环境的对比发生扭曲,因此这些特点有时也会干扰我们正确解读数据。</p>
+<h1 id="week_2_3A_Visualization_of_Numerical_Data"><a href="#week_2_3A_Visualization_of_Numerical_Data" class="headerlink" title="week 2:  Visualization of Numerical Data"></a>week 2:  Visualization of Numerical Data</h1><h2 id="Mapping_and_Chart"><a href="#Mapping_and_Chart" class="headerlink" title="Mapping and Chart"></a>Mapping and Chart</h2><p>数据根据不同维度可分为：连续的-离散的，有序的-无序的。不同类型的数据需要借助不同的图像特征来做map，比如对于数值，位置、长度、角度等一维的特征最明显。<br><img src="/img/coursera/data_mapping.JPG" alt="data mapping"><br>在选取图表表达数值时，条形图更合适一些，因为它利用了位置和长度，而线形图是利用了位置而没有使用长度。</p>
+<h2 id="High_Dimension"><a href="#High_Dimension" class="headerlink" title="High Dimension"></a>High Dimension</h2><p>高维度展示不易辨别，因此常使用下面的技巧用低维空间表达高维数据，但也经常会引起误导</p>
+<h3 id="Glyphs_uFF08_u7B26_u53F7_uFF09"><a href="#Glyphs_uFF08_u7B26_u53F7_uFF09" class="headerlink" title="Glyphs（符号）"></a>Glyphs（符号）</h3><p><img src="/img/coursera/glyphs.JPG" alt="Glyphs（符号）"><br>在图标的形状之上增加一些符号提供额外的信息，比如用颜色表示的热力图，这些特征虽然不是表达能力最强的特征，但是也起到了很好的辅助作用</p>
+<h3 id="Parallel_Coordinates"><a href="#Parallel_Coordinates" class="headerlink" title="Parallel Coordinates"></a>Parallel Coordinates</h3><p><img src="/img/coursera/parallel_coordition.JPG" alt="parallel coordinate"><br>平行坐标系可以展示高维数据，但是只有相邻两个维度的相关性可以直观的被表达，因此需要人工的设置顺序。</p>
+<h3 id="Stacked_Graphs"><a href="#Stacked_Graphs" class="headerlink" title="Stacked Graphs"></a>Stacked Graphs</h3><p><img src="/img/coursera/stacked_graph_order.JPG" alt="stacked graph"></p>
+<ul>
+<li>Central Limit Thereo:当更多的bar被加入时，整体的变化会减缓</li>
+<li>不同bar的相互顺序也会影响趋势的视觉感受（Position&gt;Length）</li>
+<li>线形图的stacked graph比柱状图的更平缓</li>
+<li>可以更改baseline使图像变化更加平缓</li>
+</ul>
+<h1 id="u611F_u53D7"><a href="#u611F_u53D7" class="headerlink" title="感受"></a>感受</h1><p>非常悲剧，因为这个课有点boring所以一直没跟上节奏，等我有闲情逸致想继续刷的时候发现已经close了。。。总体感觉一般吧，节奏太慢，实用性不是很强，因此就到此为止吧，不打算继续追了。但是里面提到的一些交互设计原理还是挺有趣的，改天有机会直接去研究交互原理了。<br>感觉coursera上的好课就那么多（比如Stanford系列），在这个已经开始四处收钱的模式下，coursera的教学效率已经大不如前了，所以打算告别coursera一段时间，winter is coming，抓紧时间去做点更高效的事情。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="week_1_3A_The_Computer_and_the_Human"><a href="#week_1_3A_The_Computer_and_the_Human" class="headerlink" title="week 1: The Computer and the Human"></a>week 1: The Computer and the Human</h1><p>visualization is an interface between the computer and the human.    因此我们要首先了解human和computer的特点才能做好visualization。</p>
+<h2 id="Photorealism"><a href="#Photorealism" class="headerlink" title="Photorealism"></a>Photorealism</h2><p>用2D画面表示3D效果常用的技巧</p>
+<ul>
+<li>occlusion：不透明物体的覆盖关系暗示远近关系（strongest cue）</li>
+<li>illumination：通过亮度差异暗示平面方向，强调细节</li>
+<li>shadowing：制造光线的occlusion</li>
+<li>perspective：大小暗示深度（近大远小）<br><img src="/img/coursera/photorealism.JPG" alt="">]]>
+    
+    </summary>
+    
+      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
+    
+      <category term="data science" scheme="http://sensirly.github.io/tags/data-science/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[位运算实现加减乘除]]></title>
+    <link href="http://sensirly.github.io/bitwise-arithmetic-calculation/"/>
+    <id>http://sensirly.github.io/bitwise-arithmetic-calculation/</id>
+    <published>2016-06-14T11:00:52.000Z</published>
+    <updated>2016-06-23T09:46:35.031Z</updated>
+    <content type="html"><![CDATA[<h2 id="u52A0_u6CD5"><a href="#u52A0_u6CD5" class="headerlink" title="加法"></a>加法</h2><p>一位加法时，和是<code>x XOR y</code>的结果,而进位恰好是<code>x AND y</code>的结果.<br>多位加法时，可将x, y的每一位级联计算：先计算x和y的第零位，将计算所得的进位传入到x和y的第一位的计算中，依次进行直到计算完最高位为止，此时将每一位计算所得的和连接起来就是最终的和。计算机中的加法也是使用这种原理来实现的。<br>然而，逐位取出计算操作复杂，可以一次求出所有位上的和及进位，然后递归调用此方法直至进位为0。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line"><span class="comment">//      if(y==0)</span></span><br><span class="line"><span class="comment">//          return x;</span></span><br><span class="line"><span class="comment">//      return add(x ^ y,(x &amp; y) &lt;&lt; 1);</span></span><br><span class="line">    <span class="keyword">while</span> (y != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = x ^ y;</span><br><span class="line">        y = (x &amp; y) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">        x = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="u51CF_u6CD5"><a href="#u51CF_u6CD5" class="headerlink" title="减法"></a>减法</h2><p>减法是加法的逆运算，加法中的可以从低位开始依次往上传递进位，而且高位对低位的计算不产生影响。而减法则需要从高位获得借位，高位会对低位的计算产生影响。如果是小数字减大数字则计算过程更复杂，因此直接实现减法对计算机来说很复杂，而且效率很低。因此一般通过转化成相反数的加法完成，而只要想得到一个数的相反数，只要对这个数求2-补码就可以了，即取反加1操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">subtract</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> add(x, add(~y, <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="u4E58_u6CD5"><a href="#u4E58_u6CD5" class="headerlink" title="乘法"></a>乘法</h2><p>根据乘法演算的过程，</p>
+<ul>
+<li>根据乘数每一位为1还是为0，决定相加数取被乘数移位后的值还是取0</li>
+<li>各相加数从乘数的最低位开始求值，并逐次将相加数(被乘数)左移一位，然后求和</li>
+<li>符号位根据同号为正异号为负的原则<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">          1 0 1 1</span><br><span class="line">*         1 1 0 1</span><br><span class="line"> ------------------</span><br><span class="line">          1 1 0 1</span><br><span class="line">        1 1 0 1 0</span><br><span class="line">      0 0 0 0 0 0</span><br><span class="line">    1 1 0 1 0 0 0</span><br><span class="line"> ------------------</span><br><span class="line">  1 0 0 0 1 1 1 1</span><br><span class="line">**/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">multiply</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sign = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        sign = ~sign;</span><br><span class="line">        x = add(~x, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (y &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        sign = ~sign;</span><br><span class="line">        y = add(~y, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (y &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((y &amp; <span class="number">1</span>) &gt; <span class="number">0</span>)</span><br><span class="line">            ans += x;</span><br><span class="line">        x &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">        y &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(sign&gt;<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> add(~ans, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="u9664_u6CD5"><a href="#u9664_u6CD5" class="headerlink" title="除法"></a>除法</h2><p>除法就是由乘法的过程逆推，依次减掉（如果x够减的）y^(2^31),y^(2^30),…y^8,y^4,y^2,y^1。减掉相应数量的y就在结果加上相应的数量。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sign = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        sign = ~sign;</span><br><span class="line">        x = add(~x, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (y &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        sign = ~sign;</span><br><span class="line">        y = add(~y, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">31</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x &gt;= (y&lt;&lt;i)) &#123;</span><br><span class="line">            x -= y&lt;&lt;i;</span><br><span class="line">            ans+= <span class="number">1</span> &lt;&lt; i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(sign&gt;<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> add(~ans, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="u52A0_u6CD5"><a href="#u52A0_u6CD5" class="headerlink" title="加法"></a>加法</h2><p>一位加法时，和是<code>x XOR y</code>的结果,而进位恰好是<code>x AND y</code>的结果.<br>多位加法时，可将x, y的每一位级联计算：先计算x和y的第零位，将计算所得的进位传入到x和y的第一位的计算中，依次进行直到计算完最高位为止，此时将每一位计算所得的和连接起来就是最终的和。计算机中的加法也是使用这种原理来实现的。<br>然而，逐位取出计算操作复杂，可以一次求出所有位上的和及进位，然后递归调用此方法直至进位为0。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line"><span class="comment">//      if(y==0)</span></span><br><span class="line"><span class="comment">//          return x;</span></span><br><span class="line"><span class="comment">//      return add(x ^ y,(x &amp; y) &lt;&lt; 1);</span></span><br><span class="line">    <span class="keyword">while</span> (y != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = x ^ y;</span><br><span class="line">        y = (x &amp; y) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">        x = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>]]>
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://sensirly.github.io/tags/algorithm/"/>
+    
+      <category term="java" scheme="http://sensirly.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《影响力》阅读摘要]]></title>
+    <link href="http://sensirly.github.io/Influence-The-Psychology-of-Persuas/"/>
+    <id>http://sensirly.github.io/Influence-The-Psychology-of-Persuas/</id>
+    <published>2016-06-03T09:33:11.000Z</published>
+    <updated>2016-06-03T09:33:11.875Z</updated>
+    <content type="html"><![CDATA[<p>时隔三年重读了罗伯特·西奥迪尼的《Influence:The Psychology of Persuas》，社会心理学经典，讲述了说服力背后的心理行为模式:互惠、承诺和一致、社会认同、喜好、权威、稀缺。市面上流传的“经典版”是人大出版社的，但张力慧译的社科版更流畅一些，其他教材版及各种演绎版本都是渣渣，不推荐阅读。<br><img src="/img/reading/influencing.gif" alt=""><br><a id="more"></a></p>
+<h1 id="0-_u5F71_u54CD_u529B_u7684_u6B66_u5668"><a href="#0-_u5F71_u54CD_u529B_u7684_u6B66_u5668" class="headerlink" title="0.影响力的武器"></a>0.影响力的武器</h1><h2 id="u56FA_u5B9A_u7684_u884C_u4E3A_u6A21_u5F0F"><a href="#u56FA_u5B9A_u7684_u884C_u4E3A_u6A21_u5F0F" class="headerlink" title="固定的行为模式"></a>固定的行为模式</h2><p>每个人心目中都存在心理定式，比如“高价=高质量”。我们并不是在衡量了一个事物的全部之后做出某种行为，而是被某个特征触发，做出某种行为。</p>
+<h2 id="u542F_u53D1_u5F0F_u5224_u65AD_uFF08_u6309_u4E00_u4E0B_u5C31_u64AD_u653E_uFF09"><a href="#u542F_u53D1_u5F0F_u5224_u65AD_uFF08_u6309_u4E00_u4E0B_u5C31_u64AD_u653E_uFF09" class="headerlink" title="启发式判断（按一下就播放）"></a>启发式判断（按一下就播放）</h2><p><strong>当某一种触发特征出现时，我们就会不假思索地做出相应的反应。</strong>要在现在这种复杂的环境中生存下去，没有一两条捷径是不行的。如果我们想要去认识和分析每一个人、每一件事和每一种处境的每一个方面，我们连一天也生存不下去，因为我们既没有这样做的时间和精力，也不具备这样做的能力。这些捷径称为“启发式判断”</p>
+<h2 id="u5BF9_u6BD4_u8BA4_u77E5_u539F_u7406"><a href="#u5BF9_u6BD4_u8BA4_u77E5_u539F_u7406" class="headerlink" title="对比认知原理"></a>对比认知原理</h2><p>我们衡量事物时，不是衡量它的绝对大小，而是相对大小。即使一个人走进服装店时目的很明确：他只是想买一套套装。但如果他在买套装之后而不是之前买附件的话，他总是会花更多的钱在附件上。因此推销时会先向消费者展示性价比低的产品再展示性价比高的产品以提高购买率。</p>
+<h1 id="1-_u4E92_u60E0_28Reciprocity_29"><a href="#1-_u4E92_u60E0_28Reciprocity_29" class="headerlink" title="1.互惠(Reciprocity)"></a>1.互惠(Reciprocity)</h1><p>互惠原理认为，<strong>我们倾向于以相同的方式回报他人为我们所做的一切</strong>。即使是一个陌生人，或者是一个不讨人喜欢或不受欢迎的人，如果先施予我们一点小小的恩惠然后再提出自己的要求，也会大大提高我们答应这个要求的可能性，因为接受的恩惠使我们产生了负债感和回报的责任感，感削弱了自己的选择能力。比如：在寄出调查问卷时放上些小礼物，调查问卷的收回率会大幅提高；免费试用过产品的消费者购买商品的概率增加，即使当时没有购买今后有需求时也会优先考虑这个产品；乞讨者向行人塞免费小礼物后在进行乞讨成功率更大</p>
+<h2 id="u201C_u62D2_u7EDD_u2014_u9000_u8BA9_u201D_u7B56_u7565"><a href="#u201C_u62D2_u7EDD_u2014_u9000_u8BA9_u201D_u7B56_u7565" class="headerlink" title="“拒绝—退让”策略"></a>“拒绝—退让”策略</h2><p><strong>妥协也可以是一个互惠的过程，因此人们可以先主动做出一个让步，以迫使对方也做出让步，从而达到自己的目的</strong>。这个简单的技巧可以称为“拒绝—退让”策略。</p>
+<p>假定你想要我同意你的某个请求，一个可以增加你的胜算的办法就是先提出一个比较大的、我极可能会拒绝的请求。然后，在我拒绝了这个请求之后，你再提出那个小一些的、你真正感兴趣的请求。如果你的请求提得很巧妙，我就会认为你的第二个请求是你做出的一个妥协，因而会觉得我也应该做出一个妥协。拒绝—退让策略是互惠原理和认知对比原理结合在一起的产物。   </p>
+<p>在“拒绝—退让”策略的影响之下，人们不仅会同意一个请求，而且对达成的协议产生更大的责任感和对这个协议的更高的满意度，因此更加努力地履行自己的诺言，而且还会自愿在将来做出更多的承诺。</p>
+<h1 id="2-_u627F_u8BFA_u548C_u4E00_u81F4_28Consistency_29"><a href="#2-_u627F_u8BFA_u548C_u4E00_u81F4_28Consistency_29" class="headerlink" title="2.承诺和一致(Consistency)"></a>2.承诺和一致(Consistency)</h1><blockquote>
+<p>“如果一开始没有拒绝，后来就难了。” 里昂那多·达·芬奇   </p>
+</blockquote>
+<p><strong>一旦我们做出了一个决定，或选择了一种立场，就会有发自内心以及来自外部的压力来迫使我们与此保持一致</strong>。在这种压力下，我们总是希望以实际行动来证明我们以前的决定是正确的。我们要让自己相信，自己做出了明智的选择。<br>很多情况下保持一致都是一种很有益的行为，而且对于一些事物的令人不安的一面，我们宁愿视而不见，机械地保持一致为我们提供一个躲避烦恼现实的安全所在。 </p>
+<h2 id="u627F_u8BFA_u5F3A_u5EA6"><a href="#u627F_u8BFA_u5F3A_u5EA6" class="headerlink" title="承诺强度"></a>承诺强度</h2><ul>
+<li><p>公开&gt;私下：6人或12人的实验陪审团要判一个很难定的案子。如果每个陪审员必须公开发表意见而不只是秘密投票，最后不能达成一致的几率便会明显增加。因为一旦陪审员们公开发表了他们的看法，他们就不太情愿再改变自己的立场了。</p>
+</li>
+<li><p>额外的努力：对于一个把建立一种持久的团结力和卓著感看得很重要的团体来说，加入过程中的艰难和严格是绝不会被轻易放弃的。比如兄弟会残忍的入会仪式。</p>
+</li>
+<li><p>主动&gt;被动:仅仅做出承诺还不够，还要让这些人从内心深处对这个承诺负起责任来。 当我们在没有外界压力的情况下做出选择时，便会在心中为这一选择负起责任来。比如鼓励战俘进行合作的例子中，不会使用太大的奖励作为诱惑，<strong>过多的物质奖励甚至会降低我们对一种行动的责任感</strong>，结果导致我们在奖励不存在时拒绝采取这种行动。“那些违背自己的意愿而服从的人，他们的想法一点也没变。” </p>
+</li>
+</ul>
+<h2 id="u5165_u95E8_u7B56_u7565"><a href="#u5165_u95E8_u7B56_u7565" class="headerlink" title="入门策略"></a>入门策略</h2><p>从小的请求开始最终达到对大的请求的依从的策略有一个名字：入门策略。即使是对一些看起来很不起眼的要求，我们也要保持警惕。答应这样的请求不仅会增加我们将来答应更大的有关请求的几率，而且也会增加我们答应更大的不相关请求的几率</p>
+<h2 id="u629B_u4F4E_u7403_u7B56_u7565"><a href="#u629B_u4F4E_u7403_u7B56_u7565" class="headerlink" title="抛低球策略"></a>抛低球策略</h2><p>先提出一个很好的条件，让对方做出那个关键的决定，也就是承诺，然后再在最初的提议上加上一个不太令人愉快的条件或者去掉一个有诱惑力的条件。因为低球策略的关键在于让人们坚持自己先前的决定，即使在条件有了变化，这个决定已经不是那么明智以后也不改变立场。</p>
+<h1 id="3-_u793E_u4F1A_u8BA4_u540C_28Social_Proof_29"><a href="#3-_u793E_u4F1A_u8BA4_u540C_28Social_Proof_29" class="headerlink" title="3.社会认同(Social Proof)"></a>3.社会认同(Social Proof)</h1><p>社会认知是一种从众心理，我们进行是非判断的标准之一就是看别人是怎么想的，尤其是当我们要决定什么是正确的行为的时候。</p>
+<h2 id="u4E0D_u786E_u5B9A_u6027"><a href="#u4E0D_u786E_u5B9A_u6027" class="headerlink" title="不确定性"></a>不确定性</h2><p><strong>当我们对自己缺乏信心时，当形势显得不很明朗时，当不确定性占了上风时，我们最有可能以别人的行为作为自己行动的参照，以显得自己镇静自若。</strong></p>
+<p>在通过观察他人来消除我们的不确定性的过程中，我们很可能忽略了一个细小但很重要的事实，那就是他人可能也正在观察中寻找社会证据。特别是在形势模糊不清的时候，每个人都希望看一看别人正在做什么，这种倾向可以导致一种被称为“<strong>多元无知</strong>”的有趣现象。比如当一名受害者在极度的痛苦中挣扎的时候，却没有一个旁观者伸出援手，而且旁观者少时获救的概率更大一些。</p>
+<p>紧急事件的受害者就有了保护自己的办法，这个办法就是减少旁观者的不确定性，避免发生三个和尚没水喝这种责任不分明的情况。明确指出需要哪个人的帮助，告诉他们自己发生了什么，需要什么样的帮助。“那个穿蓝色衣服的男士，我犯哮喘了，请帮我叫一辆救护车”。</p>
+<h2 id="u76F8_u4F3C_u6027"><a href="#u76F8_u4F3C_u6027" class="headerlink" title="相似性"></a>相似性</h2><p><strong>与我们类似的人的行为对我们最有影响力.</strong><br>维特效应：紧接着对轰动性的自杀事件的报道，在报道所涵盖的地区，自杀率便有了大幅度的上升。因此他做出了这样的推论：一些内心痛苦的人看到别人自杀身亡的消息之后效仿了他们。而且当报纸详细报道一个年轻人的自杀事件之后，我们所看到的是年轻司机把车撞到树木、电线杆、路堤上酿成悲剧；但当新闻报道了一个老年人的自杀努件之后，车祸的主角便是老年司机居多了。</p>
+<h2 id="u5229_u7528_u793E_u4F1A_u8BA4_u77E5_u539F_u7406_u7684_u4E8B_u4F8B"><a href="#u5229_u7528_u793E_u4F1A_u8BA4_u77E5_u539F_u7406_u7684_u4E8B_u4F8B" class="headerlink" title="利用社会认知原理的事例"></a>利用社会认知原理的事例</h2><ul>
+<li>捧场：一些平庸的喜剧中添加录制的笑声，使观众认为看到的内容是好笑的。</li>
+<li>领导力：没有哪一位领导人能指望依靠自己一个人的力量说服组织内的所有成员，然而一个强有力的领导人却有理由指望说服相当大一部分成员。</li>
+<li>赛马场下注：开盘后先给一批没有胜算的马下注，使这批劣马看上去成为了最大的热门，吸引不了解情况的客人下注，等要停止下注时再重金压到那匹有胜算的马身上。</li>
+</ul>
+<h1 id="4-_u559C_u597D_28Liking_29"><a href="#4-_u559C_u597D_28Liking_29" class="headerlink" title="4.喜好(Liking)"></a>4.喜好(Liking)</h1><h2 id="u5F71_u54CD_u559C_u597D_u7684_u56E0_u7D20"><a href="#u5F71_u54CD_u559C_u597D_u7684_u56E0_u7D20" class="headerlink" title="影响喜好的因素"></a>影响喜好的因素</h2><ul>
+<li>外表：所谓光环效应，是指一个人的一个正面特征会主导人们对这个人的整体看法。外表的吸引力就是这种正面特征中的一个。</li>
+<li>相似：我们通常都会对与自己相似的人更有好感，不管这种相似是在观点、个性、背景，还是生活方式上。现在很多推销员训练计划都教他们的学员要“像镜子一样”反射出顾客们的身体姿态、心情、表达方式。比如很多营销人员会先问我们是哪里人，然后号称自己是你的老乡。</li>
+<li>恭维</li>
+<li>目标一致：为了成功地达到一个共同的目标所做的努力渐渐弥合了两组人之间的嫌隙。比如通过“合作学习”的方式（每个人学一部分然后教给其他人）来建立不同人种学生之间的好感。</li>
+</ul>
+<h2 id="u559C_u597D_u7684_u4F20_u9012_u6027"><a href="#u559C_u597D_u7684_u4F20_u9012_u6027" class="headerlink" title="喜好的传递性"></a>喜好的传递性</h2><p>如果信差的袋子里装的是一封捷报，当他到达皇宫的时候一定会得到英雄似的接待，美食、醇酒、女人都可以由他尽情享受。但是如果他来报告的是一个战败的消息，他所受到的待遇就完全不同了：他往往马上就被杀掉了。坏消息的晦气会传染给报告坏消息的人。即使这个人对这个坏消息毫无责任，仅仅因为他与坏消息联系在了一起，我们就有了不喜欢他的充分理由。</p>
+<p><strong>我们总是把自己和好的事物联系在一起，而极力与坏的事物拉开距离，即使他们自己根本不必对这些或好或坏的事物负责任</strong>。比如我们总是希望与自己有关的运动队赢得比赛，以此来证明自己的优越。当大学生被采访校棒球队上周的表现时，如果球队赢球了学生们倾向于回答“我们XXX”，而输球时倾向于回答“他们XXX”。</p>
+<h2 id="u5982_u4F55_u9632_u8303"><a href="#u5982_u4F55_u9632_u8303" class="headerlink" title="如何防范"></a>如何防范</h2><p>影响喜好的因素太多，以不变应万变才是我们惟一的选择。也就是说，我们应该仅仅依靠一个方法去中和和抵消所有导致好感的因素对我们施加的负面影响。通过<strong>把注意力集中在效果而不是原因上</strong>，我们就把自己从识别并防止各种导致喜好的心理因素这一繁重而艰巨的任务中解脱了出来。当我们与依从业者打交道的时候，我们只需要注意一件事：我们是否过于迅速地对这个人产生了过多的好感。</p>
+<h1 id="5-_u6743_u5A01_28Authority_29"><a href="#5-_u6743_u5A01_28Authority_29" class="headerlink" title="5.权威(Authority)"></a>5.权威(Authority)</h1><p>不用权威的实质，只要带点权威的暗示，就足以让我们停止自己的独立思考，进入唯唯诺诺的服从状态。</p>
+<h2 id="u4EA7_u751F_u6743_u5A01_u611F_u7684_u51E0_u4E2A_u7279_u5F81"><a href="#u4EA7_u751F_u6743_u5A01_u611F_u7684_u51E0_u4E2A_u7279_u5F81" class="headerlink" title="产生权威感的几个特征"></a>产生权威感的几个特征</h2><ul>
+<li>头衔：头衔是最难也最容易得到的权威象征</li>
+<li>身高: 一个头衔越显赫，人们对拥有这个头衔的人的身高就会估计得越高,因此也会产生身高高的人头衔也越显赫的错觉</li>
+<li>虽然衣着这种权威标志比头衔更看得见摸得着，但伪造起来也同样易如反掌</li>
+<li>拥有名车的人更受人尊重</li>
+</ul>
+<h2 id="u5982_u4F55_u9632_u8303-1"><a href="#u5982_u4F55_u9632_u8303-1" class="headerlink" title="如何防范"></a>如何防范</h2><p>在多数情况下，服从权威人物的命令，总是能给我们带来一些实际的好处。他们处于更高的地位，得以接触更多的信息，掌握更多的权力，故此按照正当权威的愿望去做是有道理的。但我们大多时候遇到的专家都是“伪专家”。“这个权威是不是一个真正的专家？”这个问题让我们把注意力集中到两条重要的信息上：这个权威的资格，以及这些资格与我们手头的问题是否有关系。</p>
+<h1 id="6-_u77ED_u7F3A_28Scarcity_29"><a href="#6-_u77ED_u7F3A_28Scarcity_29" class="headerlink" title="6.短缺(Scarcity)"></a>6.短缺(Scarcity)</h1><blockquote>
+<p>“去爱一样东西的方法之一就是意识到它可能会失去。” ——格·克·切斯特顿</p>
+</blockquote>
+<p>当某种东西变得比较少、我们想获得它的自由受到限制时，我们就会对它产生一种更强烈的欲望。但我们并没有意识到心理抗拒在这个过程中所起的作用。为了解释这种强烈的欲望，我们开始赋予这种东西一些臆想出来的优良品质。</p>
+<h2 id="u53DB_u9006_u5FC3_u7406"><a href="#u53DB_u9006_u5FC3_u7406" class="headerlink" title="叛逆心理"></a>叛逆心理</h2><p>与希望获得一样东西的渴望相比，害怕失去同样价值的东西的恐惧似乎更能成为人们行动的动力。当一种机会变得比较难得时，我们也就失去了自己的一部分自由，人们都有一种维护既得利益的强烈愿望。</p>
+<p>也许罗密欧和朱丽叶之间的恋情开始时并没有强烈到可以超越家族设置的障碍的地步，反而是家族的阻挠使他们的恋情燃烧到了白热化的程度。家庭的阻碍使他们感到了自由的短缺，因而产生了更强烈的欲望。</p>
+<h2 id="u5BA1_u67E5_u5236_u5EA6"><a href="#u5BA1_u67E5_u5236_u5EA6" class="headerlink" title="审查制度"></a>审查制度</h2><p>在一种信息被禁止以后，我们总是更想得到这种信息，而且往往会给予其更高的评价。为了让人们接受他们的观点，最有效的策略不是去公开宣扬这些观点，而是故意让这些观点遭受官方的封杀，然后再把被封杀的消息公之于众。按照短缺原理，如果我们觉得某条信息不可多得，这条信息对我们就会更有说服力。</p>
+<h2 id="u5F97_u800C_u590D_u5931_u4EA7_u751F_u66F4_u5F3A_u70C8_u7684_u77ED_u7F3A_u611F"><a href="#u5F97_u800C_u590D_u5931_u4EA7_u751F_u66F4_u5F3A_u70C8_u7684_u77ED_u7F3A_u611F" class="headerlink" title="得而复失产生更强烈的短缺感"></a>得而复失产生更强烈的短缺感</h2><p>新近变得短缺的东西比一直就短缺的东西会使我们感觉更有价值。在一个社会中，特别容易揭竿而起的，并不是那些传统上受压迫最深的人，因为对他们来说，自己所受的压迫可能已经成了自然秩序的一部分。相反，革命者更可能是那些至少品尝过比较好的生活的滋味的人。当他们亲身经历过并寄予厚望的经济上的和社会上的进步突然变得可望而不可及时，他们便会对这种进步产生比以前任何时候都更强烈的欲望，甚至不惜以暴力来保卫。这个规律给未来的统治者提供了一个有益的教训：<strong>给予人们一段暂时的自由比从来就不给他们自由更危险。</strong></p>
+<h2 id="u7ADE_u4E89_u4EA7_u751F_u66F4_u5F3A_u70C8_u7684_u77ED_u7F3A_u611F"><a href="#u7ADE_u4E89_u4EA7_u751F_u66F4_u5F3A_u70C8_u7684_u77ED_u7F3A_u611F" class="headerlink" title="竞争产生更强烈的短缺感"></a>竞争产生更强烈的短缺感</h2><p>我们不仅在某种东西变得短缺时更想得到它，而且在面临竞争得到它的愿望又更加强烈。房地产经纪人在试图把房子卖给一个态度暧昧的潜在顾客时，有时会告诉他另一个人已经来看过房子，很感兴趣，计划第二天再来谈条件。这种策略就好像在骑在墙头犹豫不决的人身上推一把，由于怕输给竞争对手，很多顾客马上就从犹豫变得积极起来。</p>
+<h1 id="u7ACB_u5373_u751F_u6548_u7684_u5F71_u54CD_u529B"><a href="#u7ACB_u5373_u751F_u6548_u7684_u5F71_u54CD_u529B" class="headerlink" title="立即生效的影响力"></a>立即生效的影响力</h1><p>我们做决定的时候，特别是在匆忙、压力之下，常常都没有精力和能力考虑所有相关的信息，而是只考虑了所有相关信息中有代表性的一条。这样一条孤立的信息虽然经常能够给我们的行为提供正确的指导，但有时候也会使我们犯下很愚蠢的错误。<br>虽然依赖一条孤立的信息很容易让我们犯错误，但在忙碌的现代生活中，我们好像也别无选择，我们必须依靠各种捷径生存。那些公平地利用我们走捷径的愿望的依从业者不应该被看作敌人。恰恰相反，在建立一个高效运转和有较强适应性的交易系统的过程中，这些人是我们的盟友。我们反击的对象是那些歪曲、篡改、伪造引起我们的捷径反应的信息特征并从中获利的人。依从业者赚钱的愿望不应该成为我们产生敌意的原因，因为每一个人多多少少都有同样的愿望。他们真正的罪状，是他们赚钱的方法威胁到了我们的捷径的可靠性。<strong>我们必须借助稳妥可靠的捷径和经验来应付令人眼花缭乱的现代生活</strong>，这不是一种奢侈，而是一种必要。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>时隔三年重读了罗伯特·西奥迪尼的《Influence:The Psychology of Persuas》，社会心理学经典，讲述了说服力背后的心理行为模式:互惠、承诺和一致、社会认同、喜好、权威、稀缺。市面上流传的“经典版”是人大出版社的，但张力慧译的社科版更流畅一些，其他教材版及各种演绎版本都是渣渣，不推荐阅读。<br><img src="/img/reading/influencing.gif" alt=""><br>]]>
+    
+    </summary>
+    
+      <category term="reading" scheme="http://sensirly.github.io/tags/reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[python正则表达式]]></title>
+    <link href="http://sensirly.github.io/python-regular-expression/"/>
+    <id>http://sensirly.github.io/python-regular-expression/</id>
+    <published>2016-05-26T11:57:27.000Z</published>
+    <updated>2016-06-07T11:34:05.776Z</updated>
+    <content type="html"><![CDATA[<h1 id="u5E38_u7528_u6A21_u5F0F"><a href="#u5E38_u7528_u6A21_u5F0F" class="headerlink" title="常用模式"></a>常用模式</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:left">Matches the beginning of a line</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:left">Matches the end of the line</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:left">Matches any character</td>
+</tr>
+<tr>
+<td style="text-align:center">\d</td>
+<td style="text-align:left">Match one digit</td>
+</tr>
+<tr>
+<td style="text-align:center">\D</td>
+<td style="text-align:left">Matches any non-digit character</td>
+</tr>
+<tr>
+<td style="text-align:center">\w</td>
+<td style="text-align:left">Match one number or one digit</td>
+</tr>
+<tr>
+<td style="text-align:center">\s</td>
+<td style="text-align:left">Matches whitespace</td>
+</tr>
+<tr>
+<td style="text-align:center">\S</td>
+<td style="text-align:left">Matches any non-whitespace character</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:left">Repeats a character zero or one times</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:left">Repeats a character zero or more times</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:left">Repeats a character one or more times</td>
+</tr>
+<tr>
+<td style="text-align:center">[aeiou]</td>
+<td style="text-align:left">Matches a single character in the listed set</td>
+</tr>
+<tr>
+<td style="text-align:center">[^XYZ]</td>
+<td style="text-align:left">Matches a single character not in the listed set</td>
+</tr>
+<tr>
+<td style="text-align:center">[a-z0-9]</td>
+<td style="text-align:left">The set of characters can include a range</td>
+</tr>
+<tr>
+<td style="text-align:center">()</td>
+<td style="text-align:left">Indicates where string extraction is to start and to end</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>Lazy means match shortest possible string.<br>Greedy means match longest possible string.(default)<br>For example, the greedy <code>h.+l</code> matches ‘hell’ in ‘hello’ but the lazy <code>h.+?l</code> matches ‘hel’.</p>
+<h1 id="python_u8C03_u7528_u65B9_u5F0F"><a href="#python_u8C03_u7528_u65B9_u5F0F" class="headerlink" title="python调用方式"></a>python调用方式</h1><p><code>import re</code>引入模块直接开始使用正则匹配各种功能</p>
+<ul>
+<li>re.search() 返回True\False</li>
+<li>re.match() 匹配起始位置成功返回起始位置，否则返回non</li>
+<li>re.findall()  返回所有匹配的list<br>另外一种使用方法</li>
+</ul>
+<ol>
+<li>先将正则表达式的字符串形式编译为Pattern实例</li>
+<li>使用Pattern实例处理文本并获得匹配结果（一个Match实例）</li>
+<li>使用Match实例获得信息<br>两种方法是等价的，只不过第二种支持pattern的复用</li>
+</ol>
+<h1 id="u6B63_u5219_u5339_u914D_u590D_u6742_u5EA6"><a href="#u6B63_u5219_u5339_u914D_u590D_u6742_u5EA6" class="headerlink" title="正则匹配复杂度"></a>正则匹配复杂度</h1><p>Python正则匹配使用基于回溯的一种NFA实现。通过数据比较，在最坏的情况下用Thompson NFA实现的awk表现比匹配回溯的NFA要好很多倍。最坏情况下的复杂度不一样，回溯NFA是O(2^N)，而Thompson的复杂度是O(N^2)。参见<a href="http://cyukang.com/2014/01/04/regular-expression-matching-dfa.html" target="_blank" rel="external">正则表达式匹配和NFA/DFA</a></p>
+<h1 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h1><p><code>print re.findAll([0-9]+,&#39;My favorite 2 number are 19 and 42&#39;)</code><br>[‘2’,’19’,’42’]</p>
+<p><code>x=&#39;From stephen.marq@uct.ac.za to sansa@uci.edu Sat Jan 5 09:04:15 2008&#39;</code><br><code>y=re.findall(&#39;\S+@\S+&#39;,x)</code><br>[‘stephen.marq@uct.ac.za’,’sansa@uci.edu’]<br><code>y=re.findall(&#39;From (\S+@\S+)&#39;,x)</code><br>[‘stephen.marq@uct.ac.za’]  </p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.coursera.org/learn/python-network-data/home/week/2" target="_blank" rel="external">课程链接</a><br><a href="http://regexr.com/" target="_blank" rel="external">regular expression验证工具RegExr</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="u5E38_u7528_u6A21_u5F0F"><a href="#u5E38_u7528_u6A21_u5F0F" class="headerlink" title="常用模式"></a>常用模式</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:left">Matches the beginning of a line</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:left">Matches the end of the line</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:left">Matches any character</td>
+</tr>
+<tr>
+<td style="text-align:center">\d</td>
+<td style="text-align:left">Match one digit</td>
+</tr>
+<tr>
+<td style="text-align:center">\D</td>
+<td style="text-align:left">Matches any non-digit character</td>
+</tr>
+<tr>
+<td style="text-align:center">\w</td>
+<td style="text-align:left">Match one number or one digit</td>
+</tr>
+<tr>
+<td style="text-align:center">\s</td>
+<td style="text-align:left">Matches whitespace</td>
+</tr>
+<tr>
+<td style="text-align:center">\S</td>
+<td style="text-align:left">Matches any non-whitespace character</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:left">Repeats a character zero or one times</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:left">Repeats a character zero or more times</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:left">Repeats a character one or more times</td>
+</tr>
+<tr>
+<td style="text-align:center">[aeiou]</td>
+<td style="text-align:left">Matches a single character in the listed set</td>
+</tr>
+<tr>
+<td style="text-align:center">[^XYZ]</td>
+<td style="text-align:left">Matches a single character not in the listed set</td>
+</tr>
+<tr>
+<td style="text-align:center">[a-z0-9]</td>
+<td style="text-align:left">The set of characters can include a range</td>
+</tr>
+<tr>
+<td style="text-align:center">()</td>
+<td style="text-align:left">Indicates where string extraction is to start and to end</td>
+</tr>
+</tbody>
+</table>]]>
+    
+    </summary>
+    
+      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
+    
+      <category term="python" scheme="http://sensirly.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[预测模型结果校准]]></title>
+    <link href="http://sensirly.github.io/prediction-model-calibration/"/>
+    <id>http://sensirly.github.io/prediction-model-calibration/</id>
+    <published>2016-03-16T08:33:43.000Z</published>
+    <updated>2016-03-24T06:57:58.225Z</updated>
+    <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>由于模型预测时采样不均，或者算法本身的特性（比如SVM和boosting会使结果趋向于呈sigmoid形状的分布；使用独立假设的Naive Bayes会使结果拉向0或1；而NN和bagged tree的bias相对小一些。详见<em>refer#5</em>），模型预测值与真实观察值之间往往存在很大的gap。大多数的分类模型，得到的预测结果仅有定序意义，而不能够定量。很多情况下，仅仅得到一个好的AUC值是远远不够的，我们需要得到一个准确的概率值。例如，在优化最大收益的场景下，优化目标是最大化CTR*CVR*Price，通过模型分别学到的CTR和CVR的预测值不仅要保序，还要使预测值逼近真是分布才能获得准确的排序结果。<br><a id="more"></a><br>预测校准问题按照预测目标分为4类：<br><img src="/img/machine_learning/calibration_taxonomy.PNG" alt=""><br>RP：This kind of regression models are usually referred as “density forecasting” models.例如预测温度在21-24度之间的概率是90%，区间越小表示预测越精准。  </p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>对于CD类问题，预测的分类比例与真实数据的比例不一致，通过改变阈值修复全局比例，但是可以会引入更大的误差。这里主要讨论CP类问题的求解。</p>
+<h2 id="1-Bining"><a href="#1-Bining" class="headerlink" title="1.Bining"></a>1.Bining</h2><p>简单的做法如<em>refer#1</em>，将训练集中样本按估计值降序排序，均分成k等分；对于落在某个bin里的新样本，属于某个class的概率等于这个bin中这个class的实例所占的比例。 </p>
+<p><em>refer#2</em>中，按照预测值划分等长的n个区间并统计短点处的真实CVR值，对于一个预测值落在[Vi,Vi+1)的新样本，使用两个端点的统计值平滑得出最终预估值。由于某些bin样本过少导致的预测值的非单调性，再使用Isotonic Regression对端点统计值做后处理。</p>
+<p>为了更好的拟合预测集的分布，训练集应该被划分成两个，较大的一个用于模型训练，较小的一个预测之后进行分桶矫正。</p>
+<p>在样本充足的情况下，bin的个数越多逼近效果越好；因此在不断增大k的过程中，会出现收益的转折点；对于区间划分的方式，可以尝试一下按值和按样本数两种方式相结合，也可以尝试对一些样本充足的bin进行递归分桶，知道达到某一条件停止分裂（比如样本数不足或者不满足单调性时停止）。</p>
+<h2 id="2-Isotonic_Regression"><a href="#2-Isotonic_Regression" class="headerlink" title="2.Isotonic Regression"></a>2.Isotonic Regression</h2><p>给定一个无序序列，通过修改每个元素的值得到一个非递减序列 y’，使y和 y’ 平方差最小;该算法的假设是映射函数必须是单调的。<br><img src="/img/machine_learning/isotonic_regression.png" alt=""><br>Isotonic Regression的一个最为广泛的实现是Pool Adjacent Violators算法，简称PAV算法，主要思想就是通过不断合并、调整违反单调性的局部区间，使得最终得到的区间满足单调性。<br><img src="/img/machine_learning/PAV.PNG" alt=""><br>Isotonic Regression通常作为辅助其他方法修复因为数据稀疏性导致的矫正结果不平滑问题</p>
+<h2 id="3-_u53C2_u6570_u62DF_u5408_u5206_u5E03_uFF1A"><a href="#3-_u53C2_u6570_u62DF_u5408_u5206_u5E03_uFF1A" class="headerlink" title="3.参数拟合分布："></a>3.参数拟合分布：</h2><p>以预估值作为变量，观测值作为目标，用回归算法拟合参数。 </p>
+<ul>
+<li>Platt’s Method(<em>refer#1</em> <em>refer#5</em>)：用sigmoid函数将原始输出值映射成概率值p=1/(1+e^(A*p+B)),参数A、B通过大似然法获取。适用于SVM、boosting等算法的结果矫正。  </li>
+<li>Google的CTR预测(<em>refer#3</em>)中尝试了Poisson regression做预估CTR和真实CTR的映射。更为精准的校准：分段学习参数，然后使用Isotonic Regression平滑结果。</li>
+</ul>
+<h2 id="4-_u5176_u4ED6"><a href="#4-_u5176_u4ED6" class="headerlink" title="4.其他"></a>4.其他</h2><ul>
+<li><em>refer#6</em>中提出了针对决策树矫正的方案：Curtailment解决叶子节点样本不足的置信问题 + Laplace平滑解决C4.5等算法产生同质化节点导致预估值趋向两端的情况。</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="http://users.dsic.upv.es/~flip/papers/BFHRHandbook2010.pdf" target="_blank" rel="external">Calibration of Machine Learning Models</a></li>
+<li><a href="https://pdfs.semanticscholar.org/379a/1c6d825f957f030cda8babc519738c224ca3.pdf" target="_blank" rel="external">Estimating Conversion Rate in Display Advertising from Past Performance Data</a></li>
+<li><a href="https://www.eecs.tufts.edu/~dsculley/papers/ad-click-prediction.pdf" target="_blank" rel="external">Ad Click Prediction : a View from the Trenches Categories and Subject Descriptors</a></li>
+<li><a href="http://arxiv.org/pdf/1102.5496.pdf" target="_blank" rel="external">Efficient regularized isotonic regression with application to gene-gene interaction search</a></li>
+<li><a href="http://www.datascienceassn.org/sites/default/files/Predicting%20good%20probabilities%20with%20supervised%20learning.pdf" target="_blank" rel="external">Predicting good probabilities with supervised learning</a></li>
+<li><a href="http://cseweb.ucsd.edu/~elkan/calibrated.pdf" target="_blank" rel="external">Obtaining calibrated probability estimates from decision trees and naive Bayesian classifiers</a></li>
+<li><a href="http://120.52.72.36/www.research.ibm.com/c3pr90ntcsf0/people/z/zadrozny/kdd2002-Transf.pdf" target="_blank" rel="external">Transforming classifier scores into accurate multiclass probability estimates</a></li>
+<li><a href="http://arxiv.org/pdf/1211.3955.pdf" target="_blank" rel="external">On Calibrated Predictions for Auction Selection Mechanisms</a></li>
+<li><a href="http://www.herbrich.me/papers/adclicksfacebook.pdf" target="_blank" rel="external">Practical Lessons from Predicting Clicks on Ads at Facebook</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>由于模型预测时采样不均，或者算法本身的特性（比如SVM和boosting会使结果趋向于呈sigmoid形状的分布；使用独立假设的Naive Bayes会使结果拉向0或1；而NN和bagged tree的bias相对小一些。详见<em>refer#5</em>），模型预测值与真实观察值之间往往存在很大的gap。大多数的分类模型，得到的预测结果仅有定序意义，而不能够定量。很多情况下，仅仅得到一个好的AUC值是远远不够的，我们需要得到一个准确的概率值。例如，在优化最大收益的场景下，优化目标是最大化CTR*CVR*Price，通过模型分别学到的CTR和CVR的预测值不仅要保序，还要使预测值逼近真是分布才能获得准确的排序结果。<br>]]>
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Ranking Algorithms in Recommendation System]]></title>
+    <link href="http://sensirly.github.io/ranking-algorithms-in-recommendation-system/"/>
+    <id>http://sensirly.github.io/ranking-algorithms-in-recommendation-system/</id>
+    <published>2016-02-03T10:50:18.000Z</published>
+    <updated>2016-02-22T09:09:45.094Z</updated>
+    <content type="html"><![CDATA[<p>Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。<br><img src="/img/machine_learning/recommend_ranking.PNG" alt=""><br><a id="more"></a></p>
+<h1 id="1-Pointwise"><a href="#1-Pointwise" class="headerlink" title="1.Pointwise"></a>1.Pointwise</h1><h2 id="1-1_Matrix_Factorization"><a href="#1-1_Matrix_Factorization" class="headerlink" title="1.1 Matrix Factorization"></a>1.1 Matrix Factorization</h2><p>由Koren在Nexflix比赛期间提出并大获成功，将user对Item的偏好看做评分矩阵（稀疏矩阵），通过SGD等方法将矩阵分解为两个低维度矩阵P(|U|*K)和Q(|I|*K)，用latent factor分别代表User和Item的属性，对应向量的叉乘获取预测评分。在损失函数中增加正则项和bias项可显著提高效果。扩展算法在建模过程中考虑了更多因素，如SVD++、TimeSVD、TrustSVD等。<br><img src="/img/machine_learning/matrix_factorization.PNG" alt=""> </p>
+<h2 id="1-2_Factorization_Machines"><a href="#1-2_Factorization_Machines" class="headerlink" title="1.2 Factorization Machines"></a>1.2 Factorization Machines</h2><p>FM可以看做是MF的generalized版本，不仅能够利用普通的用户反馈信息，还能融合情景信息、社交信息等诸多影响个性化推荐的因素。与传统的非线性模型相比，降低了参数维度，作为特征预处理和预测算法被广泛应用于广告、推荐、搜索等业务。<br><img src="/img/machine_learning/factorization_machine.PNG" alt=""><br>假如忽略任何额外信息，那么一条评分数据对应的特征就只涉及到一个用户id，一个物品id，将前三项分别看成全局、用户、物品的bias，最后一项刚好是两个隐因子向量的内积，等同于带bias的SVD模型。</p>
+<h3 id="u4E3B_u8981_u53C2_u6570"><a href="#u4E3B_u8981_u53C2_u6570" class="headerlink" title="主要参数"></a>主要参数</h3><ul>
+<li>k: 控制交叉项的复杂度，k值增大可以逼近任意复杂的二次交叉特征, 但是也会造成过度拟合.</li>
+<li>lamda：在特征集较大时，k值的引入很容易导致过拟合现象，但是模型本身规定了特征交叉的形式，因此在FM模型中，不能像线性模型中一样通过减少特定的特征组合来减弱过拟合。而是通过引入L2正则项来约束过拟合。</li>
+<li>n：迭代轮数。迭代次数可以使得数据训练的相对充分，但是在数据集较大的情况下其性能上的优化并不大，因为在一轮迭代过程中特征训练的已经相对充分了</li>
+<li>Learning_rate: 学习速率太大会导致模型权重震荡，太小则需要较长的迭代时间。实际中一般使learning rate随着迭代次数不断衰减。</li>
+</ul>
+<h3 id="u4E0E_u5176_u4ED6_u6A21_u578B_u7684_u6BD4_u8F83"><a href="#u4E0E_u5176_u4ED6_u6A21_u578B_u7684_u6BD4_u8F83" class="headerlink" title="与其他模型的比较"></a>与其他模型的比较</h3><p>通过将特征的交叉映射到低纬度的空间，在特征交叉的同时达到了特征降维的效果，兼具了SVM等模型的非线性特征和latent factor model适用于稀疏数据的特征。形式上与一般的线性回归相似，特殊的地方是对组合特征的处理，在稀疏特征环境下，这种对组合特征的处理使得该模型更适合做推荐。</p>
+<h2 id="1-3_OrdRec"><a href="#1-3_OrdRec" class="headerlink" title="1.3 OrdRec"></a>1.3 OrdRec</h2><p>Korend大神提出，2011 RecSys best paper。将用户对物品的评分用1…S共S个等级而不是具体的数值来表示，相邻两个等级之间的差用β表示，因此模型的参数就是t1及S-2个β。根据训练集中的评分等级训练评分的概率分布，通过每一个评分等级与其相邻的阈值之差构造误差函数 P(r=t|β)=P(r&lt;=t|β)-P(r&lt;=t-1|β)，用随机梯度下降算法对阈值参数求解threshold，得到评分等级整体的概率分布情况。</p>
+<h2 id="1-4_Restricted_Boltzmann_Machines"><a href="#1-4_Restricted_Boltzmann_Machines" class="headerlink" title="1.4 Restricted Boltzmann Machines"></a>1.4 Restricted Boltzmann Machines</h2><p>RBM对二分类的偏好数据进行latent factor分析，本质上是一个随机神经网络（节点的状态取决于相连节点的状态），每个visible unit连接所有的hidden unit和bias unit，同时bias unit还有所有hidden unit相连。算法参数是连接visible unit和hidden unit的无向边的权重Wij，不同用户使用不同的hidden unit和hidden unit状态，但是共享一组weight。详见论文<a href="http://www.machinelearning.org/proceedings/icml2007/papers/407.pdf" target="_blank" rel="external">Restricted Boltzmann Machines for Collaborative Filtering</a>，或者这个<a href="http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines" target="_blank" rel="external">introduction</a>.</p>
+<h1 id="2-Pairwise"><a href="#2-Pairwise" class="headerlink" title="2.Pairwise"></a>2.Pairwise</h1><h2 id="2-1_EigenRank"><a href="#2-1_EigenRank" class="headerlink" title="2.1 EigenRank"></a>2.1 EigenRank</h2><p>发表于08年SIGIR，提出了ranking-oriented CF的架构，并给出了贪心法和随机游走两种简单的算法实现。详见论文<a href="http://www.cs.ust.hk/~qyang/Docs/2008/SIGIR297-liu.pdf" target="_blank" rel="external">EigenRank: A Ranking-Oriented Approach to Collaborative Filtering</a><br><img src="/img/machine_learning/EigenRank.PNG" alt=""> </p>
+<h3 id="Kendall_Rank_Correlation_Coefficient"><a href="#Kendall_Rank_Correlation_Coefficient" class="headerlink" title="Kendall Rank Correlation Coefficient"></a>Kendall Rank Correlation Coefficient</h3><p>在rating-based相似度计算中，根据user对item的打分计算u2u相似度及i2i相似度；在ranking-oriented方案中，根据user对item的偏好关系（关注打分的顺序而非数值）计算相似度，KRCC取决于两者序列中不对称pair的数量，即在一个序列中i排序高于j而在另外一个序列中i低于j。</p>
+<h3 id="Greedy_Order_Algorithm"><a href="#Greedy_Order_Algorithm" class="headerlink" title="Greedy Order Algorithm"></a>Greedy Order Algorithm</h3><ol>
+<li>根据neighborhood-based CF构造user对item的偏好关系（投票表决i和j的相对位置），这个偏好关系是没有传递性的。</li>
+<li>计算每个item初始的potential分：the more items that are less preferred than i, the higher the potential of i.</li>
+<li>每次选取potential分数最高的item并更新其他item的potential分(移除当前item对其它item的影响)：π(i)+=p(t,i)-p(i,t) </li>
+</ol>
+<h3 id="Random_Walk_Model"><a href="#Random_Walk_Model" class="headerlink" title="Random Walk Model"></a>Random Walk Model</h3><p>用Markov chain model做item排序，状态表示item，偏好函数（依然用neighborhood-based CF构造）表示转移概率。 </p>
+<h3 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h3><ul>
+<li>较早提出了ranking-oriented CF的路子，idea值得称赞，内容比较糙</li>
+<li>对照组选取有问题，为什么不选用效果更好的item-based CF而选用user-based CF作为baseline？与model-based CF相比效果如何？</li>
+<li>如何证明Preference Functions没有传递性，如果有传递性，Greedy算法的更新策略就有点问题了。</li>
+</ul>
+<h2 id="2-2_Bayesian_Personalized_Ranking"><a href="#2-2_Bayesian_Personalized_Ranking" class="headerlink" title="2.2 Bayesian Personalized Ranking"></a>2.2 Bayesian Personalized Ranking</h2><p>Rendle在2009年提出，在一个base算法基础之上通过反馈数据构造偏序对，直接对偏序对预测值大小关系构造损失函数优化base算法参数。详见论文<a href="http://www.ismll.uni-hildesheim.de/pub/pdfs/Rendle_et_al2009-Bayesian_Personalized_Ranking.pdf" target="_blank" rel="external">BPR: Bayesian Personalized Ranking from Implicit Feedback</a><br><img src="/img/machine_learning/BPR_OPT.PNG" alt="">  </p>
+<h3 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h3><p>如果使用full gradient descent，数据倾斜导致收敛速度慢；每次迭代梯度变化过大不易正则化。如果使用stochastic gradient decent，同一个user-item会有连续的多次更新。因此采用可替换的bootstrap sampling。<br>但是当商品流行度分布不均匀时（tailed distribution），随机选取(c,i)是i很可能是一个流行度很高的item，因此y(c,i)-y(c,j)趋于0，模型更新获得了很小的梯度导致更新效率低。<br><a href="http://webia.lip6.fr/~gallinar/gallinari/uploads/Teaching/WSDM2014-rendle.pdf" target="_blank" rel="external">Improving Pairwise Learning for Item Recommendation from Implicit Feedback</a>提出了一种全新的采样方式：每次选取负样本时倾向于rank较高的item，且采样函数会随模型参数的变化而变化。这种非均匀的采样方式可以大幅提高收敛速度并小幅提高效果，由于采样函数复杂度增加，算法整体的复杂度变化不大。 </p>
+<h3 id="u9002_u7528_u573A_u666F"><a href="#u9002_u7528_u573A_u666F" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li>理论上pairwise的效果好于pointwise，但由于实现代价较高，使用并不多</li>
+<li>可用于多目标学习，例如要同时优化CTR、CVR、加购率等指标，在构造样本时可假设：购买&gt;加购&gt;点击&gt;未点击</li>
+<li>当特征较多而样本不足时，pairwise的方式可提供更多的样本</li>
+</ul>
+<h1 id="3-Listwise"><a href="#3-Listwise" class="headerlink" title="3.Listwise"></a>3.Listwise</h1><h2 id="3-1_CoFiRank"><a href="#3-1_CoFiRank" class="headerlink" title="3.1 CoFiRank"></a>3.1 CoFiRank</h2><p>将排序问题转化为结构化的预估问题，学习函数最大化排序指标NDCG，详见论文<a href="http://papers.nips.cc/paper/3359-cofi-rank-maximum-margin-matrix-factorization-for-collaborative-ranking.pdf" target="_blank" rel="external">COFIRANK: Maximum Margin Matrix Factorization for Collaborative Ranking</a><br><img src="/img/machine_learning/cofirank.PNG" alt=""></p>
+<h2 id="3-2_CLiMF"><a href="#3-2_CLiMF" class="headerlink" title="3.2 CLiMF"></a>3.2 CLiMF</h2><p>通过优化Reciprocal Rank损失函数的lower bound优化整个列表的排序。 详见论文<a href="http://www.ci.tuwien.ac.at/~alexis/Publications_files/climf-recsys12.pdf" target="_blank" rel="external">CLiMF: Learning to Maximize Reciprocal Rank with Collaborative Less-is-More Filtering</a></p>
+<h3 id="Smooth_Reciprocal_Rank"><a href="#Smooth_Reciprocal_Rank" class="headerlink" title="Smooth Reciprocal Rank"></a>Smooth Reciprocal Rank</h3><p><img src="/img/machine_learning/climf_proof.PNG" alt=""></p>
+<ol>
+<li>通过对(1)中RR的定义看见，RR is a non-smooth function over the model parameters，因此无法使用传统的优化算法直接优化。</li>
+<li>使用模型预测得分的logistic function代替Rij，得到了(5)的近似表示。</li>
+<li>根据Jensen’s inequality和Concavity of log function推导出ln(1/n*RR)的lower bound，如(7).可以看出：The maximization of the first term contributes to learning latent factors that promote relevant items, e.g., item j; maximizing the second term turns to learning latent factors of all the other items (e.g., item k) in order to degrade their relevance scores. <strong>In sum, the two effects come together to promote and scatter the relevant items at the same time</strong></li>
+<li>将f(ij)=Ui*Vj带入，就可以使用梯度下降这种标准的优化方法求解UV了</li>
+</ol>
+<h3 id="u4E0E_u5176_u4ED6_u6A21_u578B_u5BF9_u6BD4"><a href="#u4E0E_u5176_u4ED6_u6A21_u578B_u5BF9_u6BD4" class="headerlink" title="与其他模型对比"></a>与其他模型对比</h3><ul>
+<li><strong>CoFiRank</strong>通过优化NDCG损失函数的convex upper bound优化整个列表的排序，适用于评分类的训练数据，；CLiMF适合于二分类的训练数据</li>
+<li><strong>CCF</strong>(Collaborative competitive Filtering)考虑了候选集中所有pair的关系（需要构造负样本），CLiMF只考虑相关的pair</li>
+<li><strong>BPR</strong>与CLiMF都是直接优化评估指标的smoothed version，但需要负样本；BPR目标是提升所有相关item的排名，而CLiMF目标是提高top-k中相关item的排名</li>
+</ul>
+<h1 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h1><p><a href="http://www.slideshare.net/kerveros99/learning-to-rank-for-recommender-system-tutorial-acm-recsys-2013" target="_blank" rel="external">RecSys2013: LTR Tutorial</a><br><a href="http://www.librec.net" target="_blank" rel="external">LibRec: A Java Library for Recommender Systems</a><br><a href="http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/" target="_blank" rel="external">Winning the Netflix Prize: A Summary</a><br><a href="http://eletva.com/tower/?p=159" target="_blank" rel="external">概述搜索排序算法的评价指标MAP,NDCG,MRR</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Top-k推荐是实际推荐场景下常用的推荐模式，由于为用户展示的Item数量有限，因此推荐更关注列表顶部结果的指标。Learning to Rank技术在实际推荐应用中起到了非常重要的作用，排序算法按照建模方式分为Pointwise、Pairwise和Listwise三种。<br><img src="/img/machine_learning/recommend_ranking.PNG" alt=""><br>]]>
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+      <category term="recommendation system" scheme="http://sensirly.github.io/tags/recommendation-system/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Game Theory II (Advanced Applications) on Coursera]]></title>
+    <link href="http://sensirly.github.io/game-theory-coursera-3/"/>
+    <id>http://sensirly.github.io/game-theory-coursera-3/</id>
+    <published>2016-02-01T14:00:18.000Z</published>
+    <updated>2016-02-03T11:57:33.967Z</updated>
+    <content type="html"><![CDATA[<p>This advanced course considers how to design interactions between agents in order to achieve good social outcomes. Three main topics are covered:<br>1：Social Choice theory(i.e., voting rules)<br>2：Mechanism Design<br>3：Efficient Mechanisms(VCG)<br>4：Auctions<br><a id="more"></a></p>
+<h1 id="1-Social_Choice"><a href="#1-Social_Choice" class="headerlink" title="1.Social Choice"></a>1.Social Choice</h1><h2 id="1-1_Voting_Schemes"><a href="#1-1_Voting_Schemes" class="headerlink" title="1.1 Voting Schemes"></a>1.1 Voting Schemes</h2><ul>
+<li>Plurality：选择每个agent最喜欢的候选计数。</li>
+<li>Plurality with elimination：如果某一个候选占据了大多数则结束，否则淘汰得票最低的进行下一轮投票。</li>
+<li>Borda Rule, Borda Count：每个agent的preference ordering记0~n-1分，计算每个候选人的总得分。</li>
+<li>Successive elimination：每一轮两个候选人pk，获胜者与下一个候选人继续pk。pk的顺序影响最终结果</li>
+<li>Condorcet Consistency：如果一个候选在起其他所有候选的pairwise比较中胜出则被选中，有时会形成Condorcet Cycle</li>
+</ul>
+<h2 id="1-2_Paradoxical_Outcomes"><a href="#1-2_Paradoxical_Outcomes" class="headerlink" title="1.2 Paradoxical Outcomes"></a>1.2 Paradoxical Outcomes</h2><p><img src="/img/game_theory/paradoxical_outcomes.PNG" alt="">  </p>
+<h3 id="1-2-1_Impossibility_of_Non-Paradoxical_Social_Welfare_Functions"><a href="#1-2-1_Impossibility_of_Non-Paradoxical_Social_Welfare_Functions" class="headerlink" title="1.2.1 Impossibility of Non-Paradoxical Social Welfare Functions"></a>1.2.1 Impossibility of Non-Paradoxical Social Welfare Functions</h3><p><code>w</code>:将所有agent的preference order变为一个order的函数（social welfare function）  </p>
+<ol>
+<li><code>W</code> is <strong>Pareto efficient(PE)</strong> if whenever all agents agree on the ordering of two outcomes, the social welfare function selects that ordering.   </li>
+<li><code>W</code> is <strong>independent of irrelevant alternatives(IIA)</strong> if the selected ordering between two outcomes depends only on the relative orderings they are given by the agents.  </li>
+<li><code>W</code> has a <strong>dictator</strong> if there exists a single agent whose preferences always determine the social ordering.  <blockquote>
+<p>Theorem (Arrow, 1951): Any social welfare function W over three or more outcomes that is Pareto efficient and independent of irrelevant alternatives is dictatorial.   </p>
+</blockquote>
+</li>
+</ol>
+<p><em>1,2直觉上与3相矛盾，却相生相依，通常牺牲IIA解决悖论</em></p>
+<h3 id="1-2-2_Impossibility_of_Non-paradoxical_Social_Choice_Functions"><a href="#1-2-2_Impossibility_of_Non-paradoxical_Social_Choice_Functions" class="headerlink" title="1.2.2 Impossibility of Non-paradoxical Social Choice Functions"></a>1.2.2 Impossibility of Non-paradoxical Social Choice Functions</h3><p><code>C</code>：根据所有agent的preference order选出部分候选集(social choice functions)</p>
+<ol>
+<li>weakly Pareto efficient：A dominated outcome can’t be chosen</li>
+<li>monotoni：an outcome o must remain the winner whenever the support for it is increased in a preference profile under which o was already winning</li>
+<li>dictatorial：<code>C</code> always selects the top choice in j’s preference ordering.<blockquote>
+<p>Theorem (Muller-Satterthwaite, 1977):Any social choice function that is weakly Pareto efficient and monotonic is dictatorial.</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="2-Mechanism_Design_28_u673A_u5236_u8BBE_u8BA1_29"><a href="#2-Mechanism_Design_28_u673A_u5236_u8BBE_u8BA1_29" class="headerlink" title="2.Mechanism Design(机制设计)"></a>2.Mechanism Design(机制设计)</h1><p>对于一组Bayesian game setting（机制设计者不可能改变的因素），Mechanism是agent的行为集合及行为到profile分布的映射。每个agent都保守着自己的信息，机制不能改变agent的偏好和type的空间。<br>机制设计通过提供一个关注激励社会成员汇报自己私有信息问题的分析框架，研究如何设计一个博弈形式，令社会成员参与其中，得出的博弈解恰好符合设计者所想达到的社会选择。<br><strong>Dominant Strategies Implementation</strong>：在dominant strategies上得到均衡点，使得每个均衡点的profile等于social choice functions的机制。<br><strong>Bayes–Nash Implementation</strong>：在信息不完整的game中存在一个Bayes–Nash equilibrium,使得每种行为的profile等于每个type的social choice functions</p>
+<h2 id="2-1_Revelation_Principle"><a href="#2-1_Revelation_Principle" class="headerlink" title="2.1 Revelation Principle"></a>2.1 Revelation Principle</h2><blockquote>
+<p>any social choice function that can be implemented by any mechanism can be implemented by a truthful, direct mechanism</p>
+</blockquote>
+<p>“The agents do not have to lie, because the mechanism already lies for them.”</p>
+<h2 id="2-2_Impossibility_of_General_2C_Dominant-Strategy_Implementation"><a href="#2-2_Impossibility_of_General_2C_Dominant-Strategy_Implementation" class="headerlink" title="2.2 Impossibility of General, Dominant-Strategy Implementation"></a>2.2 Impossibility of General, Dominant-Strategy Implementation</h2><p><img src="/img/game_theory/gibbard.PNG" alt=""><br>让所有的agent都享有dominant Strategy是不可行的，可通过如下方式化解Gibbard–Satterthwaite theorem：</p>
+<ul>
+<li>使用限制更弱的implement，比如Bayes–Nash implementation</li>
+<li>规定agent不能随意选择任意的preference</li>
+</ul>
+<h2 id="2-3_Transferable_Utility"><a href="#2-3_Transferable_Utility" class="headerlink" title="2.3 Transferable Utility"></a>2.3 Transferable Utility</h2><p>假如一个type的agent的收益函数=原始的utility-agent的payment（两者互不影响），那么称这个agent具有quasilinear preferences with transferable utility。因此机制设计拆解为社会结果选择函数（choice rule）与实体支付函数（payment rule）两部分。<br>transferrable utility mechanism考虑的因素：</p>
+<ul>
+<li><strong>Truthfulness</strong>(strategy-proof)：direct的，而且每个agent宣称的<strong>valuation function</strong>（一个agent为了一个选择x愿意付出的最大的代价的映射）都是真实的。  </li>
+<li><strong>Efficiency</strong>:忽视monetary payments，最大化所有agent收益的总和，则这个transferrable utility mechanism是strictly Pareto efficient, or just efficient。（social-welfare maximization） </li>
+<li><strong>Budget balance</strong>：所有agent的payment和等于0  </li>
+<li><strong>Individual-Rationality</strong>：参与机制的收益期望大于等于0(ex-interim) / 一定大于0(ex-post)</li>
+<li><strong>Revenue Maximization/Minimization</strong>: payment总额最大 / 最小化 </li>
+<li><strong>Maxmin fairness</strong>: make the least-happy agent the happiest,让收益最低的情况的收益额尽可能高.</li>
+<li><strong>Price of Anarchy Minimization</strong>:Minimize the worst-case ratio between optimal social welfare and the social welfare achieved by the given mechanism（无限趋近efficiency）</li>
+</ul>
+<h1 id="3-_Efficient_Mechanism_28VCG_29"><a href="#3-_Efficient_Mechanism_28VCG_29" class="headerlink" title="3. Efficient Mechanism(VCG)"></a>3. Efficient Mechanism(VCG)</h1><h2 id="3-1_The_Vickrey-Clarke-Groves_Mechanism"><a href="#3-1_The_Vickrey-Clarke-Groves_Mechanism" class="headerlink" title="3.1 The Vickrey-Clarke-Groves Mechanism"></a>3.1 The Vickrey-Clarke-Groves Mechanism</h2><p><a href="https://www.zhihu.com/question/24096972/answer/36074451" target="_blank" rel="external">Groves机制的概念与Clarke机制相比更广。在对货币的效用函数拟线性的假设下，Groves机制是strategy proof,也就是鼓励人说真话，同时也是Pareto optimal。Clarke机制要求进入的消费者用税的形式支付自己的进入而带来的公共物品的变化从而导致的其他消费者总效用的损失。Vickrey拍卖是Clarke机制在拍卖中的具体应用.</a>。<br>Definition: 选择总收益最大的一组输出，每个agent的payment=当你参与时其他人的utility的总和 - 当你不参与时其他人的utility的总和，则这个Groves mechanism称为VCG（或pivotal mechanism）。<br>you get charged everyone’s utility in the world where you don’t participate(social cost)<br><img src="/img/game_theory/vcg_example.png" alt=""></p>
+<blockquote>
+<p>Theorem: Truth telling is a dominant strategy under any Groves mechanism including the pivotal mechanism (a VCG mechanism).<br>Theorem (Green–Laffont): an “efficient” mechanismhas truthful reporting as a dominant strategy for all agents and preferences only if it is Groves mechanism.  </p>
+</blockquote>
+<h2 id="3-2_Limitations_of_VCG"><a href="#3-2_Limitations_of_VCG" class="headerlink" title="3.2 Limitations of VCG"></a>3.2 Limitations of VCG</h2><ul>
+<li>Privacy: private information may have value to agents that extends beyond the current interaction</li>
+<li>Susceptibility to Collusion: 多人密谋谎报utility可以在不影响结果的情况下减少total payment</li>
+<li>not Frugal: VCG can end up paying arbitrarily more than an agent is willing to accept</li>
+<li>Revenue Monotonicity Violated: revenue always weakly increases as agents are added</li>
+<li>Cannot Return All Revenue to Agents(一些非盈利的机制)</li>
+</ul>
+<h2 id="3-3_Effiency_u3001Individual_Rationality_and_Budget_Balance_in_VCG"><a href="#3-3_Effiency_u3001Individual_Rationality_and_Budget_Balance_in_VCG" class="headerlink" title="3.3 Effiency、Individual Rationality and Budget Balance in VCG"></a>3.3 Effiency、Individual Rationality and Budget Balance in VCG</h2><ul>
+<li>Choice-set monotonicity：移除某个agent不会增加机制的候选集</li>
+<li>No negative externalities：every agent has zero or positive utility for any choice that can be made without his participation<blockquote>
+<p>Theorem： The VCG mechanism is ex-post <strong>individual rational</strong> when the choice set monotonicity and no negative externalities properties hold.  </p>
+</blockquote>
+</li>
+<li>No single-agent effect: 移除了某个agent，其他agent的welfare总和不会减少<blockquote>
+<p>Theorem: The VCG mechanism is <strong>weakly budget-balanced</strong> when the no single-agent effect property holds.</p>
+</blockquote>
+</li>
+</ul>
+<p>有时想要设计出一个Efficient的机制是不可能的，需要在incentives和efficiency之间做让步</p>
+<blockquote>
+<p>Theorem (Myerson–Satterthwaite): There exist distributions on the buyer’s and seller’s valuations such that: There does not exist any Bayesian incentive-compatible mechanism that is simultaneously efficient, weakly budget balanced and interim individual rational.</p>
+</blockquote>
+<p>Example：Proof for fully budget balanced trade that is ex-post individually rational.<br><img src="/img/game_theory/myerson.png" alt=""></p>
+<h1 id="4-Auctions"><a href="#4-Auctions" class="headerlink" title="4.Auctions"></a>4.Auctions</h1><h2 id="4-1_Some_Canonical_Auctions"><a href="#4-1_Some_Canonical_Auctions" class="headerlink" title="4.1 Some Canonical Auctions"></a>4.1 Some Canonical Auctions</h2><ul>
+<li>English Auction: 从reservation price开始bidder相继抬价直到没有更高的出价</li>
+<li>Japanese Auction: 类似于English，但由auctioneer出价，bidder回应，避免价格大范围跳动<ul>
+<li>English and Japanese auctions are extensive form games</li>
+<li>Theorem：Under the independent private values model (IPV), it is a dominant strategy for bidders to bid up to (and not beyond) their valuations in both Japanese and English auctions.</li>
+</ul>
+</li>
+<li>Dutch Auction：从高价开始价格逐渐降低，直到有人响应</li>
+<li>First-Price Auction：bidder同时出价，出价最高的已最高价获得所有权<ul>
+<li>First-Price (sealed bid) and Dutch auctions are strategically equivalent</li>
+<li>Theorem: In a first-price auction with two risk-neutral bidders whose valuations are IID and drawn from U(0,1), (v1*1/2,v2*1/2) is a Bayes-Nash equilibrium strategy profile.</li>
+<li>Theorem: In a first-price sealed bid auction with n risk-neutral agents whose valuations are independently drawn from a uniform distribution on [0,1], the (unique) symmetric equilibrium is given by the strategy profile(vi*(n-1)/n).</li>
+</ul>
+</li>
+<li>Second-Price Auction：bidder同时出价，出价最高的以第二高价获得所有权<ul>
+<li>Second-Price Auction is special form of VCG </li>
+<li>Theorem: Truth-telling is a (weak) dominant strategy in a second-price auction</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-2_Revenue_Equivalence"><a href="#4-2_Revenue_Equivalence" class="headerlink" title="4.2 Revenue Equivalence"></a>4.2 Revenue Equivalence</h2><blockquote>
+<p>Revenue Equivalence Theorem: Assume that each of n risk-neutral agents has an independent private valuation for a single good at auction, each drawn from cumulative distribution F. Then any two auction mechanisms in which<br>(1)in equilibrium, the good is always allocated in the same way; and<br>(2)any agent with valuation 0 has an expected utility of 0;<br>both yield the same expected revenue, and both result in any bidder with valuation v making the same expected payment.</p>
+</blockquote>
+<p>RET是Auction Theory中最重要的Theorem，Paul Klemperer的<a href="http://www.nuff.ox.ac.uk/users/klemperer/WhyEveryEconomist.pdf" target="_blank" rel="external">Why Every Economist Should Learn Some Auction Theory</a>第一章有关于RET的解释和举例。</p>
+<h2 id="4-3_Optimal_Auctions"><a href="#4-3_Optimal_Auctions" class="headerlink" title="4.3 Optimal Auctions"></a>4.3 Optimal Auctions</h2><p>最大化卖家收入,可以通过牺牲efficiency设置reserve price来实现(前提是individual rational/risk-neutral和分布已知)<br><img src="/img/game_theory/virtual_valuation.PNG" alt=""><br>上面是累积分布函数，下面是概率密度函数。如果他是单调增长的， 最好的reserve price就是V.V.=0的时候.<br><strong>Myerson Theorem</strong>：Single-good下，direct机制里，Optimal Auction即把东西卖给V.V.最大的人，且V.V.最大的人支付第二高V.V.</p>
+<h1 id="u53C2_u8003_uFF1A"><a href="#u53C2_u8003_uFF1A" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><a href="http://fenixlin.github.io/2014/12/08/Game_Theory" target="_blank" rel="external">Fenix Lin的笔记</a></li>
+<li><a href="https://class.coursera.org/gametheory2-003" target="_blank" rel="external">Coursera课程链接</a>  </li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>This advanced course considers how to design interactions between agents in order to achieve good social outcomes. Three main topics are covered:<br>1：Social Choice theory(i.e., voting rules)<br>2：Mechanism Design<br>3：Efficient Mechanisms(VCG)<br>4：Auctions<br>]]>
+    
+    </summary>
+    
+      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
+    
+      <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Offline Evaluation in Recommendation System调研]]></title>
+    <link href="http://sensirly.github.io/offline-evaluation-in-recommendation-system/"/>
+    <id>http://sensirly.github.io/offline-evaluation-in-recommendation-system/</id>
+    <published>2016-01-28T08:13:43.000Z</published>
+    <updated>2016-02-03T11:57:02.294Z</updated>
+    <content type="html"><![CDATA[<p>推荐系统中的评测大致分为三类：离线评测、在线评测、用户调研。在线评测通常将流量随机分配到不同策略下下比较不同策略的优劣（又称A/B test或bucket test），操作简单，效果准确直观，但代价昂贵，可能伤害部分用户的体验；离线评测使用模拟器模拟线上环境获取结果，对线上几乎没有影响，因此一些重要系统通常要先通过离线评测确保算法效果再上线进行对比，但由于离线评测经常引入model bias及partial label（新算法产生的结果在线上真实环境下未被展示）等问题，使得线下评估结果与线上不一致；用户调研代价昂贵切过于主观，个人认为比较适用于产品调研，不适用于算法效果评估。这其中离线评测一直是推荐系统较为关注的话题，如何保持离线评测与在线评测结果的一致性在众多推荐系统中都是亟待解决的问题。</p>
+<a id="more"></a>
+<h1 id="1-_u79BB_u7EBF_u8BC4_u4F30_u4E0E_u5728_u7EBF_u8BC4_u4F30_u7684_u6BD4_u8F83"><a href="#1-_u79BB_u7EBF_u8BC4_u4F30_u4E0E_u5728_u7EBF_u8BC4_u4F30_u7684_u6BD4_u8F83" class="headerlink" title="1.离线评估与在线评估的比较"></a>1.离线评估与在线评估的比较</h1><h2 id="A_Comparison_of_Offline_Evaluations_2C_Online_Evaluations_2C_and_User_Studies_in_the_Context_of_Research-Paper_Recommender_Systems"><a href="#A_Comparison_of_Offline_Evaluations_2C_Online_Evaluations_2C_and_User_Studies_in_the_Context_of_Research-Paper_Recommender_Systems" class="headerlink" title="A Comparison of Offline Evaluations, Online Evaluations, and User Studies in the Context of Research-Paper Recommender Systems"></a><a href="http://docear.org/papers/a_comparative_analysis_of_offline_and_online_evaluations_and_discussion_of_research_paper_recommender_system_evaluation.pdf" target="_blank" rel="external">A Comparison of Offline Evaluations, Online Evaluations, and User Studies in the Context of Research-Paper Recommender Systems</a></h2><p>在论文推荐数据集上对比了user study、online evaluations和offline evaluations三种评测方法。</p>
+<h3 id="u5B9E_u9A8C_u65B9_u6CD5"><a href="#u5B9E_u9A8C_u65B9_u6CD5" class="headerlink" title="实验方法"></a>实验方法</h3><ul>
+<li>将用户在mind-map中引用的论文作为ground-truth</li>
+<li>从数据集中移除最近添加的一篇paper作为训练集，观察推荐的结果是否能够命中这篇移除的paper作为离线评测指标（<code>success@K</code>）；</li>
+<li>观察不同算法和参数在三种评测方法下的各种指标。  </li>
+</ul>
+<h3 id="u5B9E_u9A8C_u7ED3_u679C"><a href="#u5B9E_u9A8C_u7ED3_u679C" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
+<li>假设user study的评测是准确的，通过计算评测指标之间的Pearson相关性，据此判断online evaluation和offline evaluation的准确性</li>
+<li>在某些指标上，离线评测的相对大小关系与在线评测和user study一致，但绝对值差异较大</li>
+<li>离线评测无法评估展示差异、用户意图等因素的影响</li>
+</ul>
+<h3 id="u7ED3_u8BBA"><a href="#u7ED3_u8BBA" class="headerlink" title="结论"></a>结论</h3><ul>
+<li>在线指标中UCTR比CTR更能反应用户对推荐结果的满意度（CTR/UCTR高以为了增加了决策成本）</li>
+<li><strong>When incomplete or even biased datasets are used as ground-truth, recommender systems are evaluated based on how well they can calculate such an imperfect ground-truth.</strong></li>
+</ul>
+<h2 id="Offline_and_Online_Evaluation_of_News_Recommender_Systems_at_swissinfo-ch__28Recsys_2014_29"><a href="#Offline_and_Online_Evaluation_of_News_Recommender_Systems_at_swissinfo-ch__28Recsys_2014_29" class="headerlink" title="Offline and Online Evaluation of News Recommender Systems at swissinfo.ch (Recsys 2014)"></a><a href="http://florent.garcin.ch/pubs/garcin_recsys14a.pdf" target="_blank" rel="external">Offline and Online Evaluation of News Recommender Systems at swissinfo.ch </a>(Recsys 2014)</h2><p>以新闻推荐为例对比了不同算法在离线评估和在线评估阶段的差异，并对比了在线实验中CTR和准确率的差异。</p>
+<h3 id="u5B9E_u9A8C_u65B9_u6CD5-1"><a href="#u5B9E_u9A8C_u65B9_u6CD5-1" class="headerlink" title="实验方法"></a>实验方法</h3><ul>
+<li>Context Trees (CT)：根据用户的浏览序列构造树，每个节点都是一个context，每个context下都有特定的预测模型，融合多种策略。热门、随机策略作为baseline，选用baseline策略最优下的参数。</li>
+<li>选用<code>success@3</code>（无论下一次点击是来自推荐还是其他地方）作为在离线评测指标</li>
+<li>选用<code>success@3</code>和CTR（推荐结果点击率）作为在线评测指标 </li>
+</ul>
+<h3 id="u5B9E_u9A8C_u7ED3_u679C-1"><a href="#u5B9E_u9A8C_u7ED3_u679C-1" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="/img/machine_learning/CT_offline_evaluation.PNG" alt=""> <img src="/img/machine_learning/CT_online_CTR.PNG" alt=""> </p>
+<ul>
+<li>热门策略线上CTR4%, 准确率由16.5%提高至17.5%，因此3/4的点击来自于其他地方</li>
+<li>CT策略线上CTR6%, 准确率由14%提高至19%，1/6的点击来自于其他地方,因此价值更高</li>
+<li>随机策略线上点击率较高是因为多数用户历史行为较少个性化效果不明显；在行为较多的用户中，随机与CT的CTR差异会被拉大</li>
+<li>热门策略线上CTR低是因为用户在看到推荐之前已经在网页上方看过了热门的新闻</li>
+</ul>
+<h3 id="u7ED3_u8BBA-1"><a href="#u7ED3_u8BBA-1" class="headerlink" title="结论"></a>结论</h3><ul>
+<li>offine evaluations of accuracy are not always meaningful for predicting the relative performance of different techniques.</li>
+<li>CTR overestimates the actual impact for popular items, and thus gives a skewed impression of the actual performance</li>
+<li>CTR might not be the optimal metric for online evaluation, because some of the clicks are for popular items that people would have chosen anyway.用推荐的准确率更能体现推荐带来的增量收益</li>
+<li>离线评估可以会引入其他模块带来的影响（热门策略与推荐位上方的头条模块）</li>
+</ul>
+<h1 id="2-_u6D88_u9664_u79BB_u7EBF_u8BC4_u4F30_u7684Bias"><a href="#2-_u6D88_u9664_u79BB_u7EBF_u8BC4_u4F30_u7684Bias" class="headerlink" title="2.消除离线评估的Bias"></a>2.消除离线评估的Bias</h1><h2 id="Reducing_Offline_Evaluation_Bias_in_Recommendation_System"><a href="#Reducing_Offline_Evaluation_Bias_in_Recommendation_System" class="headerlink" title="Reducing Offline Evaluation Bias in Recommendation System"></a><a href="http://arxiv.org/pdf/1407.0822.pdf" target="_blank" rel="external">Reducing Offline Evaluation Bias in Recommendation System</a></h2><p>作者将bias归因为：随时间推移item的概率分布是变化的（可能是线上推荐系统造成的影响），因此如果是均匀采样则无法在两个不同的时间点评估不同的算法。借用<strong>covariate shift</strong>的思想，通过学习的方法求得一组变量控制采样,使得t1时刻item的分布尽量逼近t0时刻，从而降低bias。</p>
+<h3 id="Defination"><a href="#Defination" class="headerlink" title="Defination"></a>Defination</h3><p>离线评测通常是按一定概率分布选取一个user（通常是考虑每个用户的商业价值），再以一定概率选取一个item，并把该item从数据集中刨除，在该状态下为user推荐k个item，通过观察是否命中评估推荐算法，如(1)。这个评估函数应该是与时间无关的才能保证离线评测的稳定性<br><img src="/img/machine_learning/viadeo_define.PNG" alt=""><br>简化问题：假设算法每次推荐结果是固定的，则只有item的概率分布影响评测的稳定性，如(2)。解决方法有两种：</p>
+<ol>
+<li>记录t0时刻item的分布，在t1时刻沿用这个分布选择item再选取user。但这和离线评测流程是相悖的（先选择user在选择item），且无法响应新的user和item</li>
+<li>更好的方法是借鉴covariate shift的思想，给定一个user引起一组变量<code>w</code>控制item选取，如（3）,使得<code>Pt1(i|w) ~ Pt0(i)</code>（目标函数）</li>
+</ol>
+<h3 id="Solution__26amp_3B_Result"><a href="#Solution__26amp_3B_Result" class="headerlink" title="Solution &amp; Result"></a>Solution &amp; Result</h3><p>优化<code>w</code>看以看做是最小化两个分布之间的差异，根据Kullback-Leibler divergence的定义，两者之间的差异主要取决于出现频率最高的item，因此为了提高计算效率，只选择t0和t1之间变化最大的p个item求解<code>w</code><br>使用Viadeo（类似于linkedin）技能tag推荐数据集，为了更加直观的观察weighting策略的影响，这里依然选用了两个Constant Algorithm，算法1总是推荐评测阶段推荐最多的5个item给用户，算法2总是推荐历史上评测阶段没有推荐过但之前推荐最多的5个item给用户。<br><img src="/img/machine_learning/viadeo_result.PNG" alt=""></p>
+<blockquote>
+<p>As both algorithms are constant, it would be reasonable to expect minimal variations of their offine evaluation scores. However in practice the estimated quality of g1 increases by more than 25 %, while the relative decrease of g2 reaches 33 %.</p>
+</blockquote>
+<p>随着weighting策略的引入，离线评测的误差得到矫正，g1在p=20是趋于收敛。g2收敛速度和误差相对不太理想（why?) </p>
+<h3 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h3><p><em>在特定数据集和特定方法上通过对item采样时引入weighting策略解决了不同时间之间的bias，covariate shift的思想值得借鉴，但是数据集和方法都有局限性：文中只给出了constant algorithm上的解决方法，但在实际使用的算法上并没有可行的solution；实验中提到的两个时间点对推荐系统做了重大改变，且推荐系统对tag点击影响巨大，这种分布的变化和假设并不适用于其他数据集，该方法的通用性有待考察</em>。</p>
+<h2 id="Unbiased_Offline_Evaluation_of_Contextual-bandit-based_News_Article_Recommendation_Algorithms_28WSDM_2011_29"><a href="#Unbiased_Offline_Evaluation_of_Contextual-bandit-based_News_Article_Recommendation_Algorithms_28WSDM_2011_29" class="headerlink" title="Unbiased Offline Evaluation of Contextual-bandit-based News Article Recommendation Algorithms(WSDM 2011)"></a><a href="http://research-srv.microsoft.com/pubs/178905/published.pdf" target="_blank" rel="external">Unbiased Offline Evaluation of Contextual-bandit-based News Article Recommendation Algorithms</a>(WSDM 2011)</h2><p>针对新闻推荐中的bandit算法提出了基于replay方法的离线评估，保证离线评测是unbiased，并证明了采样的复杂度。</p>
+<h3 id="contexual_bandit_problem"><a href="#contexual_bandit_problem" class="headerlink" title="contexual bandit problem"></a>contexual bandit problem</h3><p>multi-armed bandit problem是对EE问题（exploit：利用已知短期利益最大化，explore探索未知长期利益最大化）的建模。在新闻推荐中，每篇新闻可以看做一个arm，每次根据preceding interactions和current context选择一个arm作为推荐结果，如果推荐结果被点击了则payoff为1否则为0。对一篇新闻payoff的期望等同于它的CTR，选择CTR最高的新闻等同于最大化bandit问题中的payoff。</p>
+<h3 id="Unbiased_offline_evaluation"><a href="#Unbiased_offline_evaluation" class="headerlink" title="Unbiased offline evaluation"></a>Unbiased offline evaluation</h3><p>假设(1)the individual events are i.i.d.; (2)the logging policy chose each arm at each time step uniformly at random;(3)K constant arm Set。则可以证明evaluating the policy against T real-world events from D is  equivalent to evaluating the policy using the policy evaluator on a stream of logged events。基于这个结论给出了两个离线评测的算法：<br><img src="/img/machine_learning/policy_evaluator.PNG" alt=""><br>通过重复算法1然后平均每次的误差可以准确的评测算法A；同样可以证明随着L的增大，算法2的误差也会在线性时间内收敛（K趋近于L/K）。</p>
+<h3 id="Result__26amp_3B_Comments"><a href="#Result__26amp_3B_Comments" class="headerlink" title="Result &amp; Comments"></a>Result &amp; Comments</h3><p>线上分了两个桶：random bucket和serving bucket，离线用random bucket的Event和serving bucket的Algorithm做评测，得出结论：展现次数大于2w的文章，在线和离线的CTR基本一致，因此离线评测是unbiased。<br><em>But，从随机桶里取数据本身就消除了model bias的问题，如何unbiased说明是policy evaluator的功劳？而且线上一直留着一个随机桶feasible吗？</em></p>
+<h3 id="Related_Work"><a href="#Related_Work" class="headerlink" title="Related Work"></a>Related Work</h3><p>作者一年后在JMLR上发表了<a href="http://jmlr.org/proceedings/papers/v26/li12a/li12a.pdf" target="_blank" rel="external">An Unbiased Offline Evaluation of Contextual Bandit Algorithms with Generalized Linear Models</a>， 依然是从Yahoo新闻推荐的random bucket里抽取了数据，比较了linear、logistic和probit三种线性模型，以及ε-greedy和UCB两种exploration策略的效果，离线评测部分没有新内容。</p>
+<h1 id="3-_u603B_u7ED3"><a href="#3-_u603B_u7ED3" class="headerlink" title="3.总结"></a>3.总结</h1><p>离线评估系统一直为完美主义者所青睐，各路学者也一直在讨论，但大多集中在概念上，并没有可以立即转化为生产力的实现；少有的几篇关于如何消除bias的paper前提假设过强，并不能广泛推广到实际情景中。虽然达到完全消除离线评估bias的目标仍很遥远，但已有的工作对何如减小bias仍有很多启迪。工业界精准的评测仍以在线评估为主，离线评测即使作为辅助手段也仍有很远的路要走，需要具体问题具体分析，短时间内很难达成一致的框架。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>推荐系统中的评测大致分为三类：离线评测、在线评测、用户调研。在线评测通常将流量随机分配到不同策略下下比较不同策略的优劣（又称A/B test或bucket test），操作简单，效果准确直观，但代价昂贵，可能伤害部分用户的体验；离线评测使用模拟器模拟线上环境获取结果，对线上几乎没有影响，因此一些重要系统通常要先通过离线评测确保算法效果再上线进行对比，但由于离线评测经常引入model bias及partial label（新算法产生的结果在线上真实环境下未被展示）等问题，使得线下评估结果与线上不一致；用户调研代价昂贵切过于主观，个人认为比较适用于产品调研，不适用于算法效果评估。这其中离线评测一直是推荐系统较为关注的话题，如何保持离线评测与在线评测结果的一致性在众多推荐系统中都是亟待解决的问题。</p>]]>
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+      <category term="recommendation system" scheme="http://sensirly.github.io/tags/recommendation-system/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《从0到1》阅读摘要]]></title>
+    <link href="http://sensirly.github.io/zero-to-one/"/>
+    <id>http://sensirly.github.io/zero-to-one/</id>
+    <published>2016-01-06T03:11:17.000Z</published>
+    <updated>2016-05-24T09:15:37.026Z</updated>
+    <content type="html"><![CDATA[<p><img src="/img/reading/zero_to_one_cover.jpg" alt=""><br>《从0到1》可能是迄今为止最好的一本商业书，通过硅谷公司的兴衰史讲述了初创公司的如何发现商机、占据市场、面对竞争。最大的收获是对初创公司面临的挑战有了全面的了解，对垄断和竞争的关系有了重新的认识，同时也看到了作为教父级人物缜密而冷静的思维。</p>
+<h2 id="1-_u672A_u6765_u7684_u6311_u6218"><a href="#1-_u672A_u6765_u7684_u6311_u6218" class="headerlink" title="1.未来的挑战"></a>1.未来的挑战</h2><p>进步可以呈现两种形式。水平进步，也称广泛进步，从1到n的进步，以全球化为代表；垂直进步，也称深入进步，从0到1的进步，以科技为代表。大部分人认为世界的未来由全球化决定，但事实是：科技更有影响力。<br><a id="more"></a><br>对”小团体”这种现象最简单的解释很消极：因为在大组织中发展新事物很难，而单打独斗更是难上加难。官僚阶层行动迟缓，效率低下，既得利益者不愿意冒险。在功能极端失调的组织中，要想获得晋升机会，告诉别人你在工作比挽起袖子做事更重要。从另一个极端说，如果舍弃团体，一个孤独的天才可能会创造出经典的文学艺术作品，却不能创造出整个产业。<strong>初创公司遵守这样一个原则：你需要和其他人合作来完成工作，但也需要控制规模，使组织有效运转。</strong></p>
+<h2 id="2-_u50CF1999_u90A3_u6837_u72C2_u6B22"><a href="#2-_u50CF1999_u90A3_u6837_u72C2_u6B22" class="headerlink" title="2.像1999那样狂欢"></a>2.像1999那样狂欢</h2><p>1999年科技行业的疯狂和随后的泡沫破裂，使人们走向了另一个极端：保守。在过去的泡沫里，企业家们学到了4点经验:</p>
+<ol>
+<li>循序渐进：不能沉溺在宏大的愿景中，否则会使泡沫膨胀  </li>
+<li>保持精简和灵活性：所有的公司都必须留出一定空间，不要事事都严格计划  </li>
+<li>在改进中竞争：不要贸然创造一个新市场  </li>
+<li>专注于产品，而非营销</li>
+</ol>
+<p>然而，这些法则的对立面可能更正确：  </p>
+<ol>
+<li>大胆尝试胜过平庸保守  </li>
+<li>坏计划也好过没有计划   </li>
+<li>竞争性市场很难赚钱  </li>
+<li>营销和产品同样重要  </li>
+</ol>
+<p>要想建立新一代企业，我们必须扔掉之前陈旧的教条。但这并非意昧着那些教条的对立面就一定是正确的，因为就算你有心逃脱，大众洪流也会裹挟着你向前。相反，要问自己：你对企业的认识有多少是基于对以往过错的错误反应形成的？<strong>最反主流的行动不是抵制潮流，而是在潮流中不丢弃自己的独立思考。</strong></p>
+<h2 id="3-_u6240_u6709_u6210_u529F_u7684_u4F01_u4E1A_u90FD_u662F_u4E0D_u540C_u7684"><a href="#3-_u6240_u6709_u6210_u529F_u7684_u4F01_u4E1A_u90FD_u662F_u4E0D_u540C_u7684" class="headerlink" title="3.所有成功的企业都是不同的"></a>3.所有成功的企业都是不同的</h2><p>垄断者为了自我保护而撒谎，他们知道炫耀垄断会遭受干扰因此想方设法隐瞒垄断的事实，夸大不存在的竞争（把自己的市场描述成若干大市场的并集）。非垄断者通常倾向于对市场竞争轻描淡写（把自己的市场定义为更小市场的交集），这通常是初创公司犯下的致命错误，而最致命的诱惑是将市场描述得过于狭小，好像你可以理所当然地驾驭它一样。</p>
+<p>完美的均衡可能描述了大部分宇宙的虚无状态，甚至也是许多企业的特点。但是毎个新发明的出现都和均衡相差甚远。在经济理论之外的现实世界中，毎个企业的成功恰恰就是因为它做了其他企业不能做的事情。因此垄断并不是商界的症结，也不是异常存在，而是每个成功企业的写照。 </p>
+<p>托尔斯泰在《安娜.卡列尼娜》中以下面这段文字作为开头：”幸福的家庭总是相似的，不幸的家庭各有各的不幸。”而在商业中，情形恰恰相反。<strong>企业成功的原因各有不同：每个垄断企业都是靠解决一个独一无二的问题获得垄断地位；而企业失败的原因却相同：它们都无法逃脱竞争。</strong></p>
+<h2 id="4-_u7ADE_u4E89_u610F_u8BC6"><a href="#4-_u7ADE_u4E89_u610F_u8BC6" class="headerlink" title="4.竞争意识"></a>4.竞争意识</h2><p>所有的斗争者都或多或少有些相似。由于没有什么好争的，所以他们为什么而争斗不得而知。《罗密欧与朱丽叶》开篇就说：”两家人，同样尊贵体面。”这两家人差不多但是他们互相敌对。随着矛盾升级，他们甚至变得更相似。直到最后，他们自己也忘记了最初矛盾产生的原因。 </p>
+<p>对于哈姆雷特，伟大是肯为了微不足道的理由抗争：每个人都会为重要的事进行斗争；而真正的英雄把他们个人的荣誉看得更重要，即使事情不重要，他们也会一争到底。这个扭曲的逻辑是人的天性，但是用在商业上却很致命。<strong>如果你能看出竞争不能带来价值的提升，而是充满破坏力，那你就比大多数人要理智。</strong></p>
+<h2 id="5-_u540E_u53D1_u4F18_u52BF"><a href="#5-_u540E_u53D1_u4F18_u52BF" class="headerlink" title="5.后发优势"></a>5.后发优势</h2><p>先行一步只是个策略不是目标，真正重要的是在未来产生现金流。想要实现这个目标就要<strong>先主导一个小的利基市场，在这个基础上循序渐进有纪律地逐步扩大</strong>，占据相近市场，直达达到长期目标。（在一个小市场里占据主导地位比在大市场里要容易的多）</p>
+<h2 id="6-_u6210_u529F_u4E0D_u662F_u4E2D_u5F69_u7968"><a href="#6-_u6210_u529F_u4E0D_u662F_u4E2D_u5F69_u7968" class="headerlink" title="6.成功不是中彩票"></a>6.成功不是中彩票</h2><table>
+<thead>
+<tr>
+<th></th>
+<th><em>明确的未来</em></th>
+<th><em>不明确的未来</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>乐观主义</em></td>
+<td>每一代富有创造力和远见的人都胜于前一代，广纳计划并探索计划的可行性。1950-1970的美国</td>
+<td>盲目乐观，喜欢改进已有产品；高估了机遇的力量，低估了规划的重要性。现在的美国</td>
+</tr>
+<tr>
+<td><em>悲观主义</em></td>
+<td>提前做好准备，各阶层对未来严阵以待。现在的中国</td>
+<td>只在事情发生时做出反应，希望事情不要恶化。现在的欧洲</td>
+</tr>
+</tbody>
+</table>
+<p>在一个明确乐观的未来中，会有工程师设计水下城市和太空定居地，而在一个不明确的乐观未来中，会有更多的银行和律师。金融是不明确思想的集中体现，人们不知道如何赚钱时，才会想到去搞金融。在一个未来不明确的世界中，人们就是喜欢无限的可选择性；钱比任何其他用钱得到的东西更有价值。只有在一个明确的未来中，钱才是达到最终目的的手段，而非最终目的。</p>
+<p>长期规划在我们未来不明确的追求短期利益的世界里经常被低估。计划的力量解释了评估私有企业价值的困难：初创公司的创立者只有对公司没有确切规划的时候才会卖掉公司，而这时收购者困难出价过高；一个对未来计划明确的创立者不会把公司卖掉，这就说明买家的出价不够高。<strong>在一个人人看未来都迷茫的世界里，目标明确的企业总是被低估。</strong></p>
+<h2 id="7-_u5411_u94B1_u770B"><a href="#7-_u5411_u94B1_u770B" class="headerlink" title="7.向钱看"></a>7.向钱看</h2><p><strong>风险投资的回报不遵循正态分布，而是遵循幂次法则</strong>：一小部分公司完胜其他所有公司。幂次法则要经过一段时间后才能清晰的显示出来，那些公司在呈现指数增长前的早期阶段十分相似。如果你不关注事物本身，而是关注其是否适合多元化避险策略的财务问题，那么投资就像是在买彩票。懂得幂次法则的投资者所列的备选投资公司会尽可能少。</p>
+<p>幂次法则对于个人同样重要，每个人都是自己未来的投资者，个人不能为了人生多元化同时留在十几种可能性差不多的职业。懂得幂次法则的人创建公司时更加犹豫，幂次法则意味着公司之间的差别会使内部角色的差别显得相形见绌。</p>
+<h2 id="8-_u79D8_u5BC6"><a href="#8-_u79D8_u5BC6" class="headerlink" title="8.秘密"></a>8.秘密</h2><p>成为常识的真理虽然很重要，但它却不能给你带来什么优势，因为它已不是秘密。但有些无法弄清楚的也不是秘密，而是未解之谜。两者的区别很关键，人们能完成困难的事情，但无法完成不可能完成的事情。</p>
+<p><strong>成功的企业建立于开放却未知的秘密之上，这秘密关乎世界如何运作</strong>。想想硅谷那些创业公司，正是利用着我们周围常被忽略的闲置生产力。只有相信并探索秘密才能发现常规之外的，近在眼前却不为常人所见的商机。最好的企业家深谙此理：所有成功的企业都是基于鲜为人知的秘密建立的。</p>
+<p>秘密分为两种：关于自然的和关于人的。自然界的秘密无处不在，想要发现，你必须探索物质世界的未知部分。关于人的秘密是不同的：是人类对自身认知的空白或者是人们以防他人知道而隐藏的事情。探索秘密最佳的处所是无人关注的地方。</p>
+<h2 id="9-_u57FA_u7840_u51B3_u5B9A_u547D_u8FD0"><a href="#9-_u57FA_u7840_u51B3_u5B9A_u547D_u8FD0" class="headerlink" title="9.基础决定命运"></a>9.基础决定命运</h2><ul>
+<li>选择合伙人就像结婚，而创始人之间闹矛盾就像离婚一样令人不快。毎段关系开始的时候都很乐观，而冷静地思考以 后可能会出现的问题就不那么令人愉悦了，因而人们都不去想。创始人在共同创业之前应有深厚的交情，否则就是碰运气。</li>
+<li>大董事会根本不能进行有效监督，它仅仅为实际经营组织的独断专行的领导提供掩护。如果你希望摆脱董事会的控制，那就 尽可能扩大其规模。如果你希望它高效运作，那就缩小其规模。</li>
+<li>高额的现金报酬会让员工取走公司已有的价值，而不是投入时间为未来创造新的价值。股票能有效引导人们在未来创造价值，但股票不像现金那样具有很大的流动性，缺乏吸引力。</li>
+<li>最有价值的公司始终鼓励发明创造，只要公司创新，创业就还没结束；一旦创新停止，创业就结束了。创业可以无限延续下去。</li>
+</ul>
+<h2 id="10-_u6253_u9020_u5E2E_u6D3E_u6587_u5316"><a href="#10-_u6253_u9020_u5E2E_u6D3E_u6587_u5316" class="headerlink" title="10.打造帮派文化"></a>10.打造帮派文化</h2><p>“公司文化”不能脱离公司本身而存在，创始公司是肩负同一使命的一个团体，企业文化的好坏取决于内涵。</p>
+<p>界定角色可以减少矛盾，公司里绝大多数矛盾是由同事竞争同一岗位引起的。消除竞争更易于建立长久的纯粹的工作关系之外的交情。</p>
+<h2 id="11-_u987E_u5BA2_u4E0D_u4F1A_u81EA_u52A8_u4E0A_u95E8"><a href="#11-_u987E_u5BA2_u4E0D_u4F1A_u81EA_u52A8_u4E0A_u95E8" class="headerlink" title="11.顾客不会自动上门"></a>11.顾客不会自动上门</h2><p>人们高估了科技与工程工作的难度，实在是因为这些领域的挑战显而易见。而销售人员在背后要付出很多才能使销售工作看起来容易进行， 而这些往往被技术精英忽略。</p>
+<p><strong>和演戏一样，不露声色的销售最为有效。</strong>即使是企业人士也低估了推销的重要性，根本原因在于，各个领域各个层面合力掩盖了这 一点，让我们察觉不到世界正是由推销驱动的。</p>
+<p>谁先占领有病毒式销售前景的细分市场，谁就能成为整个市场的定局者。</p>
+<h2 id="12-_u4EBA_u7C7B_u4E0E_u673A_u5668"><a href="#12-_u4EBA_u7C7B_u4E0E_u673A_u5668" class="headerlink" title="12.人类与机器"></a>12.人类与机器</h2><p>人类和机器之间的显著差别意味着，和计算机合作得到的成果远高于与人交易得到的成果。人机结合比单打独斗效果显著。</p>
+<h2 id="13-_u7EFF_u8272_u80FD_u6E90_u4E0E_u7279_u65AF_u62C9"><a href="#13-_u7EFF_u8272_u80FD_u6E90_u4E0E_u7279_u65AF_u62C9" class="headerlink" title="13.绿色能源与特斯拉"></a>13.绿色能源与特斯拉</h2><p>无论从事哪个行业，成功的企业规划都必须解决如下7个问题</p>
+<ol>
+<li>工程问题：你的技术具有突破性，而不仅仅是稍有改进吗？优秀的技术公司，其拥有的专有技术应该比最相近的技术高一个数量级，稍有改进对终端用户来说就是毫无改进。</li>
+<li>时机问题：现在开创事业，时机合适吗？</li>
+<li>垄断问题：开创之初，是在一个小市场抢占大份额吗？如果不能就垄断小市场拿出独特的解决方案，就无法摆脱恶性竞争。夸大独特性并不能解决垄断问题。</li>
+<li>人员问题：你有合适的团队吗？最佳销售总是深藏不露，擅长销售的首席执行官没有什么不对，但如果他的确看起来像销售员，那么他很可能拙于销售，更不擅长技术问题。</li>
+<li>销售问题：除了创造产品，你有没有办法销售产品？销售和物流至少和产品本身一样重要。</li>
+<li>持久问题；未来10年或20年，你能保住自己的市场地位吗？</li>
+<li>秘密问题：你有没有找到一个其他人没有发现的独特机会？失败者往往都运用被普遍认可的观念来描述自己的摧操未来。但是伟大企业是构筑在秘密之上，这是它们取得成功的独特原因，而別人对此却一无所知。</li>
+</ol>
+<p>阻碍公益创业进步的不是企业的贪婪与非营利组织的善良之间的差异，而是做一样的事。做与众不同的事情才是真正有益于社会，也是企业通过垄断新市场盈利的方式。</p>
+<h2 id="14-_u521B_u59CB_u4EBA_u7684_u6096_u8BBA"><a href="#14-_u521B_u59CB_u4EBA_u7684_u6096_u8BBA" class="headerlink" title="14.创始人的悖论"></a>14.创始人的悖论</h2><p>众多的创始人看似拥有极端特质，但几乎所有成功的企业家既是局内人又是局外人。创始人事实上并不像他们所表现的那么极端，而是在自我夸大和外界夸大的循环之间彼此加强。</p>
+<p>相信自己具有不依赖他人的神圣能力并不能表明个体的强大，而是表明你把人们的崇拜或嘲弄错认为事实。创始人最大的危险是对自己的神话过于肯定，因而迷失了方向。同样，对于公司，最大的危险是不再相信创始人的神话，错把不信神话当作一种智慧。</p>
+<h2 id="u7ED3_u8BED_uFF1A_u505C_u6EDE_u4E0D_u524D_uFF0C_u8FD8_u662F_u4E34_u8FD1_u5947_u70B9"><a href="#u7ED3_u8BED_uFF1A_u505C_u6EDE_u4E0D_u524D_uFF0C_u8FD8_u662F_u4E34_u8FD1_u5947_u70B9" class="headerlink" title="结语：停滞不前，还是临近奇点"></a>结语：停滞不前，还是临近奇点</h2><p>无论有多少趋势可以追踪，未来都不是自行发生的。我们不能理所当然地认为未来会更美好，而是要今天努力创造美好的未来。<br>我们当下的任务是找到创新的独特方式，使得未来不仅仅与众不同，而且更加美好，即从0到1。最重要的第一步是独立思考。<strong>只有重新认识世界，如同古人第一眼看见这个世界一样新奇，我们才能重构世界，守护未来。</strong></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="/img/reading/zero_to_one_cover.jpg" alt=""><br>《从0到1》可能是迄今为止最好的一本商业书，通过硅谷公司的兴衰史讲述了初创公司的如何发现商机、占据市场、面对竞争。最大的收获是对初创公司面临的挑战有了全面的了解，对垄断和竞争的关系有了重新的认识，同时也看到了作为教父级人物缜密而冷静的思维。</p>
+<h2 id="1-_u672A_u6765_u7684_u6311_u6218"><a href="#1-_u672A_u6765_u7684_u6311_u6218" class="headerlink" title="1.未来的挑战"></a>1.未来的挑战</h2><p>进步可以呈现两种形式。水平进步，也称广泛进步，从1到n的进步，以全球化为代表；垂直进步，也称深入进步，从0到1的进步，以科技为代表。大部分人认为世界的未来由全球化决定，但事实是：科技更有影响力。<br>]]>
+    
+    </summary>
+    
+      <category term="reading" scheme="http://sensirly.github.io/tags/reading/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Game Theory on Coursera (2)]]></title>
+    <link href="http://sensirly.github.io/game-theory-coursera-2/"/>
+    <id>http://sensirly.github.io/game-theory-coursera-2/</id>
+    <published>2015-12-29T13:30:05.000Z</published>
+    <updated>2016-01-22T04:07:06.322Z</updated>
+    <content type="html"><![CDATA[<p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>5: Repeated Games<br>6: Bayesian Games<br>7: Coalitional Games<br><a id="more"></a></p>
+<h1 id="5_3A_Repeated_Gmaes"><a href="#5_3A_Repeated_Gmaes" class="headerlink" title="5: Repeated Gmaes"></a>5: Repeated Gmaes</h1><h2 id="5-1_Utility"><a href="#5-1_Utility" class="headerlink" title="5.1 Utility"></a>5.1 Utility</h2><p>可以定义为均值的极限，也可以定义为指数加权和的极限<br><img src="/img/game_theory/repeat_reward.PNG" alt=""><br>对衰减系数的两种解释：</p>
+<ol>
+<li>选手更在意近期的收益而非长期收益</li>
+<li>在每一轮中，游戏都有<code>1-β^i</code>的概率结束</li>
+</ol>
+<h2 id="5-2_Stochastic_Games"><a href="#5-2_Stochastic_Games" class="headerlink" title="5.2 Stochastic Games"></a>5.2 Stochastic Games</h2><p>Stochastic Games是Repeated Gmaes的泛化形式,agents可以重复参与一组normal-form games，下一轮选择的game取决于上一个game及所有agent的actions<br><img src="/img/game_theory/stochastic_game.PNG" alt=""><br>it also generalizes MDP (Markov Decision Process), MDP is a single-agent stochastic game.</p>
+<h2 id="5-3_Learning_in_Repeated_Games"><a href="#5-3_Learning_in_Repeated_Games" class="headerlink" title="5.3 Learning in Repeated Games"></a>5.3 Learning in Repeated Games</h2><h3 id="5-3-1-_Fictitious_Play"><a href="#5-3-1-_Fictitious_Play" class="headerlink" title="5.3.1. Fictitious Play"></a>5.3.1. Fictitious Play</h3><p>观察对手前面行为的分布，选择频率最大的一个作为对手下一轮的assessed strategy，并作出最佳回应(pure strategy)   </p>
+<blockquote>
+<p>Theorem：If the empirical distribution of each player’s strategies converges in fictitious play, then it converges to a Nash equilibrium.   </p>
+</blockquote>
+<h3 id="5-3-2-_No-regret_Learning"><a href="#5-3-2-_No-regret_Learning" class="headerlink" title="5.3.2. No-regret Learning"></a>5.3.2. No-regret Learning</h3><p>不取决于对手建模，只关注自己的经验。<br>t时刻没有采用策略s的regret值=采用的s的utility-真实的utility。<br>按照不同策略的regret值分布选择t+1时刻的策略。</p>
+<h2 id="5-4_Equilibria"><a href="#5-4_Equilibria" class="headerlink" title="5.4 Equilibria"></a>5.4 Equilibria</h2><h3 id="5-4-1_Some_famous_strategies__28repeated_PD_29_3A"><a href="#5-4-1_Some_famous_strategies__28repeated_PD_29_3A" class="headerlink" title="5.4.1 Some famous strategies (repeated PD):"></a>5.4.1 Some famous strategies (repeated PD):</h3><ul>
+<li>Tit-for-tat: Start out cooperating. If the opponent defected, defect in the next round. Then go back to cooperation</li>
+<li>Trigger: Start out cooperating. If the opponent ever defects, defect forever.</li>
+</ul>
+<h3 id="5-4-2_Nash_Equilibria"><a href="#5-4-2_Nash_Equilibria" class="headerlink" title="5.4.2 Nash Equilibria"></a>5.4.2 Nash Equilibria</h3><ul>
+<li>如果任何player的payoff都不小于他的minmax value（当其他player都执行minmax策略时的收益），则这个playoff profile是enforceable的</li>
+<li>如果存在一个合理、非负、和为1的概率分布，使得集合中每个playoff都能表示为不同策略utility的加权和，则这个playoff profile是feasible的   <blockquote>
+<p>Folk Theorem (Part 1)：Payoff in Nash → enforceable<br>Folk Theorem (Part 2)：Feasible and enforceable → Nash</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="5-5_Discounted_Repeated_Games"><a href="#5-5_Discounted_Repeated_Games" class="headerlink" title="5.5 Discounted Repeated Games"></a>5.5 Discounted Repeated Games</h2><p>将utility定义为时间衰减的指数加权<br>Repeatedly playing a Nash equilibrium of the stage game is always a subgame perfect equilibrium of the repeated game</p>
+<h1 id="6_3A_Bayesian_Games"><a href="#6_3A_Bayesian_Games" class="headerlink" title="6: Bayesian Games"></a>6: Bayesian Games</h1><ol>
+<li>a set of games that differ only in their payoffs, a common prior defined over them, and a partition structure over the games for each agent. 一组游戏，相同的策略空间，不同的utility。<br><img src="/img/game_theory/bayesian_define.PNG" alt=""> </li>
+<li>Directly represent uncertainty over utility function using the notion of <strong>epistemic type</strong></li>
+</ol>
+<p>Bayesian (Nash) Equilibrium: 在对手的action和type分布上最大化自己的expected utility.</p>
+<ul>
+<li>strategic uncertainty about how others will play</li>
+<li>payoff uncertainty about the value to their actions</li>
+</ul>
+<h1 id="7_3A_Coalitional_Games"><a href="#7_3A_Coalitional_Games" class="headerlink" title="7: Coalitional Games"></a>7: Coalitional Games</h1><p>agent之间相互cooperative，关注集体的payoff，playoff在团体内重新分配。</p>
+<h2 id="7-1_The_Shapley_Value"><a href="#7-1_The_Shapley_Value" class="headerlink" title="7.1 The Shapley Value"></a>7.1 The Shapley Value</h2><p>Lloyd Shapley’s idea: members should receive payments or shares proportional to their marginal contributions。根据边际收益分配利益，需要遵循如下3个公理确保分配的公平性：</p>
+<ol>
+<li>Symmetry: i and j are interchangeable relative to v if they always contribute the same amount to every coalition of the other agents. Interchangeable agents should receive the same shares/payments.</li>
+<li>Dummy player: i is a dummy player if the amount that i contributes to any coalition is 0. Dummy players should receive nothing.</li>
+<li>Additivity: If we can separate a game into two parts v = v1 + v2, then we should be able to decompose the payments<blockquote>
+<p>Theorem: 当满足Symmetry, Dummy player and Additivity 三个公理时，每一个Coalitional Games都有唯一一组payoff分配方案</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="/img/game_theory/shapley_value.PNG" alt=""> </p>
+<h2 id="7-2_The_Core"><a href="#7-2_The_Core" class="headerlink" title="7.2 The Core"></a>7.2 The Core</h2><p>Shapley Value保证了fairness缺忽略了stability. 有时更小的coalition虽然整体收益较小但却更有吸引力，因此个体不愿意组成grand coalition。<br><img src="/img/game_theory/core_define.PNG" alt=""><br>每个个体在集体中得到的都要大于等于个体可以独自获得的payoff。类似于Nash Equilibrium。</p>
+<h1 id="u53C2_u8003_uFF1A"><a href="#u53C2_u8003_uFF1A" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><a href="http://fenixlin.github.io/2014/12/08/Game_Theory" target="_blank" rel="external">Fenix Lin的笔记</a></li>
+<li><a href="https://www.coursera.org/course/gametheory" target="_blank" rel="external">Coursera课程链接</a>  </li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>5: Repeated Games<br>6: Bayesian Games<br>7: Coalitional Games<br>]]>
+    
+    </summary>
+    
+      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
+    
+      <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Game Theory on Coursera (1)]]></title>
+    <link href="http://sensirly.github.io/game-theory-coursera-1/"/>
+    <id>http://sensirly.github.io/game-theory-coursera-1/</id>
+    <published>2015-12-28T11:50:18.000Z</published>
+    <updated>2016-01-26T11:27:22.276Z</updated>
+    <content type="html"><![CDATA[<p>为了赶上1月开课的<a href="https://www.coursera.org/course/gametheory2" target="_blank" rel="external">Game Theory II: Advanced Applications</a>，最近补习了前序课。本课程主要讲了博弈论中的基础问题和概念，除了对slides做了一些摘要外，还结合了其他资料及自己的心得进行了注释，在后续学习过程中会不断添加延伸资料（如知乎上的相关讨论）。  </p>
+<p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>1: Introduction and Overview<br>2: Mixed-Strategy Nash Equilibrium<br>3: Alternate Solution Concepts<br>4: Extensive-Form Games<br><a id="more"></a></p>
+<h1 id="1_3A_Introduction_and_Overview"><a href="#1_3A_Introduction_and_Overview" class="headerlink" title="1: Introduction and Overview"></a>1: Introduction and Overview</h1><h2 id="1-1_Nash_Equilibrium"><a href="#1-1_Nash_Equilibrium" class="headerlink" title="1.1 Nash Equilibrium"></a>1.1 Nash Equilibrium</h2><h3 id="1-1-1_Presumption"><a href="#1-1-1_Presumption" class="headerlink" title="1.1.1 Presumption"></a>1.1.1 Presumption</h3><ul>
+<li>A consistent list of actions</li>
+<li>Each player’s action maximizes his or her payoff given the actions of the others</li>
+<li>A self-consistent or stable profile</li>
+</ul>
+<h3 id="1-1-2_E-g-_Keynes_Beauty_Contest_Game_3A_The_Stylized_Version"><a href="#1-1-2_E-g-_Keynes_Beauty_Contest_Game_3A_The_Stylized_Version" class="headerlink" title="1.1.2 E.g. Keynes Beauty Contest Game: The Stylized Version"></a>1.1.2 E.g. Keynes Beauty Contest Game: The Stylized Version</h3><ol>
+<li>Each player names an integer between 1 and 100</li>
+<li>The player who names the integer closest to two thirds of the average integer wins a prize, the other players get nothing</li>
+<li>Ties are broken uniformly at random</li>
+</ol>
+<h3 id="1-1-3_Summary"><a href="#1-1-3_Summary" class="headerlink" title="1.1.3 Summary"></a>1.1.3 Summary</h3><ul>
+<li>Each player’s action maximizes his or her payoff given the actions of the others</li>
+<li>Someone has an incentive to deviate from a profile of actions that do not form an equilibrium (第1次参与游戏时: Median 33, Winner 23)</li>
+<li>Nobody has an incentive to deviate from their action if an equilibrium profile is played  (第2次参与游戏时: Median 2, Winner 4)</li>
+</ul>
+<h3 id="1-1-4_Definition"><a href="#1-1-4_Definition" class="headerlink" title="1.1.4 Definition"></a>1.1.4 Definition</h3><p><img src="/img/game_theory/best_response.png" alt=""><br><em>玩家在当前局面的收益最大化的选择</em><br><img src="/img/game_theory/nash_equilibrium.png" alt=""><br><em>纳什均衡是这样的一种状态：在博弈中如果玩家A选择了X选项，那么玩家B为了使自己的利益最大话选择了Y选项；相反如果玩家B选择了Y选项，这种情况下X对于玩家A来说也是利益最大话的唯一选项</em></p>
+<h3 id="1-1-5_Example_Games"><a href="#1-1-5_Example_Games" class="headerlink" title="1.1.5 Example Games"></a>1.1.5 Example Games</h3><p><img src="/img/game_theory/example_games_ne.png" alt=""></p>
+<h2 id="1-2_Domination"><a href="#1-2_Domination" class="headerlink" title="1.2 Domination"></a>1.2 Domination</h2><ul>
+<li>If one strategy dominates all others, we say it is dominant</li>
+<li>A strategy profile consisting of dominant strategies for every player must be a Nash equilibrium</li>
+<li>An equilibrium in strictly dominant strategies must be unique    </li>
+</ul>
+<h2 id="1-3_Pareto_Optimality"><a href="#1-3_Pareto_Optimality" class="headerlink" title="1.3 Pareto Optimality"></a>1.3 Pareto Optimality</h2><ul>
+<li>when an output is at least good for everyone as another and strictly preferred by someone, we say the it Pareto-dominates another    </li>
+<li>an output is Pareto-optimal if there is no other outcome that Pareto-dominates it<ul>
+<li>a game can have more than one Pareto-optimal outcome</li>
+<li>every game have at least one Pareto-optimal outcome</li>
+</ul>
+</li>
+<li>The paradox of Prisoner’s dilemma: the (DS) Nash equilibrium is the only none-Pareto-optimal outcome!<br><img src="/img/game_theory/pareto_paradox.png" alt=""><br><em>“从此以后，非损人不能利己。” 摘自知乎：<a href="https://www.zhihu.com/question/22570835" target="_blank" rel="external">如何通俗地解释「帕累托最优」(Pareto optimum)?</a></em><br><a href="https://www.youtube.com/watch?v=3Y1WpytiHKE" target="_blank" rel="external">介绍Dominant Strategy Equilibrium的视频</a><h3 id="1-3-1_Braess_u2019_paradox_28_u5E03_u96F7_u65AF_u6096_u8BBA_29"><a href="#1-3-1_Braess_u2019_paradox_28_u5E03_u96F7_u65AF_u6096_u8BBA_29" class="headerlink" title="1.3.1 Braess’ paradox(布雷斯悖论)"></a>1.3.1 Braess’ paradox(布雷斯悖论)</h3>有4000辆车从START到达END，如果只开通实线表示的路，在纳什均衡的条件下，各有2000辆车分别通过A和B，每辆车花费65分钟。<br><img src="/img/game_theory/braess_paradox_traffic.png" alt=""><br>当增加虚线代表的路后，由于T/100&lt;45，所有的司机都倾向于START-A-B-END的路线。但对于所有司机而言，花费的时间变为80分钟。<br><em>新加的路增加了一个更加低效的纳什均衡点，<strong>Nash Equilibrium不总是全局最优解</strong>。由于每个人都是自私的而不是相互协作的，每一个个体都企求扩大自身可使用的资源，然而资源耗损的代价却转嫁所有可使用资源的人们。这种个人利益与公共利益对资源分配有所冲突的社会陷阱成为“公地悲剧”（<a href="https://en.wikipedia.org/wiki/Tragedy_of_the_commons" target="_blank" rel="external">Tragedy of the Commons</a>）</em></li>
+</ul>
+<h1 id="2_3A_Mixed-Strategy_Nash_Equilibrium"><a href="#2_3A_Mixed-Strategy_Nash_Equilibrium" class="headerlink" title="2: Mixed-Strategy Nash Equilibrium"></a>2: Mixed-Strategy Nash Equilibrium</h1><ul>
+<li>Pure Strategy：每个选手只选定一种策略</li>
+<li>Mixed Strategy： 每个选手的策略选择都是多个Pure Strategy的概率分布  <blockquote>
+<p>Theorem (Nash, 1950): Every finite game has a Nash equilibrium.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-1_Computing"><a href="#2-1_Computing" class="headerlink" title="2.1 Computing"></a>2.1 Computing</h2><p>纳什均衡，就是要使得别人在自己的概率下没法区别他的策略，否则对手会选择对自己更有利的策略<br><img src="/img/game_theory/mixed_ne_computing.png" alt=""><br>类似的，可以计算出选手1的概率分布(2/3,1/3)<br>然而，当维度增加时，纳什均衡的求解是NP完全的  </p>
+<h1 id="3_3A_Alternate_Solution_Concepts"><a href="#3_3A_Alternate_Solution_Concepts" class="headerlink" title="3: Alternate Solution Concepts"></a>3: Alternate Solution Concepts</h1><h2 id="3-1_Iterated_Removal"><a href="#3-1_Iterated_Removal" class="headerlink" title="3.1 Iterated Removal"></a>3.1 Iterated Removal</h2><p>通过移除Dominated Strategies来简化/求解纳什均衡</p>
+<h3 id="3-1-1_Strictly_Dominated_Strategies_3A"><a href="#3-1-1_Strictly_Dominated_Strategies_3A" class="headerlink" title="3.1.1 Strictly Dominated Strategies:"></a>3.1.1 Strictly Dominated Strategies:</h3><ul>
+<li>preserves Nash equilibrium</li>
+<li>It can be used as a preprocessing step before computing an equilibrium</li>
+<li>order of removal doesn’t matter</li>
+</ul>
+<h3 id="3-1-2_Weakly_Dominated_Strategies_3A"><a href="#3-1-2_Weakly_Dominated_Strategies_3A" class="headerlink" title="3.1.2 Weakly Dominated Strategies:"></a>3.1.2 Weakly Dominated Strategies:</h3><ul>
+<li>At least one equilibrium preserved.</li>
+<li>Order of removal can matter.</li>
+</ul>
+<h2 id="3-2_Maxmin_Strategies"><a href="#3-2_Maxmin_Strategies" class="headerlink" title="3.2 Maxmin Strategies"></a>3.2 Maxmin Strategies</h2><p><img src="/img/game_theory/maxmin_define.png" alt=""><br><em>在其他玩家选择对其伤害最大的策略时，自己的最小收益最大化</em><br>Why would I want to play a maxmin strategy?  </p>
+<ul>
+<li>a conservative agent maximizing worst-case payoff  </li>
+<li>a paranoid agent who believes everyone is out to get him<br><img src="/img/game_theory/minmax_define.png" alt=""><br>Why would I want to play a minmax strategy?  </li>
+<li>to punish the other agent as much as possible</li>
+</ul>
+<blockquote>
+<p>Theorem (Minimax theorem (von Neumann, 1928): In any finite, two-player, zero-sum game, in any Nash equilibrium each player receives a payoff that is equal to both his maxmin value and his minmax value. </p>
+</blockquote>
+<ol>
+<li>Each player’s maxmin value is equal to his minmax value. The maxmin value for player 1 is called the value of the game</li>
+<li>For both players, the set of maxmin strategies coincides with the set of minmax strategies</li>
+<li>Any maxmin strategy profile (or, equivalently, minmax strategy profile) is a Nash equilibrium. Furthermore, these are all the Nash Equilibria. Consequently, all Nash equilibria have the same payoff vector</li>
+</ol>
+<h1 id="4-Extensive-Form_Games"><a href="#4-Extensive-Form_Games" class="headerlink" title="4.Extensive-Form Games"></a>4.Extensive-Form Games</h1><p>用树形结构表示多位player的交替行为及收益  </p>
+<p><img src="/img/game_theory/extensive_form.png" alt="">  </p>
+<blockquote>
+<p>Theorem: Every perfect information game in extensive form has a PSNE  </p>
+</blockquote>
+<p><em>This is easy to see, since the players move sequentially<br>一颗子树是一个Subgame。Subgame均衡的纳什均衡才可信(与Subgame不均衡的相比往往是在其他走不到的子树上有区别)。据此可以从叶节点倒推出均衡状况。</em> </p>
+<h2 id="4-1_Subgame_Perfect_Equilibrium"><a href="#4-1_Subgame_Perfect_Equilibrium" class="headerlink" title="4.1 Subgame Perfect Equilibrium"></a>4.1 Subgame Perfect Equilibrium</h2><ol>
+<li>Definition：策略S对于所有的子图来说，都是Nash Equilibrium，则S称为subgame perfect equilibrium</li>
+<li>Computing：Backward Induction, maxmin Algorithm, alpha-beta pruning</li>
+<li>Application：Centipede Game<br><img src="/img/game_theory/centipede_game.png" alt=""><br><a href="https://www.zhihu.com/question/29543850" target="_blank" rel="external">知乎：蜈蚣博弈（Centipede Game）在现实中都有哪些应用?</a></li>
+</ol>
+<h2 id="4-2_Imperfect_information_Extensive-Form_Games"><a href="#4-2_Imperfect_information_Extensive-Form_Games" class="headerlink" title="4.2 Imperfect information Extensive-Form Games"></a>4.2 Imperfect information Extensive-Form Games</h2><p>有了等价结点的概念，Player只能知道目前在某一类等价节点，无法区分具体位置</p>
+<h1 id="u53C2_u8003_uFF1A"><a href="#u53C2_u8003_uFF1A" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><a href="http://fenixlin.github.io/2014/12/08/Game_Theory" target="_blank" rel="external">Fenix Lin的笔记</a></li>
+<li><a href="https://www.coursera.org/course/gametheory" target="_blank" rel="external">Coursera课程链接</a>  </li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>为了赶上1月开课的<a href="https://www.coursera.org/course/gametheory2">Game Theory II: Advanced Applications</a>，最近补习了前序课。本课程主要讲了博弈论中的基础问题和概念，除了对slides做了一些摘要外，还结合了其他资料及自己的心得进行了注释，在后续学习过程中会不断添加延伸资料（如知乎上的相关讨论）。  </p>
+<p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>1: Introduction and Overview<br>2: Mixed-Strategy Nash Equilibrium<br>3: Alternate Solution Concepts<br>4: Extensive-Form Games<br>]]>
+    
+    </summary>
+    
+      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
+    
+      <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+  </entry>
+  
+</feed>
