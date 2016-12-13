@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://sensirly.github.io/udacity-deep-learning/</loc>
+    <lastmod>2016-12-13T12:37:57.214Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://sensirly.github.io/python-data-structure/</loc>
     <lastmod>2016-11-28T09:40:15.609Z</lastmod>
   </url>
