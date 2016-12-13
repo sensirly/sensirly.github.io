@@ -4,7 +4,7 @@
   <subtitle><![CDATA[给时光以生命，而不是给生命以时光]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sensirly.github.io/"/>
-  <updated>2016-12-13T12:37:57.214Z</updated>
+  <updated>2016-12-13T12:43:09.811Z</updated>
   <id>http://sensirly.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://sensirly.github.io/udacity-deep-learning/"/>
     <id>http://sensirly.github.io/udacity-deep-learning/</id>
     <published>2016-12-13T12:29:05.000Z</published>
-    <updated>2016-12-13T12:37:57.214Z</updated>
+    <updated>2016-12-13T12:43:09.811Z</updated>
     <content type="html"><![CDATA[<p>Udacity和Google合作开设的一门deep learning入门课 <a href="https://classroom.udacity.com/courses/ud730" target="_blank" rel="external">课程链接</a>，由Google首席研发科学家Vincent Vanhoucke主讲，以实战的视角介绍了常用deep learning算法，原理性的内容大多一两句话带过没有详细的证明推导，但也算句句珠玑了，wide but not very deep。作业使用修改过的MNIST(手写数字识别)数据集，python编程，在scikit-learn和TensorFlow平台上完成，可以借此熟悉平台使用。主要内容包括机器学习基本概念、深度神经网络、卷积神经网络、文本和序列的深度模型。<br><img src="/../img/udacity-deep-learning/course_overview.png" alt=""><br><a id="more"></a></p>
 <h2 id="1-_From_Machine_Learning_to_Deep_Learning"><a href="#1-_From_Machine_Learning_to_Deep_Learning" class="headerlink" title="1. From Machine Learning to Deep Learning"></a>1. From Machine Learning to Deep Learning</h2><p>讲了softmax、one-hot encoding、cross entropy、learning rate、overfitting、gradient decent、测试集划分、评估指标等基本概念。</p>
 <h2 id="2-_Deep_Neural_Networks"><a href="#2-_Deep_Neural_Networks" class="headerlink" title="2. Deep Neural Networks"></a>2. Deep Neural Networks</h2><p>线性模型具有很多优点，比如较高的稳定性，输入的细小变更不会对输出造成剧烈的波动，且求导和计算较为方便。但是线性模型有太多的参数需要学习，且不能拟合非线性数据。因此我们需要引入非线性模型。</p>
@@ -68,6 +68,8 @@
     </summary>
     
       <category term="machine learning" scheme="http://sensirly.github.io/tags/machine-learning/"/>
+    
+      <category term="online course" scheme="http://sensirly.github.io/tags/online-course/"/>
     
   </entry>
   
@@ -288,7 +290,7 @@
     <link href="http://sensirly.github.io/data-visualization/"/>
     <id>http://sensirly.github.io/data-visualization/</id>
     <published>2016-06-22T13:23:03.000Z</published>
-    <updated>2016-06-23T07:56:39.359Z</updated>
+    <updated>2016-12-13T12:42:31.919Z</updated>
     <content type="html"><![CDATA[<h1 id="week_1_3A_The_Computer_and_the_Human"><a href="#week_1_3A_The_Computer_and_the_Human" class="headerlink" title="week 1: The Computer and the Human"></a>week 1: The Computer and the Human</h1><p>visualization is an interface between the computer and the human.    因此我们要首先了解human和computer的特点才能做好visualization。</p>
 <h2 id="Photorealism"><a href="#Photorealism" class="headerlink" title="Photorealism"></a>Photorealism</h2><p>用2D画面表示3D效果常用的技巧</p>
 <ul>
@@ -328,9 +330,9 @@
     
     </summary>
     
-      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
-    
       <category term="data science" scheme="http://sensirly.github.io/tags/data-science/"/>
+    
+      <category term="online course" scheme="http://sensirly.github.io/tags/online-course/"/>
     
   </entry>
   
@@ -724,7 +726,7 @@
     <link href="http://sensirly.github.io/game-theory-coursera-3/"/>
     <id>http://sensirly.github.io/game-theory-coursera-3/</id>
     <published>2016-02-01T14:00:18.000Z</published>
-    <updated>2016-02-03T11:57:33.967Z</updated>
+    <updated>2016-12-13T12:42:49.289Z</updated>
     <content type="html"><![CDATA[<p>This advanced course considers how to design interactions between agents in order to achieve good social outcomes. Three main topics are covered:<br>1：Social Choice theory(i.e., voting rules)<br>2：Mechanism Design<br>3：Efficient Mechanisms(VCG)<br>4：Auctions<br><a id="more"></a></p>
 <h1 id="1-Social_Choice"><a href="#1-Social_Choice" class="headerlink" title="1.Social Choice"></a>1.Social Choice</h1><h2 id="1-1_Voting_Schemes"><a href="#1-1_Voting_Schemes" class="headerlink" title="1.1 Voting Schemes"></a>1.1 Voting Schemes</h2><ul>
 <li>Plurality：选择每个agent最喜欢的候选计数。</li>
@@ -835,9 +837,9 @@
     
     </summary>
     
-      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
-    
       <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+      <category term="online course" scheme="http://sensirly.github.io/tags/online-course/"/>
     
   </entry>
   
@@ -1012,7 +1014,7 @@
     <link href="http://sensirly.github.io/game-theory-coursera-2/"/>
     <id>http://sensirly.github.io/game-theory-coursera-2/</id>
     <published>2015-12-29T13:30:05.000Z</published>
-    <updated>2016-01-22T04:07:06.322Z</updated>
+    <updated>2016-12-13T12:42:45.247Z</updated>
     <content type="html"><![CDATA[<p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>5: Repeated Games<br>6: Bayesian Games<br>7: Coalitional Games<br><a id="more"></a></p>
 <h1 id="5_3A_Repeated_Gmaes"><a href="#5_3A_Repeated_Gmaes" class="headerlink" title="5: Repeated Gmaes"></a>5: Repeated Gmaes</h1><h2 id="5-1_Utility"><a href="#5-1_Utility" class="headerlink" title="5.1 Utility"></a>5.1 Utility</h2><p>可以定义为均值的极限，也可以定义为指数加权和的极限<br><img src="/img/game_theory/repeat_reward.PNG" alt=""><br>对衰减系数的两种解释：</p>
 <ol>
@@ -1068,9 +1070,9 @@
     
     </summary>
     
-      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
-    
       <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+      <category term="online course" scheme="http://sensirly.github.io/tags/online-course/"/>
     
   </entry>
   
@@ -1079,7 +1081,7 @@
     <link href="http://sensirly.github.io/game-theory-coursera-1/"/>
     <id>http://sensirly.github.io/game-theory-coursera-1/</id>
     <published>2015-12-28T11:50:18.000Z</published>
-    <updated>2016-01-26T11:27:22.276Z</updated>
+    <updated>2016-12-13T12:42:40.816Z</updated>
     <content type="html"><![CDATA[<p>为了赶上1月开课的<a href="https://www.coursera.org/course/gametheory2" target="_blank" rel="external">Game Theory II: Advanced Applications</a>，最近补习了前序课。本课程主要讲了博弈论中的基础问题和概念，除了对slides做了一些摘要外，还结合了其他资料及自己的心得进行了注释，在后续学习过程中会不断添加延伸资料（如知乎上的相关讨论）。  </p>
 <p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>1: Introduction and Overview<br>2: Mixed-Strategy Nash Equilibrium<br>3: Alternate Solution Concepts<br>4: Extensive-Form Games<br><a id="more"></a></p>
 <h1 id="1_3A_Introduction_and_Overview"><a href="#1_3A_Introduction_and_Overview" class="headerlink" title="1: Introduction and Overview"></a>1: Introduction and Overview</h1><h2 id="1-1_Nash_Equilibrium"><a href="#1-1_Nash_Equilibrium" class="headerlink" title="1.1 Nash Equilibrium"></a>1.1 Nash Equilibrium</h2><h3 id="1-1-1_Presumption"><a href="#1-1-1_Presumption" class="headerlink" title="1.1.1 Presumption"></a>1.1.1 Presumption</h3><ul>
@@ -1168,9 +1170,9 @@
     
     </summary>
     
-      <category term="coursera" scheme="http://sensirly.github.io/tags/coursera/"/>
-    
       <category term="economics" scheme="http://sensirly.github.io/tags/economics/"/>
+    
+      <category term="online course" scheme="http://sensirly.github.io/tags/online-course/"/>
     
   </entry>
   
