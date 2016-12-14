@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/bayesian_define.PNG">
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/shapley_value.PNG">
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/core_define.PNG">
-<meta property="og:updated_time" content="2016-12-13T12:42:45.247Z">
+<meta property="og:updated_time" content="2016-12-14T06:16:18.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Game Theory on Coursera (2)">
 <meta name="twitter:description" content="The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (m">
@@ -70,8 +70,6 @@ ga('send', 'pageview');
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/archives">所有文章</a></li>
-	        
 				<li><a href="/tags/machine-learning">机器学习</a></li>
 	        
 				<li><a href="/tags/reading">读书笔记</a></li>
@@ -138,8 +136,6 @@ ga('send', 'pageview');
 			<nav class="header-menu">
 				<ul>
 				
-					<li><a href="/archives">所有文章</a></li>
-		        
 					<li><a href="/tags/machine-learning">机器学习</a></li>
 		        
 					<li><a href="/tags/reading">读书笔记</a></li>
@@ -185,7 +181,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p>The course covers the basics: representing games and strategies, the extensive form (which computer scientists call game trees), repeated and stochastic games, coalitional games, and Bayesian games (modeling things like auctions). This note includes following sections：<br>5: Repeated Games<br>6: Bayesian Games<br>7: Coalitional Games<br><a id="more"></a></p>
-<h1 id="5_3A_Repeated_Gmaes"><a href="#5_3A_Repeated_Gmaes" class="headerlink" title="5: Repeated Gmaes"></a>5: Repeated Gmaes</h1><h2 id="5-1_Utility"><a href="#5-1_Utility" class="headerlink" title="5.1 Utility"></a>5.1 Utility</h2><p>可以定义为均值的极限，也可以定义为指数加权和的极限<br><img src="/img/game_theory/repeat_reward.PNG" alt=""><br>对衰减系数的两种解释：</p>
+<h1 id="5_3A_Repeated_Gmaes"><a href="#5_3A_Repeated_Gmaes" class="headerlink" title="5: Repeated Gmaes"></a>5: Repeated Gmaes</h1><h2 id="5-1_Utility"><a href="#5-1_Utility" class="headerlink" title="5.1 Utility"></a>5.1 Utility</h2><p>可以定义为均值的极限，也可以定义为指数加权和的极限<br><img src="/img/game_theory/repeat_reward.PNG" alt=""><br>对衰减系数的两种解释：  </p>
 <ol>
 <li>选手更在意近期的收益而非长期收益</li>
 <li>在每一轮中，游戏都有<code>1-β^i</code>的概率结束</li>
@@ -209,7 +205,7 @@ ga('send', 'pageview');
 </ul>
 <h2 id="5-5_Discounted_Repeated_Games"><a href="#5-5_Discounted_Repeated_Games" class="headerlink" title="5.5 Discounted Repeated Games"></a>5.5 Discounted Repeated Games</h2><p>将utility定义为时间衰减的指数加权<br>Repeatedly playing a Nash equilibrium of the stage game is always a subgame perfect equilibrium of the repeated game</p>
 <h1 id="6_3A_Bayesian_Games"><a href="#6_3A_Bayesian_Games" class="headerlink" title="6: Bayesian Games"></a>6: Bayesian Games</h1><ol>
-<li>a set of games that differ only in their payoffs, a common prior defined over them, and a partition structure over the games for each agent. 一组游戏，相同的策略空间，不同的utility。<br><img src="/img/game_theory/bayesian_define.PNG" alt=""> </li>
+<li>a set of games that differ only in their payoffs, a common prior defined over them, and a partition structure over the games for each agent. 一组游戏，相同的策略空间，不同的utility。<br><img src="/img/game_theory/bayesian_define.PNG" alt="">   </li>
 <li>Directly represent uncertainty over utility function using the notion of <strong>epistemic type</strong></li>
 </ol>
 <p>Bayesian (Nash) Equilibrium: 在对手的action和type分布上最大化自己的expected utility.</p>

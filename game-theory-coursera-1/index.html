@@ -26,7 +26,7 @@ The course covers the basics: representing games and st">
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/minmax_define.png">
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/extensive_form.png">
 <meta property="og:image" content="http://sensirly.github.io/img/game_theory/centipede_game.png">
-<meta property="og:updated_time" content="2016-12-13T12:42:40.816Z">
+<meta property="og:updated_time" content="2016-12-14T06:16:18.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Game Theory on Coursera (1)">
 <meta name="twitter:description" content="为了赶上1月开课的Game Theory II: Advanced Applications，最近补习了前序课。本课程主要讲了博弈论中的基础问题和概念，除了对slides做了一些摘要外，还结合了其他资料及自己的心得进行了注释，在后续学习过程中会不断添加延伸资料（如知乎上的相关讨论）。  
@@ -78,8 +78,6 @@ ga('send', 'pageview');
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/archives">所有文章</a></li>
-	        
 				<li><a href="/tags/machine-learning">机器学习</a></li>
 	        
 				<li><a href="/tags/reading">读书笔记</a></li>
@@ -146,8 +144,6 @@ ga('send', 'pageview');
 			<nav class="header-menu">
 				<ul>
 				
-					<li><a href="/archives">所有文章</a></li>
-		        
 					<li><a href="/tags/machine-learning">机器学习</a></li>
 		        
 					<li><a href="/tags/reading">读书笔记</a></li>
@@ -210,7 +206,7 @@ ga('send', 'pageview');
 <li>Nobody has an incentive to deviate from their action if an equilibrium profile is played  (第2次参与游戏时: Median 2, Winner 4)</li>
 </ul>
 <h3 id="1-1-4_Definition"><a href="#1-1-4_Definition" class="headerlink" title="1.1.4 Definition"></a>1.1.4 Definition</h3><p><img src="/img/game_theory/best_response.png" alt=""><br><em>玩家在当前局面的收益最大化的选择</em><br><img src="/img/game_theory/nash_equilibrium.png" alt=""><br><em>纳什均衡是这样的一种状态：在博弈中如果玩家A选择了X选项，那么玩家B为了使自己的利益最大话选择了Y选项；相反如果玩家B选择了Y选项，这种情况下X对于玩家A来说也是利益最大话的唯一选项</em></p>
-<h3 id="1-1-5_Example_Games"><a href="#1-1-5_Example_Games" class="headerlink" title="1.1.5 Example Games"></a>1.1.5 Example Games</h3><p><img src="/img/game_theory/example_games_ne.png" alt=""></p>
+<h3 id="1-1-5_Example_Games"><a href="#1-1-5_Example_Games" class="headerlink" title="1.1.5 Example Games"></a>1.1.5 Example Games</h3><p><img src="/img/game_theory/example_games_ne.png" alt="">   </p>
 <h2 id="1-2_Domination"><a href="#1-2_Domination" class="headerlink" title="1.2 Domination"></a>1.2 Domination</h2><ul>
 <li>If one strategy dominates all others, we say it is dominant</li>
 <li>A strategy profile consisting of dominant strategies for every player must be a Nash equilibrium</li>
@@ -246,8 +242,8 @@ ga('send', 'pageview');
 <h2 id="3-2_Maxmin_Strategies"><a href="#3-2_Maxmin_Strategies" class="headerlink" title="3.2 Maxmin Strategies"></a>3.2 Maxmin Strategies</h2><p><img src="/img/game_theory/maxmin_define.png" alt=""><br><em>在其他玩家选择对其伤害最大的策略时，自己的最小收益最大化</em><br>Why would I want to play a maxmin strategy?  </p>
 <ul>
 <li>a conservative agent maximizing worst-case payoff  </li>
-<li>a paranoid agent who believes everyone is out to get him<br><img src="/img/game_theory/minmax_define.png" alt=""><br>Why would I want to play a minmax strategy?  </li>
-<li>to punish the other agent as much as possible</li>
+<li>a paranoid agent who believes everyone is out to get him<br><img src="/img/game_theory/minmax_define.png" alt=""><br>Why would I want to play a minmax strategy?   </li>
+<li>to punish the other agent as much as possible   </li>
 </ul>
 <blockquote>
 <p>Theorem (Minimax theorem (von Neumann, 1928): In any finite, two-player, zero-sum game, in any Nash equilibrium each player receives a payoff that is equal to both his maxmin value and his minmax value. </p>
@@ -258,7 +254,7 @@ ga('send', 'pageview');
 <li>Any maxmin strategy profile (or, equivalently, minmax strategy profile) is a Nash equilibrium. Furthermore, these are all the Nash Equilibria. Consequently, all Nash equilibria have the same payoff vector</li>
 </ol>
 <h1 id="4-Extensive-Form_Games"><a href="#4-Extensive-Form_Games" class="headerlink" title="4.Extensive-Form Games"></a>4.Extensive-Form Games</h1><p>用树形结构表示多位player的交替行为及收益  </p>
-<p><img src="/img/game_theory/extensive_form.png" alt="">  </p>
+<p><img src="/img/game_theory/extensive_form.png" alt="">   </p>
 <blockquote>
 <p>Theorem: Every perfect information game in extensive form has a PSNE  </p>
 </blockquote>

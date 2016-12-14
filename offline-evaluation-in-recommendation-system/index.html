@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://sensirly.github.io/img/machine_learning/viadeo_define.PNG">
 <meta property="og:image" content="http://sensirly.github.io/img/machine_learning/viadeo_result.PNG">
 <meta property="og:image" content="http://sensirly.github.io/img/machine_learning/policy_evaluator.PNG">
-<meta property="og:updated_time" content="2016-02-03T11:57:02.294Z">
+<meta property="og:updated_time" content="2016-12-14T06:16:18.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Offline Evaluation in Recommendation System调研">
 <meta name="twitter:description" content="推荐系统中的评测大致分为三类：离线评测、在线评测、用户调研。在线评测通常将流量随机分配到不同策略下下比较不同策略的优劣（又称A/B test或bucket test），操作简单，效果准确直观，但代价昂贵，可能伤害部分用户的体验；离线评测使用模拟器模拟线上环境获取结果，对线上几乎没有影响，因此一些重要系统通常要先通过离线评测确保算法效果再上线进行对比，但由于离线评测经常引入model bias及pa">
@@ -70,8 +70,6 @@ ga('send', 'pageview');
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/archives">所有文章</a></li>
-	        
 				<li><a href="/tags/machine-learning">机器学习</a></li>
 	        
 				<li><a href="/tags/reading">读书笔记</a></li>
@@ -138,8 +136,6 @@ ga('send', 'pageview');
 			<nav class="header-menu">
 				<ul>
 				
-					<li><a href="/archives">所有文章</a></li>
-		        
 					<li><a href="/tags/machine-learning">机器学习</a></li>
 		        
 					<li><a href="/tags/reading">读书笔记</a></li>
@@ -207,7 +203,7 @@ ga('send', 'pageview');
 <li>选用<code>success@3</code>（无论下一次点击是来自推荐还是其他地方）作为在离线评测指标</li>
 <li>选用<code>success@3</code>和CTR（推荐结果点击率）作为在线评测指标 </li>
 </ul>
-<h3 id="u5B9E_u9A8C_u7ED3_u679C-1"><a href="#u5B9E_u9A8C_u7ED3_u679C-1" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="/img/machine_learning/CT_offline_evaluation.PNG" alt=""> <img src="/img/machine_learning/CT_online_CTR.PNG" alt=""> </p>
+<h3 id="u5B9E_u9A8C_u7ED3_u679C-1"><a href="#u5B9E_u9A8C_u7ED3_u679C-1" class="headerlink" title="实验结果"></a>实验结果</h3><p><img src="/img/machine_learning/CT_offline_evaluation.PNG" alt=""> <img src="/img/machine_learning/CT_online_CTR.PNG" alt="">   </p>
 <ul>
 <li>热门策略线上CTR4%, 准确率由16.5%提高至17.5%，因此3/4的点击来自于其他地方</li>
 <li>CT策略线上CTR6%, 准确率由14%提高至19%，1/6的点击来自于其他地方,因此价值更高</li>
@@ -226,7 +222,7 @@ ga('send', 'pageview');
 <li>记录t0时刻item的分布，在t1时刻沿用这个分布选择item再选取user。但这和离线评测流程是相悖的（先选择user在选择item），且无法响应新的user和item</li>
 <li>更好的方法是借鉴covariate shift的思想，给定一个user引起一组变量<code>w</code>控制item选取，如（3）,使得<code>Pt1(i|w) ~ Pt0(i)</code>（目标函数）</li>
 </ol>
-<h3 id="Solution__26amp_3B_Result"><a href="#Solution__26amp_3B_Result" class="headerlink" title="Solution &amp; Result"></a>Solution &amp; Result</h3><p>优化<code>w</code>看以看做是最小化两个分布之间的差异，根据Kullback-Leibler divergence的定义，两者之间的差异主要取决于出现频率最高的item，因此为了提高计算效率，只选择t0和t1之间变化最大的p个item求解<code>w</code><br>使用Viadeo（类似于linkedin）技能tag推荐数据集，为了更加直观的观察weighting策略的影响，这里依然选用了两个Constant Algorithm，算法1总是推荐评测阶段推荐最多的5个item给用户，算法2总是推荐历史上评测阶段没有推荐过但之前推荐最多的5个item给用户。<br><img src="/img/machine_learning/viadeo_result.PNG" alt=""></p>
+<h3 id="Solution__26amp_3B_Result"><a href="#Solution__26amp_3B_Result" class="headerlink" title="Solution &amp; Result"></a>Solution &amp; Result</h3><p>优化<code>w</code>看以看做是最小化两个分布之间的差异，根据Kullback-Leibler divergence的定义，两者之间的差异主要取决于出现频率最高的item，因此为了提高计算效率，只选择t0和t1之间变化最大的p个item求解<code>w</code><br>使用Viadeo（类似于linkedin）技能tag推荐数据集，为了更加直观的观察weighting策略的影响，这里依然选用了两个Constant Algorithm，算法1总是推荐评测阶段推荐最多的5个item给用户，算法2总是推荐历史上评测阶段没有推荐过但之前推荐最多的5个item给用户。<br><img src="/img/machine_learning/viadeo_result.PNG" alt="">   </p>
 <blockquote>
 <p>As both algorithms are constant, it would be reasonable to expect minimal variations of their offine evaluation scores. However in practice the estimated quality of g1 increases by more than 25 %, while the relative decrease of g2 reaches 33 %.</p>
 </blockquote>
