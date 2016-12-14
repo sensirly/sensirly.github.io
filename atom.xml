@@ -4,7 +4,7 @@
   <subtitle><![CDATA[给时光以生命，而不是给生命以时光]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://sensirly.github.io/"/>
-  <updated>2016-12-14T06:16:18.424Z</updated>
+  <updated>2016-12-14T11:04:26.848Z</updated>
   <id>http://sensirly.github.io/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <link href="http://sensirly.github.io/udacity-deep-learning/"/>
     <id>http://sensirly.github.io/udacity-deep-learning/</id>
     <published>2016-12-13T12:29:05.000Z</published>
-    <updated>2016-12-14T06:16:18.424Z</updated>
-    <content type="html"><![CDATA[<p>Udacity和Google合作开设的一门deep learning入门课 <a href="https://classroom.udacity.com/courses/ud730" target="_blank" rel="external">课程链接</a>，由Google首席研发科学家Vincent Vanhoucke主讲，以实战的视角介绍了常用deep learning算法，原理性的内容大多一两句话带过没有详细的证明推导，但也算句句珠玑了，wide but not very deep。作业使用修改过的MNIST(手写数字识别)数据集，python编程，在scikit-learn和TensorFlow平台上完成，可以借此熟悉平台使用。主要内容包括机器学习基本概念、深度神经网络、卷积神经网络、文本和序列的深度模型。<br><img src="/../img/udacity-deep-learning/course_overview.png" alt=""><br><a id="more"></a></p>
+    <updated>2016-12-14T11:04:26.848Z</updated>
+    <content type="html"><![CDATA[<p>deep learning入门公开课 <a href="https://classroom.udacity.com/courses/ud730" target="_blank" rel="external">课程链接</a>，由Google首席研发科学家Vincent Vanhoucke主讲，以实战的视角介绍了常用deep learning算法，原理性的内容大多一两句话带过没有详细的证明推导，但也算句句珠玑了，wide but not very deep。作业使用修改过的MNIST(手写数字识别)数据集，python编程，在scikit-learn和TensorFlow平台上完成，可以借此熟悉平台使用。主要内容包括机器学习基本概念、深度神经网络、卷积神经网络、文本和序列的深度模型。<br><img src="/../img/udacity-deep-learning/course_overview.png" alt=""><br><a id="more"></a></p>
 <h2 id="1-_From_Machine_Learning_to_Deep_Learning"><a href="#1-_From_Machine_Learning_to_Deep_Learning" class="headerlink" title="1. From Machine Learning to Deep Learning"></a>1. From Machine Learning to Deep Learning</h2><p>讲了softmax、one-hot encoding、cross entropy、learning rate、overfitting、gradient decent、测试集划分、评估指标等基本概念。</p>
 <h2 id="2-_Deep_Neural_Networks"><a href="#2-_Deep_Neural_Networks" class="headerlink" title="2. Deep Neural Networks"></a>2. Deep Neural Networks</h2><p>线性模型具有很多优点，比如较高的稳定性，输入的细小变更不会对输出造成剧烈的波动，且求导和计算较为方便。但是线性模型有太多的参数需要学习，且不能拟合非线性数据。因此我们需要引入非线性模型。</p>
 <h3 id="2-1_Activation_Function"><a href="#2-1_Activation_Function" class="headerlink" title="2.1 Activation Function"></a>2.1 Activation Function</h3><p>sigmoid和tanh传统神经网络中最常用的两个激活函数，但这两个激活函数都存在梯度饱和问题（<strong>Vanishing Gradient Problem</strong>）：函数的梯度接近于两端时计算出的梯度接近于0，引起参数弥散问题，传到前几层的梯度也非常靠近0，导致参数更新变慢。<br><img src="/../img/udacity-deep-learning/sigmoid_tanh_relu.png" alt=""><br>相比sigmoid和tanh函数，Relu激活函数（The Rectified Linear Unit）的优点在于：</p>
@@ -53,7 +53,7 @@
 </ul>
 <h3 id="4-2_RNN"><a href="#4-2_RNN" class="headerlink" title="4.2 RNN"></a>4.2 RNN</h3><p>文本是一个长度可变的序列，因此不能直接表示为vector了。RNN每一轮迭代都根据过去的数据判断当前的状态，这就需要一个非常深的网络记忆之前所有分类器的状态。而使用Recurrent Connection对过去的状态进行总结并传递状态，这样就简化了网络的结构。<br><img src="/../img/udacity-deep-learning/rnn.png" alt=""><br>在通过BackPropagation进行参数学习时，对应同一个参数会有很多次求导和更新，使用SGD就存在很大的问题了，因为SGD是通过不相关的求导更新参数已达到训练的稳定性。由于梯度之间的相关性会出现exploding gradient（梯度急剧下降）和vanishing gradient（梯度几乎为0）的问题。exploding gradient可以使用gradient clipping修复，即当梯度大于某个阈值的时候进行截断。</p>
 <h3 id="4-3_LSTM"><a href="#4-3_LSTM" class="headerlink" title="4.3 LSTM"></a>4.3 LSTM</h3><p>vanishing gradient会导致分类器只对最近状态的有反应，丧失学习到连接如此远的信息的能力，于是就产生了LSTM(Long Short-Term Memory)。一个RNN的model包含两个输入：过去状态和新的数据，两个输出：当前的预测和将来状态，中间是一个简单的神经网络。而把中间的部分换成LSTM-cell，就可以解决vanishing gradient问题，提高RNN的记忆能力。<br>一个简单的记忆模型包含写、读、遗忘三个步骤。每一步不单纯做01判断，而是使用一个连续值决定对输入的接收程度，这样就可以进行求导和训练了。<br><img src="/../img/udacity-deep-learning/lstm_gate.png" alt=""><br>最后用一个逻辑回归训练这些连续的参数，输出时进行归一化。这样就可以方便地训练并且消除了gradient vanishing的问题，让整个cell更好地平衡记忆和遗忘。对于LSTM而言，L2和用于输入输出数据的Dropout（不可用于Recurrent Connection）都是可以奏效的RRegularization方法。<br><img src="/../img/udacity-deep-learning/lstm_cell.png" alt=""><br>生产序列是一个不断重复预测、采样、预测的过程，每次只预测一个结果是比较贪心的，多预测几部然后选择概率最高的那个会提高效果，但是生成的候选集会指数增长，通过beam search进行剪枝可以有效控制候选集合并取到很好的效果。<br><img src="/../img/udacity-deep-learning/beam_search.png" alt="">   </p>
-<h2 id="u89C2_u540E_u611F"><a href="#u89C2_u540E_u611F" class="headerlink" title="观后感"></a>观后感</h2><p>虽然整个课程的视频只有一个多小时的样子，但是要把所有内容都消化还是要花很多时间到处查资料的。DL博大精深，但是TensorFlow这些神器也一定程度上降低了学习成本，这个课本身也是实践导向，提倡暂时忽略一些背后的复杂推导做个lazy engineer，然后learn by practice。视频已撸完，对应的知识也大体理解了，接下来该装个TensorFlow把课上的assignment跑起来了。</p>
+<h2 id="u89C2_u540E_u611F"><a href="#u89C2_u540E_u611F" class="headerlink" title="观后感"></a>观后感</h2><p>虽然整个课程的视频只有一个多小时的样子，但对于初学者来说要把所有内容都消化还是要花很多时间到处查资料的。DL博大精深，但是TensorFlow这些神器也一定程度上降低了学习成本，这个课本身也是实践导向，提倡暂时忽略一些背后的复杂推导做个lazy engineer，然后learn by practice。视频已撸完，对应的知识也大体理解了，接下来该装个TensorFlow把课上的assignment跑起来了。</p>
 <h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="http://ufldl.stanford.edu/wiki/index.php/UFLDL%E6%95%99%E7%A8%8B" target="_blank" rel="external">UFLDL教程</a></li>
 <li><a href="http://www.cnblogs.com/neopenx/p/4453161.html" target="_blank" rel="external">ReLu(Rectified Linear Units)激活函数</a></li>
@@ -63,7 +63,7 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Udacity和Google合作开设的一门deep learning入门课 <a href="https://classroom.udacity.com/courses/ud730">课程链接</a>，由Google首席研发科学家Vincent Vanhoucke主讲，以实战的视角介绍了常用deep learning算法，原理性的内容大多一两句话带过没有详细的证明推导，但也算句句珠玑了，wide but not very deep。作业使用修改过的MNIST(手写数字识别)数据集，python编程，在scikit-learn和TensorFlow平台上完成，可以借此熟悉平台使用。主要内容包括机器学习基本概念、深度神经网络、卷积神经网络、文本和序列的深度模型。<br><img src="/../img/udacity-deep-learning/course_overview.png" alt=""><br>]]>
+    <![CDATA[<p>deep learning入门公开课 <a href="https://classroom.udacity.com/courses/ud730">课程链接</a>，由Google首席研发科学家Vincent Vanhoucke主讲，以实战的视角介绍了常用deep learning算法，原理性的内容大多一两句话带过没有详细的证明推导，但也算句句珠玑了，wide but not very deep。作业使用修改过的MNIST(手写数字识别)数据集，python编程，在scikit-learn和TensorFlow平台上完成，可以借此熟悉平台使用。主要内容包括机器学习基本概念、深度神经网络、卷积神经网络、文本和序列的深度模型。<br><img src="/../img/udacity-deep-learning/course_overview.png" alt=""><br>]]>
     
     </summary>
     
