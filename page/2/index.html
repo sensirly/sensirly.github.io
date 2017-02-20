@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://sensirly.github.io">
-  <title>Learning Machine</title>
+  <title>Eric的学习笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Learning Machine">
+<meta property="og:title" content="Eric的学习笔记">
 <meta property="og:url" content="http://sensirly.github.io/page/2/index.html">
-<meta property="og:site_name" content="Learning Machine">
+<meta property="og:site_name" content="Eric的学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Learning Machine">
+<meta name="twitter:title" content="Eric的学习笔记">
   
-    <link rel="alternative" href="/atom.xml" title="Learning Machine" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Eric的学习笔记" type="application/atom+xml">
   
   
     <link rel="icon" href="/img/favicon.png">
@@ -154,6 +154,58 @@ ga('send', 'pageview');
 
       <div class="body-wrap">
         
+  
+    <article id="post-prediction-model-calibration" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/prediction-model-calibration/">预测模型结果校准</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>由于模型预测时采样不均，或者算法本身的特性（比如SVM和boosting会使结果趋向于呈sigmoid形状的分布；使用独立假设的Naive Bayes会使结果拉向0或1；而NN和bagged tree的bias相对小一些。详见<em>refer#5</em>），模型预测值与真实观察值之间往往存在很大的gap。大多数的分类模型，得到的预测结果仅有定序意义，而不能够定量。很多情况下，仅仅得到一个好的AUC值是远远不够的，我们需要得到一个准确的概率值。例如，在优化最大收益的场景下，优化目标是最大化CTR*CVR*Price，通过模型分别学到的CTR和CVR的预测值不仅要保序，还要使预测值逼近真是分布才能获得准确的排序结果。<br>
+        <p class="article-more-link">
+          <a class="article-more-a"  href="/prediction-model-calibration/#more">more >></a>
+        </p>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/prediction-model-calibration/" class="archive-article-date">
+  	<time datetime="2016-03-16T08:33:43.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-03-16</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/machine-learning/">machine learning</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
   
     <article id="post-ranking-algorithms-in-recommendation-system" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -532,7 +584,7 @@ ga('send', 'pageview');
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/coursera/" style="font-size: 10px;">coursera</a> <a href="/tags/data-science/" style="font-size: 10px;">data science</a> <a href="/tags/economics/" style="font-size: 15px;">economics</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/online-course/" style="font-size: 17.5px;">online course</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/reading/" style="font-size: 15px;">reading</a> <a href="/tags/recommendation-system/" style="font-size: 12.5px;">recommendation system</a>
+    				<a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/coursera/" style="font-size: 10px;">coursera</a> <a href="/tags/data-science/" style="font-size: 10px;">data science</a> <a href="/tags/economics/" style="font-size: 17.5px;">economics</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/online-course/" style="font-size: 20px;">online course</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/reading/" style="font-size: 15px;">reading</a> <a href="/tags/recommendation-system/" style="font-size: 12.5px;">recommendation system</a>
     			</div>
     	</section>
     

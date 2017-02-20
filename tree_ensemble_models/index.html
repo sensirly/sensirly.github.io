@@ -6,13 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://sensirly.github.io">
-  <title>Tree Ensemble Models | Learning Machine</title>
+  <title>Tree Ensemble Models | Eric的学习笔记</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tree Ensemble Models">
 <meta property="og:url" content="http://sensirly.github.io/tree_ensemble_models/index.html">
-<meta property="og:site_name" content="Learning Machine">
+<meta property="og:site_name" content="Eric的学习笔记">
 <meta property="og:description" content="集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行">
 <meta property="og:image" content="http://sensirly.github.io/../img/machine_learning/model_ensemble.png">
 <meta property="og:image" content="http://sensirly.github.io/../img/machine_learning/bias_variance.png">
@@ -25,13 +25,13 @@
 <meta property="og:image" content="http://sensirly.github.io/../img/machine_learning/xgboost_obj.png">
 <meta property="og:image" content="http://sensirly.github.io/../img/machine_learning/xgboost_split.png">
 <meta property="og:image" content="http://sensirly.github.io/../img/machine_learning/xgboost_block.png">
-<meta property="og:updated_time" content="2016-12-26T15:55:08.000Z">
+<meta property="og:updated_time" content="2017-01-24T10:53:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tree Ensemble Models">
 <meta name="twitter:description" content="集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行">
 <meta name="twitter:image" content="http://sensirly.github.io/../img/machine_learning/model_ensemble.png">
   
-    <link rel="alternative" href="/atom.xml" title="Learning Machine" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Eric的学习笔记" type="application/atom+xml">
   
   
     <link rel="icon" href="/img/favicon.png">
@@ -190,7 +190,7 @@ ga('send', 'pageview');
         <p>集成学习通过训练多个分类器，并将这些分类器组合起来以达到更好的预测性能。集成学习通常会比单模型的结果好，可以在提高精度的同时降低overfitting，且模型间的差异越大（diversity）提升效果越显著，这个差异性可以体现在数据、特征、模型、参数等多个维度。<br><img src="../img/machine_learning/model_ensemble.png" alt=""><br>下面一个例子可以看到简单的ensemble就可以达到远高于单个分类器的效果：<br>比如有三个分类器，准确率都为0.7，如果采用多数投票的方式进行ensemble，那么得到的正确率为：<code>0.7*0.7*0.7+0.3*0.7*0.7+0.7*0.3*0.7+0.7*0.7*0.3=0.788</code></p>
 <a id="more"></a>
 <h1 id="Ensemble-Method"><a href="#Ensemble-Method" class="headerlink" title="Ensemble Method"></a>Ensemble Method</h1><p>主要的方法有Bagging和Boosting。另外一种是stacking（也有叫Hybrid的），即将多个模型的输出作为特征，使用单模型将预测值组合起来，常用LR做模型组合。</p>
-<h2 id="Bagging和Boosting"><a href="#Bagging和Boosting" class="headerlink" title="Bagging和Boosting"></a>Bagging和Boosting</h2><p>Random Forest使用了Bagging的方法，GBDT、AdaBoost使用的是Boosting的方法。两者在实现上的区别在于：</p>
+<h2 id="Bagging和Boosting"><a href="#Bagging和Boosting" class="headerlink" title="Bagging和Boosting"></a>Bagging和Boosting</h2><p>Random Forest使用了Bagging的方法，GBDT、AdaBoost使用的是Boosting的方法。两者在实现上的区别在于： </p>
 <ul>
 <li>训练集：Bagging每一轮从样本中做有放回的随机采样；Boosting每一轮采用的样本分布都和上一轮的学习结果有关</li>
 <li>样例权重：Bagging随机采样权重相同；Boosting根据错误率不断调整样例的权值，错误率越大则权重越大（不完全是这样）</li>
@@ -200,7 +200,7 @@ ga('send', 'pageview');
 <h2 id="variance-amp-bias"><a href="#variance-amp-bias" class="headerlink" title="variance &amp; bias"></a>variance &amp; bias</h2><p>模型的准确度<code>Error = Bias + Variance</code>, Bias反映的是模型在样本上的输出与真实值之间的误差，即模型本身的精准度（拟合程度，由underfitting造成）；Variance反映的是模型每一次输出结果与模型输出期望之间的误差，即模型的稳定性（泛化能力，由overfitting造成）。<br><img src="../img/machine_learning/bias_variance.png" alt=""><br>两者往往互相影响不可兼得，需要做tradeoff。比如降低决策树的高度、增加正则项、降低k近邻算法中的k值，牺牲bias降低variance。<br><img src="../img/machine_learning/bias_variance_tradeoff.png" alt=""><br>Boosting通过将若干个弱分类器合成一个强分类器，主要降低Bias。因此GBDT中每棵树的深度都很浅，通过boosting消除单棵树的bias；<br>Bagging通过将多个弱分类器取平均，主要降低Variance。因此RF每棵树都是充分学习的（过拟合的）树，通过bagging消除单棵树的variance。</p>
 <h2 id="Adaboosting和Gradient-Boosting的区别"><a href="#Adaboosting和Gradient-Boosting的区别" class="headerlink" title="Adaboosting和Gradient Boosting的区别"></a>Adaboosting和Gradient Boosting的区别</h2><p>Adaboosting在每次迭代时增加上次分类错误的样本的权重，减少分类正确的样本的权重。最后将得到的许多分类器综合起来。<br>Gradient Boosting每次并未改变样本的权重来拟合下一棵树，而是将之前所有模型的预测值与目标值的残差作为新的目标进行学习。</p>
 <h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>GBDT(Gradient Boosting Decision Tree) 又叫 MART（Multiple Additive Regression Tree)，是Ensemble Model的一种实现方式，由多棵决策树组成，所有树的结果累加起来做最终答案。<br><img src="../img/machine_learning/gradient_boosting.png" alt="">    </p>
-<h2 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h2><p>选取Decision Tree作为Gradient Boosting Modeling的弱分类器，得益于Decision Tree本身的一些良好特性，比如可以处理missing feature、可以不理不同scale的特征值不需要归一化、可以自动过滤无关特征等等。虽然GBDT可以用来解决分类问题，但是GBDT中的树都是回归树，不是分类树。两者区别主要在于节点分裂的依据：</p>
+<h2 id="Decision-Tree"><a href="#Decision-Tree" class="headerlink" title="Decision Tree"></a>Decision Tree</h2><p>选取Decision Tree作为Gradient Boosting Modeling的弱分类器，得益于Decision Tree本身的一些良好特性，比如可以处理missing feature、可以不理不同scale的特征值不需要归一化、可以自动过滤无关特征等等。虽然GBDT可以用来解决分类问题，但是GBDT中的树都是回归树，不是分类树。两者区别主要在于节点分裂的依据： </p>
 <ul>
 <li>分类树（如C4.5）在每次分裂时穷举每一个特征的的每一个阈值，找到信息熵最大的分裂点分裂，直到到达临界条件。</li>
 <li>回归树（如CART）每个节点都会得一个预测值，每次分裂时穷举每一个特征的的每一个阈值，最小化均方差（最小二乘）。</li>
@@ -392,7 +392,7 @@ ga('send', 'pageview');
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/coursera/" style="font-size: 10px;">coursera</a> <a href="/tags/data-science/" style="font-size: 10px;">data science</a> <a href="/tags/economics/" style="font-size: 15px;">economics</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/online-course/" style="font-size: 17.5px;">online course</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/reading/" style="font-size: 15px;">reading</a> <a href="/tags/recommendation-system/" style="font-size: 12.5px;">recommendation system</a>
+    				<a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/coursera/" style="font-size: 10px;">coursera</a> <a href="/tags/data-science/" style="font-size: 10px;">data science</a> <a href="/tags/economics/" style="font-size: 17.5px;">economics</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/machine-learning/" style="font-size: 20px;">machine learning</a> <a href="/tags/online-course/" style="font-size: 20px;">online course</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/reading/" style="font-size: 15px;">reading</a> <a href="/tags/recommendation-system/" style="font-size: 12.5px;">recommendation system</a>
     			</div>
     	</section>
     
